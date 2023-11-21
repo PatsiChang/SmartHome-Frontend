@@ -1,0 +1,91 @@
+body{
+    background-color: var(--darkColor);
+    height: 100vh;
+    margin: 0 auto;
+    max-width: 960px;
+}
+:root{
+    --darkColor: rgb(66, 62, 62);
+    --middleColor: rgb(113, 108, 108);
+    --lighterColor: rgb(223, 223, 223);
+
+}
+::selection{
+    color: rgb(223, 223, 223);
+    background-color: var(--middleColor);
+}
+a{
+    color: var(--lighterColor);
+    text-decoration: none;
+}
+a:active{
+    color: rgb(183, 93, 105);
+    text-decoration: none;
+}
+
+/* NavBar */
+.pageContent{
+    color: var(--lighterColor);
+    font-size: 20px;
+    font-family: 'Poppins-thin', 'arial';
+    flex-grow: 1;
+    text-align: center;
+}
+li.pageContent:hover{
+    cursor: pointer;
+    background-color: var(--middleColor);
+}
+.links{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: end;
+    list-style-type: none;
+}
+
+/* Banner */
+.recipeDisplayBanner{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    justify-self: center
+}
+#sashimiDemo{
+    margin-top: 20px;
+    width: 60vw;
+}
+/* Middle Row */
+.middleRow{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(53, 52, 52, 0.2);
+}
+#addRecipe{
+    color: var(--lighterColor);
+    font-size: 20px;
+    font-family: 'Poppins-thin', 'arial';
+}
+.gridContainer{
+    display: flex;
+    justify-content: space-evenly;
+    overflow: hidden;
+    padding:0% 10% 0% 10%;
+    background-color: rgb(73, 69, 69);
+    height: 70vh;
+    width: 70vw;
+}
+.grid-item{
+    gap: 10px;
+    width: 30vw;
+    height: 30vh;
+    flex-grow: 3;
+    overflow: hidden;
+}
+
+/* Fonts */
+@font-face {
+    font-family: Poppins-Thin;
+    src: url(../Fonts/Poppins-Thin.ttf);
+    font-weight: lighter;
+}
