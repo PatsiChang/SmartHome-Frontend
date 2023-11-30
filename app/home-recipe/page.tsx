@@ -2,8 +2,11 @@ import Image from 'next/image';
 import './homeRecipe.css';
 import HomeRecipeNavBar from './NavBar';
 import sashimiDemo from '../IMG/sashimiDemo.jpg';
+import addBtn from '../IMG/addBtn.png';
 import UploadForm from './UploadForm';
-import ProgressBar from './ProgressBar';
+import ImageGrid from './ImageGrid';
+import RegisterRecipe from './RegisterRecipe';
+// import ProgressBar from './ProgressBar';
 
 
 
@@ -21,20 +24,10 @@ function HomeRecipe() {
       <div className='middleRow'> 
         <div id='addRecipe'> Add New Recipe </div>
       </div>
-
+      
       <div><UploadForm /></div>
-
-
-
-
-      {/* <div className='gridContainer'> 
-        <div className='grid-item'>1</div>
-        <div className='grid-item'>2</div>
-        <div className='grid-item'>3</div>
-        <div className='grid-item'>4</div>
-        <div className='grid-item'>5</div>
-        <div className='grid-item'>6</div>
-      </div> */}
+      <div><RegisterRecipe  propsTrigger/></div>
+      <div><ImageGrid /></div>
      
     </main>
   

@@ -61,28 +61,91 @@ li.pageContent:hover{
     justify-content: center;
     background-color: rgba(53, 52, 52, 0.2);
 }
+
+/* AddRecipe Row */
+#uploadFormLabel input{
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+#uploadFormLabel{
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: solid white 1px;
+    border-radius: 50%;
+    margin: 10px auto;
+    color: var(--lighterColor);
+    font-weight: bold;
+    font-size: 24px;
+}
 #addRecipe{
     color: var(--lighterColor);
     font-size: 20px;
     font-family: 'Poppins-thin', 'arial';
 }
-.gridContainer{
-    display: flex;
-    justify-content: space-evenly;
-    overflow: hidden;
-    padding:0% 10% 0% 10%;
-    background-color: rgb(73, 69, 69);
-    height: 70vh;
-    width: 70vw;
+#plusSign{
+    padding-left: 5px;
 }
-.grid-item{
-    gap: 10px;
-    width: 30vw;
-    height: 30vh;
-    flex-grow: 3;
+.img-grid{
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 40px;
+}
+.img-wrap{
     overflow: hidden;
+    height: 0;
+    padding: 50% 0;
+    position: relative;
+    opacity: 0.8;
 }
 
+
+/* ProgressBar */
+.progress-bar{
+    height: 5px;
+    background-color: var(--lighterColor);
+    margin-top: 20px;
+}
+
+/* Register Recipe */
+.registerRecipe{
+    padding: 20px;
+    opacity: 0.95;
+    color: black;
+    background-color:rgb(181, 172, 172);
+    position: absolute;
+    top: 10vh;
+    left: 15%;
+    width: 70%;
+    height:70vh;
+    border-radius: 10px;
+}
+.close-btn{
+    color: var(--darkColor);
+    position: absolute;
+    right: 4%;
+}
+#radioBtn{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+#registerRecipePopUp{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+    width: auto;
+    color: var(--darkColor);
+}
+#addStepsBtn{
+    background-color: rgb(155, 145, 145);
+    width: 70%;
+}
 /* Fonts */
 @font-face {
     font-family: Poppins-Thin;

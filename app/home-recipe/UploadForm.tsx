@@ -1,7 +1,22 @@
  'use client'
  
- import React, { useState } from "react";
+import React, { useState } from "react";
 import ProgressBar from "./ProgressBar";
+import server_url from '../../next.config'
+import RegisterRecipe from "./RegisterRecipe";
+
+export type UploadFormFile = {
+    file: File,
+    setFile: React.Dispatch<React.SetStateAction<File | null>>
+};
+
+export type UploadFormError = {
+    error: string,
+    setError: React.Dispatch<React.SetStateAction<string | null>>
+};
+
+export type UploadFormState = UploadFormFile & UploadFormError;
+
 
  const UploadForm = () => {
 
@@ -17,7 +32,10 @@ import ProgressBar from "./ProgressBar";
 
         let selected = e.target.files[0];
         if(selected && ImgTypes.includes(selected.type)){
-            setFile(selected);
+            // setFile(selected);
+            // fetch(server_url + "/recipe")
+            // .then(response => response.json())
+            // .then(res => console.log(res))
             setError('');
         }else {
             setFile(null);
@@ -29,13 +47,17 @@ import ProgressBar from "./ProgressBar";
 
     return(
         <form>
-            <input type="file" onChange={changeHandler} />
+            <label id="uploadFormLabel">
+                <input type="file" onChange={changeHandler} />
+                <span id="plusSign"> +</span>
+            </label>
+            
             <div className="output">
-                {/* Only if first param is true, thus second param */}
-                { error && <div className="error">{ error}</div> }
-                { file && <div>{ file.name}</div> }
-                {/* { file && <ProgressBar /> } */}
+                { error && <div className="error">{ error }</div> }
+                { file && <ProgressBar file={file} setFile={setFile}/> }
             </div>
+        
+           
         </form>
     )
  }
