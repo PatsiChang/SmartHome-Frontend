@@ -11,8 +11,8 @@ type RegisterRecipeProps = {
 
 const RegisterRecipe = ({propsTrigger} : RegisterRecipeProps) => {
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSubmit = (form: FormData) => {
+        // e.preventDefault();
         // const formData = new FormData(document.getElementById("registerRecipePopUp") as HTMLFormElement);
         const formData = new FormData();
         formData.append("recipeName", "name");
@@ -32,25 +32,25 @@ const RegisterRecipe = ({propsTrigger} : RegisterRecipeProps) => {
                     <button className="close-btn">close</button>
                 </div>
                 
-                <form id="registerRecipePopUp" onClick={handleSubmit}>
+                <form id="registerRecipePopUp"  action={handleSubmit}>
                     <div>
                         <label htmlFor="recipeName">Recipe Name: </label>
-                        <input type="text" id="recipeName" name="recipeName" value= ""/>
+                        <input type="text" id="recipeName" name="recipeName"/>
                     </div>
 
-                    <label htmlFor="type">Recipe Type: </label>
+                    <span>Recipe Type: </span>
                     <div id="radioBtn">
                         <div>
                             <label htmlFor="breakfast">Breakfast </label>
-                            <input type="radio" id="Breakfast" name="type" value="breakfast"/>
+                            <input type="radio" id="breakfast" name="type"/>
                         </div>
                         <div>
                             <label htmlFor="lunch">Lunch </label>
-                            <input type="radio" id="lunch" name="type" value="lunch"/>
+                            <input type="radio" id="lunch" name="type" />
                         </div>
                         <div>
                             <label htmlFor="dinner">Dinner </label>
-                            <input type="radio" id="dinner" name="type" value="dinner"/>
+                            <input type="radio" id="dinner" name="type"/>
                         </div>
                     </div>
                     
@@ -58,14 +58,14 @@ const RegisterRecipe = ({propsTrigger} : RegisterRecipeProps) => {
                     <label htmlFor="ingredient">Recipe Ingredient: </label>
                     <input type="textfield" id="ingredient" name="ingredient"/>
     
-                    <label htmlFor="cookingSteps">Recipe Steps: </label>
+                    <span>Recipe Steps: </span>
                     <input type="textfield" id="cookingStep1" placeholder=" Step 1"/>
                     <input type="textfield" id="cookingStep2" placeholder=" Step 2"/>
                     <input type="textfield" id="cookingStep3" placeholder=" Step 3"/>
                     <input type="textfield" id="cookingStep4" placeholder=" Step 4"/>
                     <span id="responce"></span>
                     {/* <button id="addStepsBtn">Add Steps</button> */}
-                    <button type="submit" id="submitRecipe">Submit Recipe</button>
+                    <button type="submit" id="submitRecipe" >Submit Recipe</button>
                 </form>
     
             </div>
