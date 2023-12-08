@@ -1,6 +1,7 @@
 body{
     background-color: var(--darkColor);
     height: 100vh;
+    padding: 10px;
     margin: 0 auto;
     max-width: 960px;
 }
@@ -127,6 +128,32 @@ li.pageContent:hover{
     position: absolute;
     right: 4%;
 }
+input[type="textfield"]:focus {
+    outline:auto rgb(184, 119, 119);
+    box-shadow: 0px 0px 5px rgb(217, 117, 117);
+    border:1px solid #9b8383;
+}
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color:rgb(255, 255, 255);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+    background-color: rgb(217, 117, 117);
+    display: inline-block;
+
+    border: 2px solid white;
+}
+
 #radioBtn{
     display: flex;
     justify-content: space-evenly;
@@ -146,6 +173,31 @@ li.pageContent:hover{
     background-color: rgb(155, 145, 145);
     width: 70%;
 }
+
+/* HandleRecipe */
+.recipeList{
+    padding: 5px 0px 5px 0px;
+    /* font-size: 1em; */
+    font-family: 'Poppins-thin', 'arial';
+}
+.recipePreview{
+    display: flex;
+    justify-content: space-between;
+}
+.deleteRecipeBtn{
+    padding: 0% 10px 0% 10px;
+    border: 0.5px solid var(--lighterColor);
+}
+.recipePreview{
+    margin: 0px 0px 5px 0px;
+    background-color: rgb(37, 36, 36);
+}
+.recipePreview:hover{
+    border: 0.5px solid var(--middleColor);
+    background-color: rgb(47, 46, 46);
+    box-shadow: 1px 3px 5px rgb(72, 69, 69);
+}
+
 /* Fonts */
 @font-face {
     font-family: Poppins-Thin;

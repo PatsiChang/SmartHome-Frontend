@@ -1,15 +1,17 @@
 'use client'
 import { error } from "console";
-import React, { ReactComponentElement, ReactPropTypes, useState } from "react";
+import React, { ReactComponentElement, ReactPropTypes, useImperativeHandle, useState } from "react";
 import { render } from "react-dom";
 import handleFormSubmit from '../hooks/FormSubmission'
+import { HomeRecipeState } from "./page";
 
 type RegisterRecipeProps = {
-    propsTrigger: boolean
+    propsTrigger: HomeRecipeState['propsTrigger']
+    setPropsTrigger: HomeRecipeState["setPropsTrigger"];
 }
 
 
-const RegisterRecipe = ({propsTrigger} : RegisterRecipeProps) => {
+const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) => {
 
     const handleSubmit = (form: FormData) => {
         // e.preventDefault();
@@ -22,20 +24,22 @@ const RegisterRecipe = ({propsTrigger} : RegisterRecipeProps) => {
         formData.append("steps", "name");
         // Call the function to handle the form submission with Fetch API
         handleFormSubmit(formData);
+        setPropsTrigger(false);
     };
-    
+
+    const handleCloseBtnOnClick = () => setPropsTrigger(false);
     
         return propsTrigger ? (
 
             <div className="registerRecipe">
                 <div className="registerRecipeCloseBtn">
-                    <button className="close-btn">close</button>
+                    <button className="close-btn" onClick={handleCloseBtnOnClick}>close</button>
                 </div>
                 
-                <form id="registerRecipePopUp"  action={handleSubmit}>
+                <form id="registerRecipePopUp" action={handleSubmit}>
                     <div>
                         <label htmlFor="recipeName">Recipe Name: </label>
-                        <input type="text" id="recipeName" name="recipeName"/>
+                        <input type="textfield" id="recipeName" name="recipeName"/>
                     </div>
 
                     <span>Recipe Type: </span>
