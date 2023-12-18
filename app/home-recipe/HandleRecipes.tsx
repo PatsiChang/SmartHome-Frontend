@@ -12,19 +12,19 @@ type DeleteRecipeBtnOnClickHandler = (recipeName: string) => React.MouseEventHan
 
 const HandleRecipe = () => {
 
-    const { recipeList, fetchData } = useRecipeData({action: ACTION.get});
+    const { recipeList, getData, deleteData } = useRecipeData();
     console.log("HandleRecipe recipeList", recipeList)
 
     const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipeName) => (event) => {
         console.log(recipeName);
-        fetchData({action: ACTION.delete, recipeName});
-        fetchData({action: ACTION.get, recipeName});
+        deleteData({recipeName});
+        getData({recipeName});
     }
 
     return (
         <div className="recipeList">
             {recipeList.map((recipe) => (
-                <div className="recipePreview" key = {recipe.recipeName}>
+                <div className="recipePreview" key = {recipe.recipeID}>
                 <div>
                     <h2>Recipe Name: { recipe.recipeName }</h2>
                     <h3>Recipe Type: { recipe.type }</h3>

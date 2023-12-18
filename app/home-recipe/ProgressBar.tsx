@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import useStorage from '../hooks/useStorage';
 import '../home-recipe/homeRecipe.css';
-import { projectFireStore } from '../firebase/config';
-
-import { collection } from 'firebase/firestore';
-import { UploadFormError, UploadFormState } from './UploadForm';
+import { UploadFormState, UploadFormError } from './RegisterRecipe';
 
 
 type ProgressBarProps = {
