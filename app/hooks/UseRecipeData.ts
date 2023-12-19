@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Form } from '../home-recipe/RegisterRecipe';
+import { Ingredient } from '../home-recipe/IngredientList';
 
-// import RegisterRecipe from '../home-recipe/RegisterRecipe'
 
 export type GetRecipeType = {
   recipeList: Array<ReceipeData>
@@ -9,12 +9,12 @@ export type GetRecipeType = {
 };
 
 export type ReceipeData = {
-  recipeID?: string
-  recipeName: string
-  type: string
-  ingredient: any
-  steps: string
-  imgURL?: string
+  recipeID?: string;
+  recipeName: string;
+  type: string;
+  ingredient: Map<string, string>;
+  steps: string;
+  imgURL?: string;
 };
 
 export enum ACTION {
@@ -36,15 +36,11 @@ const useRecipeData = ({ recipeName, form } : Props = {}) => {
 
   const fetchData = (action: ACTION) => ({ recipeName, form }: Props) => {
     try {
-      // console.log("the form to be submitted hook:", Array.from(formData.entries()));
-      // console.log("Json format to be submitted hook", JSON.stringify(formData));
       // const plainFormData: { [key: string]: FormDataEntryValue } = {};
       // formData.forEach((value: FormDataEntryValue, key: string) => {
       //   plainFormData[key] = value;
       // });
-    
-      // console.log('Plain Form Data:', plainFormData);
-    
+      
       if(action === ACTION.get) {
         fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'GET',
@@ -68,6 +64,7 @@ const useRecipeData = ({ recipeName, form } : Props = {}) => {
         })
       }else if(action === ACTION.post) {
         console.log("FrontEnd Posted")
+        console.log("Fetch API BODY: ", form)
         fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'POST',
           headers: {

@@ -26,9 +26,9 @@ const HandleRecipe = () => {
             {recipeList.map((recipe) => (
                 <div className="recipePreview" key = {recipe.recipeID}>
                 <div>
+                    {/* <img src={recipe.imgURL} width="200px"/> */}
                     <h2>Recipe Name: { recipe.recipeName }</h2>
                     <h3>Recipe Type: { recipe.type }</h3>
-                    {/* Todo: Loop through the ingredient map */}
                     <p>Steps: { recipe.steps }</p>
                 </div>
                 <div className="deleteRecipe">

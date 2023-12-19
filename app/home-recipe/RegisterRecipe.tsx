@@ -4,7 +4,7 @@ import { HomeRecipeState } from "./page";
 import ProgressBar from "./ProgressBar";
 import useRecipeData, { ACTION, GetRecipeType } from "../hooks/UseRecipeData";
 import { newRecipeValication } from "./utils";
-import IngredientList from "./IngredientList";
+import IngredientList, { Ingredient } from "./IngredientList";
 
 //Types
 type RegisterRecipeProps = {
@@ -24,8 +24,8 @@ type onchangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export type Form = {
     recipeName : string | null;
-    selectedOptionRadio : RecipeTypes | null;
-    ingredientMap  : Map<string, string> | null;
+    type : RecipeTypes | null;
+    ingredient  : Map<string, string> | null;
     steps : string | null;
 }
 
@@ -47,8 +47,8 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
     const[error, setError] = useState<string | null>(null);
     const[imgState, setImgState] = useState<string | null>("Add Recipe Icon");
     const[selectedOptionRadio, setSelectedOptionRadio] = useState<RecipeTypes>(RecipeTypes.BREAKFAST);
-    const ingredientRef = useRef <HTMLInputElement> (null);
-    const ingredientAmountRef = useRef <HTMLInputElement> (null);
+    const[ingredientInput, setIngredientInput] = useState<Ingredient[]>([{ id: '', ingredientName: '', ingredientAmount: '' }]);
+
 
     const { postData }  = useRecipeData();
 
@@ -81,6 +81,16 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
             // formData.append("ingredient", formData.get("ingredient"));
         }
     }
+    //Dump Ingredient Objects into Map
+    const createIngredientMap = () => {
+        const ingredient = new Map<string, string>();
+        ingredientInput.forEach((ingredientItems) => {
+            ingredient.set(ingredientItems.ingredientName, ingredientItems.ingredientAmount);
+        })
+        return ingredient;
+    }
+
+
 
     const getFormValue = (formData: FormData) => (key: string) => {
         const field = formData.get(key);
@@ -98,13 +108,15 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
         const { currentTarget } = event;
         const formData = new FormData(currentTarget);
         const recipeName = getFormValue(formData)("recipeName") as string;
+        const type = selectedOptionRadio;
+        const ingredient = createIngredientMap();
         const steps = getFormValue(formData)("steps") as string;
 
         const form: Form = {
             recipeName, 
-            selectedOptionRadio, 
-            ingredientMap, 
-            steps
+            type, 
+            ingredient, 
+            steps,
         }
         postData({ form });
         setPropsTrigger(false);
@@ -120,7 +132,7 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
                 
                 <form id="registerRecipePopUp" onSubmit={handleSubmit}>
                     <label id="addRecipeIcons">
-                        <input type="file" onChange={changeHandler} />
+                        <input type="file" name="recipeImg" onChange={changeHandler} />
                         <span id="addRecipeIcon"> {imgState} </span>
                     </label>
                     <div className="output">
@@ -153,9 +165,9 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
                             onChange={handleRadioChange}/>
                         </div>
                     </div>
-                    <div><IngredientList /></div>
+                    <div><IngredientList ingredientInput={ingredientInput} setIngredientInput={setIngredientInput}/></div>
                     <span>Recipe Steps: </span>
-                    <input type="textfield" id="steps" placeholder=" Step 1"/>
+                    <input type="textfield" id="steps" name="steps" placeholder=" Steps"/>
                     <span id="responce"></span>
                     {/* <button id="addStepsBtn">Add Steps</button> */}
                     <button type="submit" id="submitRecipe">Submit Recipe</button>
