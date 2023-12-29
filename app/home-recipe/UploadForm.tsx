@@ -4,15 +4,15 @@
 // import server_url from '../../next.config'
 // import RegisterRecipe from "./RegisterRecipe";
 
-export type UploadFormFile = {
-    file: File,
-    setFile: React.Dispatch<React.SetStateAction<File | null>>
-};
+// export type UploadFormFile = {
+//     file: File,
+//     setFile: React.Dispatch<React.SetStateAction<File | null>>
+// };
 
-export type UploadFormError = {
-    error: string,
-    setError: React.Dispatch<React.SetStateAction<string | null>>
-};
+// export type UploadFormError = {
+//     error: string,
+//     setError: React.Dispatch<React.SetStateAction<string | null>>
+// };
 
 // export type UploadFormState = UploadFormFile & UploadFormError;
 

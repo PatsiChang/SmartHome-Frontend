@@ -98,7 +98,7 @@ li.pageContent:hover{
     grid-gap: 40px;
 }
 .img-wrap{
-    overflow: hidden;
+    /* overflow: hidden; */
     height: 0;
     padding: 50% 0;
     position: relative;
@@ -125,7 +125,16 @@ li.pageContent:hover{
     width: 75%;
     max-height:90%;
     border-radius: 10px;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+.registerRecipe::-webkit-scrollbar {
+    display: none;
+}
+#registerRecipePopUp{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
 }
 .close-btn{
     color: var(--darkColor);
@@ -180,7 +189,9 @@ input[type='radio']:checked:after {
 #ingredientListBody{
     width: 100%;
 }
-
+.className input:focus + div {
+    background-color: #9b8383 ;
+}
 #ingredientParts{
     display: flex;
     justify-content:space-around;
@@ -202,16 +213,7 @@ input[type='radio']:checked:after {
     border: 1px solid black;
     border-radius: 5px;
 }
-#registerRecipePopUp{
-    display: flex;
-    justify-content: flex-start;
-    overflow: hidden;
-    flex-direction: column;
-    gap: 10px;
-    height: auto;
-    width: auto;
-    color: var(--darkColor);
-}
+
 #addStepsBtn{
     background-color: rgb(155, 145, 145);
     width: 70%;

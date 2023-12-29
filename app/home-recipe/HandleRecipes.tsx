@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useRecipeData, { ACTION, GetRecipeType } from "../hooks/UseRecipeData";
 
 
-type HandleRecipePropsList = {
-    recipeList: GetRecipeType ['recipeList']
-    setRecipeList: GetRecipeType ['setRecipeList']
-    
-}
-
-type DeleteRecipeBtnOnClickHandler = (recipeName: string) => React.MouseEventHandler<HTMLButtonElement>
+type DeleteRecipeBtnOnClickHandler = (recipeID: string) => React.MouseEventHandler<HTMLButtonElement>
 
 const HandleRecipe = () => {
 
-    const { recipeList, getData, deleteData } = useRecipeData();
-    console.log("HandleRecipe recipeList", recipeList)
+    const { recipeList, deleteData } = useRecipeData();
 
-    const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipeName) => (event) => {
-        console.log(recipeName);
-        deleteData({recipeName});
-        getData({recipeName});
+    const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipeID) => (event) => {
+        deleteData({recipeIDTMP: recipeID});
+        window.location.reload();
+    }
+
+    const handleRecipeIcons = (recipeID : string | undefined) => {
+        if (recipeID != null || recipeID != undefined){
+            return `http://localhost:8080/${recipeID}.jpg`;
+        }else{
+            return `http://localhost:8080/recipeIconAlt.jpg`;
+        }
     }
 
     return (
@@ -26,13 +26,24 @@ const HandleRecipe = () => {
             {recipeList.map((recipe) => (
                 <div className="recipePreview" key = {recipe.recipeID}>
                 <div>
+                    <img src={handleRecipeIcons(recipe.imgURL)} alt={'recipeIcon'}  width="150px"/>
+                </div>    
+                <div>
                     {/* <img src={recipe.imgURL} width="200px"/> */}
-                    <h2>Recipe Name: { recipe.recipeName }</h2>
-                    <h3>Recipe Type: { recipe.type }</h3>
-                    <p>Steps: { recipe.steps }</p>
+                    <h2>Recipe Name: &nbsp;&nbsp;{ recipe.recipeName }</h2>
+
+                    {/* { typeof recipe.ingredient === 'object' &&
+                        Object.entries(recipe.ingredient).map(([key, value])=>(
+                        <div key={key}>
+                            <div> Ingredient: {key} </div>
+                        </div>
+                    ))} */}
+                    
+                    <h3>Recipe Type: &nbsp;&nbsp;{ recipe.type }</h3>
+                    <p>Steps: &nbsp;&nbsp;{ recipe.steps }</p>
                 </div>
                 <div className="deleteRecipe">
-                    <button className="deleteRecipeBtn" onClick={deleteRecipeBtnOnClickHandler(recipe.recipeName)}>
+                    <button className="deleteRecipeBtn" onClick={deleteRecipeBtnOnClickHandler(recipe.recipeID as string)}>
                         X
                     </button>
                 </div>

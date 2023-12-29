@@ -18,16 +18,14 @@ const IngredientList = ({ ingredientInput, setIngredientInput }: IngredientListP
 
     //Add new Input Fields
     const addNewIngredientInputFields : MouseEventHandler<HTMLButtonElement> = (e) => {
-        setIngredientInput([...ingredientInput, { id: uuidv4(), ingredientName: '', ingredientAmount: '' }]);
+        setIngredientInput( ( previousInput ) => [...previousInput, { id: uuidv4(), ingredientName: '', ingredientAmount: '' }]);
     }
 
     //Change IngredientState with input fields Index
     const handleInputChange = (idx: number, field: string, value: string) => {
         const newIngredientInput = [...ingredientInput];
         newIngredientInput[idx][field] = value;
-      
         setIngredientInput(newIngredientInput);
-        console.log("After Adding into the array", ingredientInput)
     };
 
     //Delete Row
@@ -44,16 +42,16 @@ const IngredientList = ({ ingredientInput, setIngredientInput }: IngredientListP
                 ingredientInput.map((ingredient, idx) => {
                     return (
                         <div id="ingredientParts" key= {ingredient.id}>
-                            <div id="ingredientSubLabel" >
+                            <div className="ingredientSubLabel" >
                                 { idx === 0 && <div>Ingredient </div> }
                                 <div>
-                                    <input type="textfield" value = {ingredient.ingredientName} onChange={(e) => handleInputChange(idx, 'ingredientName', e.target.value)} />
+                                    <input type="text" value = {ingredient.ingredientName} onChange={(e) => handleInputChange(idx, 'ingredientName', e.target.value)} />
                                 </div>
                             </div>
-                            <div id="ingredientSubLabel" >
-                                { idx === 0 && <div>Amount </div> }
+                            <div className="ingredientSubLabel" >
+                                { idx === 0 && <div >Amount </div> }
                                 <div>
-                                    <input type="textfield" value = {ingredient.ingredientAmount}  onChange={(e) => handleInputChange(idx, 'ingredientAmount', e.target.value)} />
+                                    <input type="text" value = {ingredient.ingredientAmount}  onChange={(e) => handleInputChange(idx, 'ingredientAmount', e.target.value)} />
                                 </div>
                             </div>
                             <div id="deleteIngredientRow" onClick={ () => deleteRow(ingredient.id) }>

@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Form } from '../home-recipe/RegisterRecipe';
 import { Ingredient } from '../home-recipe/IngredientList';
 
-
 export type GetRecipeType = {
   recipeList: Array<ReceipeData>
   setRecipeList: Dispatch<SetStateAction<Array<ReceipeData>>>
@@ -12,7 +11,7 @@ export type ReceipeData = {
   recipeID?: string;
   recipeName: string;
   type: string;
-  ingredient: Map<string, string>;
+  ingredient: Ingredient[];
   steps: string;
   imgURL?: string;
 };
@@ -24,9 +23,12 @@ export enum ACTION {
   delete = "DELETE",
 } 
 
+
 type Props = {
   recipeName? : string;
   form? : Form
+  recipeIcon? : File | Blob;
+  recipeIDTMP?: string | Blob
 }
 
 
@@ -34,15 +36,18 @@ const useRecipeData = ({ recipeName, form } : Props = {}) => {
   
   const [recipeList, setRecipeList] = useState<Array<ReceipeData>>([]);
 
-  const fetchData = (action: ACTION) => ({ recipeName, form }: Props) => {
+  const fetchData = (action: ACTION) => async ({ recipeName, form, recipeIDTMP, recipeIcon }: Props) => {
     try {
-      // const plainFormData: { [key: string]: FormDataEntryValue } = {};
-      // formData.forEach((value: FormDataEntryValue, key: string) => {
-      //   plainFormData[key] = value;
-      // });
-      
+      const recipeID = recipeIDTMP as string;
+      const formData = new FormData();
+      formData.append("recipeID", recipeID as string);
+      formData.append("recipeIcon", recipeIcon as Blob);
+      console.log("Check outside post:", form?.recipeName);
+      console.log("Check outside post:", form?.steps);
+      console.log("Check outside post:", form?.ingredient);
+
       if(action === ACTION.get) {
-        fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
+        await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -51,27 +56,42 @@ const useRecipeData = ({ recipeName, form } : Props = {}) => {
         })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Afterfetching data: " + JSON.stringify(data))
           setRecipeList(data)
         })
       }else if(action === ACTION.delete) {
         fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'DELETE',
-          body: recipeName
+          headers: {
+            "Content-Type": 'application/json'
+          },
+          body: JSON.stringify(recipeID),
         })
-        .then((data) => {
-          console.log(JSON.stringify(data) + "deleted ")
-        })
+          await getData({recipeName: "GetData"});
       }else if(action === ACTION.post) {
-        console.log("FrontEnd Posted")
-        console.log("Fetch API BODY: ", form)
-        fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'POST',
           headers: {
             "Content-Type": 'application/json'
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify(form)
+            // ...form,
+            // ingredient: Array.from(form?.ingredient.entries())
+          // }),
         })
+        
+      const recipeID = await response.json();
+      return recipeID;
+
+      }else if (action === ACTION.put) {
+        if (!recipeID) throw new Error("No recipeID!");
+        fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe/addRecipeIcon", {
+          method: 'PUT',
+          // headers: {
+          //   "Content-Type": 'application/json'
+          // },
+          body: formData,
+        })
+
       }
   
     } catch (error) {
@@ -82,17 +102,15 @@ const useRecipeData = ({ recipeName, form } : Props = {}) => {
 
   const postData = fetchData(ACTION.post);
   const getData = fetchData(ACTION.get);
-  const updateData = fetchData(ACTION.get);
-  const deleteData = fetchData(ACTION.get);
+  const updateRecipeIcon = fetchData(ACTION.put);
+  const updateData = fetchData(ACTION.put);
+  const deleteData = fetchData(ACTION.delete);
   
-  console.log("useRecipeData recipeList", recipeList)
-  console.log("useRecipeData {recipeName, formData }", { recipeName, form })
   useEffect(() => {
-    console.log("useRecipeData useEffect recipeList", recipeList);
-    getData({recipeName, form });
+    getData({recipeName: "GetData"});
   }, []);
 
-  return { recipeList, fetchData, postData, getData, updateData, deleteData }
+  return { recipeList, fetchData, postData, getData, updateData, deleteData, updateRecipeIcon}
 
 }
 

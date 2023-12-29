@@ -25,9 +25,11 @@ type onchangeEvent = React.ChangeEvent<HTMLInputElement>;
 export type Form = {
     recipeName : string | null;
     type : RecipeTypes | null;
-    ingredient  : Map<string, string> | null;
+    ingredient  : Ingredient[]| null;
     steps : string | null;
+   
 }
+// imgURL: File | null;
 
 //Restrict File Types
 const ImgTypes = ['image/png', 'image/jpeg']
@@ -43,20 +45,19 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
 
     //useState Hooks
     const[imgUrl, setImgUrl] = useState<string | null>(null);
+    const[imgBytes, setImgBytes] = useState<File | null>(null);
     const[file, setFile] = useState<File | null>(null);
     const[error, setError] = useState<string | null>(null);
     const[imgState, setImgState] = useState<string | null>("Add Recipe Icon");
     const[selectedOptionRadio, setSelectedOptionRadio] = useState<RecipeTypes>(RecipeTypes.BREAKFAST);
     const[ingredientInput, setIngredientInput] = useState<Ingredient[]>([{ id: '', ingredientName: '', ingredientAmount: '' }]);
 
-
-    const { postData }  = useRecipeData();
+    const { postData, updateRecipeIcon }  = useRecipeData();
 
     //Set Radio Button Types
     const handleRadioChange = (event: onchangeEvent) => {
         const { value } = event.target;
-        setSelectedOptionRadio(value as RecipeTypes) 
-        console.log(selectedOptionRadio);
+        setSelectedOptionRadio(value as RecipeTypes); 
     };
 
     //Upload Recipe Image
@@ -64,10 +65,11 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
         if (!e.target.files) return;
         let selected = e.target.files[0];
         if(selected && ImgTypes.includes(selected.type)){
-            setFile(selected);
-            setImgUrl(URL.createObjectURL(selected));
-            setImgState("Change Icon");
-            setError('');
+                setImgBytes(selected)
+                setFile(selected);
+                setImgUrl(URL.createObjectURL(selected));
+                setImgState("Change Icon");
+                setError('');
         }else {
             setFile(null);
             setError('Not an image file (png or jpeg)');
@@ -83,14 +85,13 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
     }
     //Dump Ingredient Objects into Map
     const createIngredientMap = () => {
-        const ingredient = new Map<string, string>();
-        ingredientInput.forEach((ingredientItems) => {
-            ingredient.set(ingredientItems.ingredientName, ingredientItems.ingredientAmount);
-        })
-        return ingredient;
+        // const ingredient = new Map<string, string>();
+        // ingredientInput.forEach((ingredientItems) => {
+        //     ingredient.set(ingredientItems.ingredientName, ingredientItems.ingredientAmount);
+        // })
+        // const ingredientObject = Object.fromEntries(ingredient.entries())
+        // return ingredientObject;
     }
-
-
 
     const getFormValue = (formData: FormData) => (key: string) => {
         const field = formData.get(key);
@@ -100,26 +101,35 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
         return field;
     };
 
-        
-    const handleSubmit: FormEventHandler<HTMLFormElement> = (event) =>{
+    const uploadForm = async (form: Form) => {
+        const recipeID: string = await postData({ form: form });
+        return recipeID;
+    }
+
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) =>{
         //Prevent browser reload content
         event.preventDefault();
-        const ingredientMap = new Map();
         const { currentTarget } = event;
         const formData = new FormData(currentTarget);
         const recipeName = getFormValue(formData)("recipeName") as string;
         const type = selectedOptionRadio;
-        const ingredient = createIngredientMap();
+        // const ingredient = createIngredientMap();
+        const ingredient = ingredientInput;
         const steps = getFormValue(formData)("steps") as string;
-
+        const imgURL = imgBytes as Blob;
+     
         const form: Form = {
             recipeName, 
             type, 
             ingredient, 
             steps,
         }
-        postData({ form });
+
+        // TODO: convert this into await
+        const recipeID = await uploadForm(form);
+        updateRecipeIcon({recipeIDTMP: recipeID, recipeIcon: imgURL});
         setPropsTrigger(false);
+        //  window.location.reload();
     };
 
     const handleCloseBtnOnClick = () => setPropsTrigger(false);

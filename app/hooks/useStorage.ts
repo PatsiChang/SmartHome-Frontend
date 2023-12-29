@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getCollection, projectFireStore, projectStorage } from '../firebase/config';
+import { projectStorage } from '../firebase/config';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { collection, addDoc, doc, setDoc } from "firebase/firestore"; 
 
 const useStorage = (file: File) => {
     //Progress of the Upload
@@ -16,7 +15,7 @@ const useStorage = (file: File) => {
         const storageRef = ref(projectStorage, file.name);
         //Firebase auto create image folder if not exist
         // const collectionRef =  collection(projectFireStore, 'images');
-        const collectionRef = getCollection('images');
+        // const collectionRef = getCollection('images');
 
         const uploadTask = uploadBytesResumable(storageRef, file);
         // Called any time the state changes
