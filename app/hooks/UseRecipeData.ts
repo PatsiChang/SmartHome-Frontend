@@ -23,28 +23,25 @@ export enum ACTION {
   delete = "DELETE",
 } 
 
-
 type Props = {
   recipeName? : string;
   form? : Form
   recipeIcon? : File | Blob;
-  recipeIDTMP?: string | Blob
+  recipeIDTMP?: string | null
 }
 
 
-const useRecipeData = ({ recipeName, form } : Props = {}) => {
+const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
   
   const [recipeList, setRecipeList] = useState<Array<ReceipeData>>([]);
 
   const fetchData = (action: ACTION) => async ({ recipeName, form, recipeIDTMP, recipeIcon }: Props) => {
+
     try {
       const recipeID = recipeIDTMP as string;
       const formData = new FormData();
       formData.append("recipeID", recipeID as string);
       formData.append("recipeIcon", recipeIcon as Blob);
-      console.log("Check outside post:", form?.recipeName);
-      console.log("Check outside post:", form?.steps);
-      console.log("Check outside post:", form?.ingredient);
 
       if(action === ACTION.get) {
         await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
@@ -56,7 +53,8 @@ const useRecipeData = ({ recipeName, form } : Props = {}) => {
         })
         .then((response) => response.json())
         .then((data) => {
-          setRecipeList(data)
+          if(data !== null && data !== undefined && data !== "")
+            setRecipeList(data)
         })
       }else if(action === ACTION.delete) {
         fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {

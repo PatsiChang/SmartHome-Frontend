@@ -3,8 +3,10 @@ import React, { useState, FormEventHandler, useRef } from "react";
 import { HomeRecipeState } from "./page";
 import ProgressBar from "./ProgressBar";
 import useRecipeData, { ACTION, GetRecipeType } from "../hooks/UseRecipeData";
-import { newRecipeValication } from "./utils";
+// import { newRecipeValidation } from "./utils";
 import IngredientList, { Ingredient } from "./IngredientList";
+import { newRecipeValidation } from "./utils";
+// import { newRecipeValidation } from "./utils";
 
 //Types
 type RegisterRecipeProps = {
@@ -40,7 +42,6 @@ enum RecipeTypes {
     LUNCH = "LUNCH",
     DINNER = "DINNER",
 }
-
 const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) => {
 
     //useState Hooks
@@ -48,11 +49,12 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
     const[imgBytes, setImgBytes] = useState<File | null>(null);
     const[file, setFile] = useState<File | null>(null);
     const[error, setError] = useState<string | null>(null);
+    const[errorCode, setErrorCode] = useState<string | null>("");
     const[imgState, setImgState] = useState<string | null>("Add Recipe Icon");
     const[selectedOptionRadio, setSelectedOptionRadio] = useState<RecipeTypes>(RecipeTypes.BREAKFAST);
     const[ingredientInput, setIngredientInput] = useState<Ingredient[]>([{ id: '', ingredientName: '', ingredientAmount: '' }]);
 
-    const { postData, updateRecipeIcon }  = useRecipeData();
+    const { postData, updateRecipeIcon, recipeList }  = useRecipeData();
 
     //Set Radio Button Types
     const handleRadioChange = (event: onchangeEvent) => {
@@ -77,21 +79,6 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
     }
 
     // useful library: lodash , yui for form
-    const validateFormData = (formData: FormData) => {
-        newRecipeValication(formData);
-        if (formData.get("ingredient")) {
-            // formData.append("ingredient", formData.get("ingredient"));
-        }
-    }
-    //Dump Ingredient Objects into Map
-    const createIngredientMap = () => {
-        // const ingredient = new Map<string, string>();
-        // ingredientInput.forEach((ingredientItems) => {
-        //     ingredient.set(ingredientItems.ingredientName, ingredientItems.ingredientAmount);
-        // })
-        // const ingredientObject = Object.fromEntries(ingredient.entries())
-        // return ingredientObject;
-    }
 
     const getFormValue = (formData: FormData) => (key: string) => {
         const field = formData.get(key);
@@ -102,8 +89,23 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
     };
 
     const uploadForm = async (form: Form) => {
-        const recipeID: string = await postData({ form: form });
-        return recipeID;
+        // const recipeID: string = await postData({ form: form });
+        //     return recipeID;
+        console.log("Before 1:",recipeList);
+        if (!newRecipeValidation({form, recipeList})){
+            setErrorCode("");
+            console.log(errorCode);
+            console.log("Before 2:",recipeList);
+            const recipeID: string = await postData({ form: form });
+            setPropsTrigger(false);
+            return recipeID;
+        }else{
+            console.log("Before 3:",recipeList);
+            console.log("Tested true");
+            setErrorCode("Recipe Name Already Exist!");
+            console.log("After Error Occur:",errorCode);
+            setPropsTrigger(true);
+        }
     }
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) =>{
@@ -125,10 +127,12 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
             steps,
         }
 
-        // TODO: convert this into await
         const recipeID = await uploadForm(form);
-        updateRecipeIcon({recipeIDTMP: recipeID, recipeIcon: imgURL});
-        setPropsTrigger(false);
+        if(recipeID!== null && recipeID !== undefined){
+            updateRecipeIcon({recipeIDTMP: recipeID, recipeIcon: imgURL});
+        }
+       
+        
         //  window.location.reload();
     };
 
@@ -181,6 +185,7 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
                     <span id="responce"></span>
                     {/* <button id="addStepsBtn">Add Steps</button> */}
                     <button type="submit" id="submitRecipe">Submit Recipe</button>
+                    <div id="errorCode">{errorCode}</div>
                 </form>
     
             </div>

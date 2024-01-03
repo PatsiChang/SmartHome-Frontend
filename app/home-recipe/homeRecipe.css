@@ -54,7 +54,7 @@ li.pageContent:hover{
 }
 #sashimiDemo{
     margin-top: 20px;
-    width: 60vw;
+    width: 400px;
 }
 /* Middle Row */
 .middleRow{
@@ -217,6 +217,30 @@ input[type='radio']:checked:after {
 #addStepsBtn{
     background-color: rgb(155, 145, 145);
     width: 70%;
+}
+
+/* Detailed Recipe */
+#recipeDetailsParent{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+.detailedRecipe{
+    padding: 10px 20px 10px 20px;
+    margin: 0px 0px 0px 10px;
+    width: 70%;
+    height: 50%;
+    position: absolute;
+    background-color: var(--lighterColor);
+    opacity: 0.95;
+    max-height:90%;
+    border-radius: 10px;
+    color: black
+    /* overflow-y: scroll; */
+    
+}
+.detailedRecipe::-webkit-scrollbar {
+    display: none;
 }
 
 /* HandleRecipe */

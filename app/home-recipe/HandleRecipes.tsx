@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useRecipeData, { ACTION, GetRecipeType } from "../hooks/UseRecipeData";
-
+// import RecipeDetails from "./RecipeDetails";
 
 type DeleteRecipeBtnOnClickHandler = (recipeID: string) => React.MouseEventHandler<HTMLButtonElement>
 
@@ -23,6 +23,9 @@ const HandleRecipe = () => {
 
     return (
         <div className="recipeList">
+            {/* <div id="recipeDetailsParent">
+                 <div><RecipeDetails recipe={ recipeList.at(0) } /></div>
+            </div> */}
             {recipeList.map((recipe) => (
                 <div className="recipePreview" key = {recipe.recipeID}>
                 <div>
@@ -31,14 +34,15 @@ const HandleRecipe = () => {
                 <div>
                     {/* <img src={recipe.imgURL} width="200px"/> */}
                     <h2>Recipe Name: &nbsp;&nbsp;{ recipe.recipeName }</h2>
-
-                    {/* { typeof recipe.ingredient === 'object' &&
-                        Object.entries(recipe.ingredient).map(([key, value])=>(
-                        <div key={key}>
-                            <div> Ingredient: {key} </div>
-                        </div>
-                    ))} */}
-                    
+                    <div> Ingredient: </div>
+                    { recipe.ingredient.map(( ingredient, index )=>{
+                        return(
+                            <div key={ index }>
+                                <div> {ingredient.ingredientName} </div>
+                            </div>
+                        )
+                    })
+                    }
                     <h3>Recipe Type: &nbsp;&nbsp;{ recipe.type }</h3>
                     <p>Steps: &nbsp;&nbsp;{ recipe.steps }</p>
                 </div>

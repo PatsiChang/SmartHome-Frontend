@@ -8,6 +8,7 @@ import RegisterRecipe from './RegisterRecipe';
 import { Dispatch, SetStateAction, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
+// import RecipeDetails from './RecipeDetails';
 
 export type HomeRecipeState = {
   propsTrigger: boolean;
@@ -32,6 +33,9 @@ function HomeRecipe() {
       <div className='createNewRecipe'>
         <button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe </button>
       </div>
+      {/* <div id="recipeDetailsParent">
+        <div><RecipeDetails recipe={ null } /></div>
+      </div> */}
       <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} /></div>
       <div><HandleRecipe /></div>
       <div className='imgSliderContainer'><ImgSlider /></div>
