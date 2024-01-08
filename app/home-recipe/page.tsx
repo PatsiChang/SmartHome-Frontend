@@ -33,14 +33,10 @@ function HomeRecipe() {
       <div className='createNewRecipe'>
         <button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe </button>
       </div>
-      {/* <div id="recipeDetailsParent">
-        <div><RecipeDetails recipe={ null } /></div>
-      </div> */}
       <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} /></div>
       <div><HandleRecipe /></div>
       <div className='imgSliderContainer'><ImgSlider /></div>
       <div><ImageGrid /></div>
-     
     </main>
   
   )

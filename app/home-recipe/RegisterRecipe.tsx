@@ -41,6 +41,8 @@ enum RecipeTypes {
     BRUNCH = "BRUNCH",
     LUNCH = "LUNCH",
     DINNER = "DINNER",
+    DESSERT = "DESSERT",
+
 }
 const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) => {
 
@@ -91,19 +93,13 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
     const uploadForm = async (form: Form) => {
         // const recipeID: string = await postData({ form: form });
         //     return recipeID;
-        console.log("Before 1:",recipeList);
         if (!newRecipeValidation({form, recipeList})){
             setErrorCode("");
-            console.log(errorCode);
-            console.log("Before 2:",recipeList);
             const recipeID: string = await postData({ form: form });
             setPropsTrigger(false);
             return recipeID;
         }else{
-            console.log("Before 3:",recipeList);
-            console.log("Tested true");
             setErrorCode("Recipe Name Already Exist!");
-            console.log("After Error Occur:",errorCode);
             setPropsTrigger(true);
         }
     }
@@ -145,7 +141,7 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
                 </div>
                 
                 <form id="registerRecipePopUp" onSubmit={handleSubmit}>
-                    <label id="addRecipeIcons">
+                    <label id="addRecipeIcons" >
                         <input type="file" name="recipeImg" onChange={changeHandler} />
                         <span id="addRecipeIcon"> {imgState} </span>
                     </label>
@@ -176,6 +172,12 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
                             <label htmlFor="dinner">Dinner </label>
                             <input type="radio" id="dinner" value={RecipeTypes.DINNER}
                             checked = { selectedOptionRadio === RecipeTypes.DINNER }
+                            onChange={handleRadioChange}/>
+                        </div>
+                        <div>
+                            <label htmlFor="dessert">Dessert </label>
+                            <input type="radio" id="dessert" value={RecipeTypes.DESSERT}
+                            checked = { selectedOptionRadio === RecipeTypes.DESSERT }
                             onChange={handleRadioChange}/>
                         </div>
                     </div>

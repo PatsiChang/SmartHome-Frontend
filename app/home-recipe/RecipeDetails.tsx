@@ -1,36 +1,54 @@
 // import useRecipeData, { ReceipeData } from "../hooks/UseRecipeData";
 
-import { ReceipeData } from "../hooks/UseRecipeData";
+import { useEffect } from "react";
+import useRecipeData, { ReceipeData } from "../hooks/UseRecipeData";
+import { CloseRecipeDetails } from "./HandleRecipes";
 
-const RecipeDetails = ({recipe} : {recipe: ReceipeData | undefined}) => {
-    
-
-    // const { recipeList } = useRecipeData();
+const RecipeDetails = ({recipe, closeRecipeDetails} : {recipe: ReceipeData | null; closeRecipeDetails: CloseRecipeDetails}) => {
 
     return recipe? (
         <div className="detailedRecipe">
-                <div key = {recipe.recipeID}>
-                {/* <div>
-                    <img src={handleRecipeIcons(recipe.imgURL)} alt={'recipeIcon'}  width="150px"/>
-                </div>     */}
+            <div id="closeDetailedRecipeBtn">
+                <button onClick={closeRecipeDetails}> close </button>
+            </div>
+            <div key = {recipe.recipeID}>
+                <div id="detailedRecipeUpperRow">
+                    <img src={`http://localhost:8080/${recipe.recipeID}.jpg`} alt={'recipeIcon'}  width="300px"/>
+                    <div>{ recipe.recipeName }</div>
+                </div> 
                 <div>
-                    {/* <img src={recipe.imgURL} width="200px"/> */}
-                    <h2>Recipe Name: &nbsp;&nbsp;{ recipe.recipeName }</h2>
-                    <div> Ingredient: </div>
-                    { recipe.ingredient.map(( ingredient, index )=>{
-                        return(
-                            <div key={ index }>
-                                <div> {ingredient.ingredientName} </div>
+                    <div id="ingredientRow">
+                        <div> Ingredient: 
+                            <div className="ingredientName">
+                                { recipe.ingredient.map(( ingredient, index )=>{
+                                    return(
+                                        <div key={ index }>
+                                            <div> {ingredient.ingredientName} </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        )
-                    })
-                    }
-                    <h3>Recipe Type: &nbsp;&nbsp;{ recipe.type }</h3>
-                    <p>Steps: &nbsp;&nbsp;{ recipe.steps }</p>
-                </div>
-                </div>
+                        </div>
+                       
+                        <div> Amount: 
+                            <div className="ingredientName">
+                                { recipe.ingredient.map(( ingredient, index )=>{
+                                    return(
+                                        <div key={ index }>
+                                            <div> {ingredient.ingredientAmount} </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                    <p>{ recipe.steps }</p>
+                </div>   
+            </div>
         </div>
     ) : <></>;
+
+
 
 }
 

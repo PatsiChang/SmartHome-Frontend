@@ -25,7 +25,13 @@ const IngredientList = ({ ingredientInput, setIngredientInput }: IngredientListP
     const handleInputChange = (idx: number, field: string, value: string) => {
         const newIngredientInput = [...ingredientInput];
         newIngredientInput[idx][field] = value;
-        setIngredientInput(newIngredientInput);
+        if(newIngredientInput[idx].id!==""){
+            setIngredientInput(newIngredientInput);
+        }else{
+            newIngredientInput[idx].id = uuidv4();
+            setIngredientInput(newIngredientInput);
+        }
+        
     };
 
     //Delete Row

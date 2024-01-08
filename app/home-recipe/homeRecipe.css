@@ -7,10 +7,10 @@ body{
 }
 :root{
     --darkColor: rgb(66, 62, 62);
+    --middleColor0: rgb(166, 159, 159);
     --middleColor: rgb(113, 108, 108);
     --lighterColor: rgb(223, 223, 223);
     --modernPink: #9b8383;
-
 }
 ::selection{
     color: rgb(223, 223, 223);
@@ -63,14 +63,16 @@ li.pageContent:hover{
     justify-content: center;
     background-color: rgba(53, 52, 52, 0.2);
 }
-
 /* AddRecipe Row */
 #addRecipeIcons input{
     height: 0;
     width: 0;
     opacity: 0;
+
 }
 #addRecipeIcons{
+    max-height: 20vh;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     border: solid var(--modernPink) 1px;
@@ -90,7 +92,6 @@ li.pageContent:hover{
     font-size: 20px;
     font-family: 'Poppins-thin', 'arial';
 }
-
 .img-grid{
     margin: 20px auto;
     display: grid;
@@ -104,7 +105,6 @@ li.pageContent:hover{
     position: relative;
     opacity: 0.8;
 }
-
 
 /* ProgressBar */
 .progress-bar{
@@ -218,22 +218,50 @@ input[type='radio']:checked:after {
     background-color: rgb(155, 145, 145);
     width: 70%;
 }
+#detailsBtn{
+    margin-right: 40px;
 
+}
+#detailsBtn:hover{
+    font-size: larger ;
+}
 /* Detailed Recipe */
+#closeDetailedRecipeBtn{
+    pointer-events: auto;
+    display: flex;
+    justify-content: flex-end;
+}
 #recipeDetailsParent{
+    pointer-events: none;
+    position: absolute;
+    height: 70%;
+    top: 200px;
+    display: flex;
+    justify-content: flex-start;
+    width: 80%;
+
+}
+#detailedRecipeUpperRow{
+    flex-wrap: wrap;
+    gap: 20px;
     display: flex;
     justify-content: flex-start;
     width: 100%;
+    font-size: 4em;
+
 }
 .detailedRecipe{
-    padding: 10px 20px 10px 20px;
+    pointer-events: auto;
+    font-family: 'Arial';
+    padding: 10px 20px 20px 20px;
     margin: 0px 0px 0px 10px;
     width: 70%;
-    height: 50%;
+    height: 90vh;
     position: absolute;
+    overflow:scroll;
     background-color: var(--lighterColor);
     opacity: 0.95;
-    max-height:90%;
+    max-height:70vh;
     border-radius: 10px;
     color: black
     /* overflow-y: scroll; */
@@ -242,24 +270,49 @@ input[type='radio']:checked:after {
 .detailedRecipe::-webkit-scrollbar {
     display: none;
 }
+#ingredientRow{
+    display: flex;
+    justify-content: flex-start;
+  
+}
+.ingredientName{
+    font-size: 0.8em;
+    color: rgb(63, 66, 68);
+    border-radius: 5px;
+    background-color: var(--middleColor0);
+    padding: 15px;
+    gap: 50px
+}
 
 /* HandleRecipe */
+#recipeIconFrontPage{
+    max-height: 20vh;
+    width: 300px;
+    flex-basis: calc((100% - 200px) / 2); 
+    overflow: hidden;
+}
 .recipeList{
     padding: 5px 0px 5px 0px;
-    /* font-size: 1em; */
     font-family: 'Poppins-thin', 'arial';
-}
-.recipePreview{
-    display: flex;
-    justify-content: space-between;
-}
-.deleteRecipeBtn{
-    padding: 0% 10px 0% 10px;
-    border: 0.5px solid var(--lighterColor);
 }
 .recipePreview{
     margin: 0px 0px 5px 0px;
     background-color: rgb(37, 36, 36);
+    display: flex;
+    justify-content: flex-start;
+}
+#recipeNames{
+    margin: 0px 0px 5px 10px;
+    width: 1000px;
+    align-self: flex-start;
+    
+}
+.deleteRecipe{
+
+}
+.deleteRecipeBtn{
+    padding: 0% 10px 0% 10px;
+    border: 0.5px solid var(--lighterColor);
 }
 .recipePreview:hover{
     border: 0.5px solid var(--middleColor);
@@ -269,6 +322,7 @@ input[type='radio']:checked:after {
 
 /* ImageSlider */
 .imgSliderContainer{
+    pointer-events: none;
     width: 500px;
     height: 280px;
     margin: 0 auto;

@@ -2,7 +2,6 @@
  
 import React, { useEffect, useState } from "react";
 import '../home-recipe/homeRecipe.css';
-import server_url from '../../next.config'
 import Image from 'next/image';
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
