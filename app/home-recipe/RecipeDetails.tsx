@@ -42,7 +42,15 @@ const RecipeDetails = ({recipe, closeRecipeDetails} : {recipe: ReceipeData | nul
                             </div>
                         </div>
                     </div>
-                    <p>{ recipe.steps }</p>
+                    <br></br>
+                    <div>Steps</div>
+                    <p>{ recipe.steps.map((step)=>{
+                        return(
+                            <div>
+                                {step}
+                            </div>
+                        )
+                    })}</p>
                 </div>   
             </div>
         </div>

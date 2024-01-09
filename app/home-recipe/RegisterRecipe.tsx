@@ -6,6 +6,7 @@ import useRecipeData, { ACTION, GetRecipeType } from "../hooks/UseRecipeData";
 // import { newRecipeValidation } from "./utils";
 import IngredientList, { Ingredient } from "./IngredientList";
 import { newRecipeValidation } from "./utils";
+import StepsList, { Steps } from "./StepsList";
 // import { newRecipeValidation } from "./utils";
 
 //Types
@@ -28,7 +29,7 @@ export type Form = {
     recipeName : string | null;
     type : RecipeTypes | null;
     ingredient  : Ingredient[]| null;
-    steps : string | null;
+    steps : string[] | null;
    
 }
 // imgURL: File | null;
@@ -55,6 +56,8 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
     const[imgState, setImgState] = useState<string | null>("Add Recipe Icon");
     const[selectedOptionRadio, setSelectedOptionRadio] = useState<RecipeTypes>(RecipeTypes.BREAKFAST);
     const[ingredientInput, setIngredientInput] = useState<Ingredient[]>([{ id: '', ingredientName: '', ingredientAmount: '' }]);
+    const[stepsInput, setStepsInput] = useState<Steps[]>([{ id: '', step: '' }]);
+
 
     const { postData, updateRecipeIcon, recipeList }  = useRecipeData();
 
@@ -113,7 +116,8 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
         const type = selectedOptionRadio;
         // const ingredient = createIngredientMap();
         const ingredient = ingredientInput;
-        const steps = getFormValue(formData)("steps") as string;
+        let steps : string[] = [];
+        stepsInput.forEach((step)=>steps.push(step.step));
         const imgURL = imgBytes as Blob;
      
         const form: Form = {
@@ -183,7 +187,9 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
                     </div>
                     <div><IngredientList ingredientInput={ingredientInput} setIngredientInput={setIngredientInput}/></div>
                     <span>Recipe Steps: </span>
-                    <input type="textfield" id="steps" name="steps" placeholder=" Steps"/>
+                    <div><StepsList stepsInput={stepsInput} setStepsInput={setStepsInput}/></div>
+
+                    {/* <input type="textfield" id="steps" name="steps" placeholder=" Steps"/> */}
                     <span id="responce"></span>
                     {/* <button id="addStepsBtn">Add Steps</button> */}
                     <button type="submit" id="submitRecipe">Submit Recipe</button>

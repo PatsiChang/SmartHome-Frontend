@@ -12,7 +12,7 @@ export type ReceipeData = {
   recipeName: string;
   type: string;
   ingredient: Ingredient[];
-  steps: string;
+  steps: string[];
   imgURL?: string;
 };
 
