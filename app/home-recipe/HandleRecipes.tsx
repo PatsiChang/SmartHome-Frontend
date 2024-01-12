@@ -13,9 +13,12 @@ const HandleRecipe = () => {
     const[detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
 
     const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipeID) => (event) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this recipe?");
         // event.stopPropagation();
-        deleteData({recipeIDTMP: recipeID});
-        window.location.reload();
+        if(isConfirmed){
+            deleteData({recipeIDTMP: recipeID});
+            window.location.reload();
+        }
     }
 
     const handleRecipeIcons = (recipeID : string | undefined) => {
@@ -48,6 +51,8 @@ const HandleRecipe = () => {
                         <div>
                             <h2>{ recipe.recipeName }</h2>
                             <h3>{ recipe.type }</h3>
+                            <br></br>
+                            <button>Edit</button>
                         </div>
                     </div>
        

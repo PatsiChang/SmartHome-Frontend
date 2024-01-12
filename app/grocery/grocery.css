@@ -1,0 +1,125 @@
+/* Home Page */
+::selection{
+    color: rgb(223, 223, 223);
+    background-color: var(--middleColor);
+}
+:root{
+    --darkColor: rgb(66, 62, 62);
+    --middleColor0: rgb(166, 159, 159);
+    --middleColor: rgb(113, 108, 108);
+    --lighterColor: rgb(223, 223, 223);
+    --modernPink: #9b8383;
+    --darkerPink: #645858;
+}
+.body{    
+    height: 100%;
+    width: 100%;
+    background-color: var(--darkColor);
+    overflow: scroll;
+}
+#subNav{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: smaller;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--middleColor);
+}
+#GroceryMainPageBody{
+    z-index: 5;
+    display: flex;
+    justify-content: space-evenly;
+    height: 100vh;
+    background-color: var(--middleColor0);
+    padding: 10px 0px 10px 0px;
+}
+.GrocerytoByList{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--darkColor);
+    border-radius: 5px;
+    padding: 20px 10% 20px 10%;
+    overflow: scroll;
+    /* width: 25%; */
+
+}
+.addGroceryBtn{
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--lighterColor);
+    padding: 1px;
+    border-radius: 50%;
+}
+:hover{
+    size: larger;
+}
+#CreateNewGroceryItemParent{
+    opacity: 90%;
+    overflow: scroll;
+    position: absolute;
+    height: 40%;
+    width: 500px;
+    margin: 50px;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Create New Grocery Item Form*/
+input[type="text"] {
+    padding: 1px 5px 1px 5px;
+    border-radius: 5px;
+    background-color: var(--darkerPink);
+}
+select {
+    padding: 1px 5px 1px 5px;
+    border-radius: 5px;
+    background-color: var(--darkerPink);
+}
+
+input[type="text"]:focus {
+    outline:auto rgb(184, 119, 119);
+    box-shadow: 0px 0px 5px rgb(217, 117, 117);
+    border:1px solid #9b8383;
+
+}
+/* input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color:rgb(255, 255, 255);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+} */
+/* input[type='radio']:checked:after {
+    background-color: rgb(217, 117, 117);
+    display: inline-block;
+    border: 2px solid white;
+} */
+#createGroceryForm{
+    background-color: #9b8383;
+    display: flex;
+    justify-content: space-between; 
+    padding: 20px;
+    /* color: black; */
+}
+#createGroceryInputForm{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+
+}
+#SubmitGroceryItem{
+    /* align-self: flex-end; */
+    margin-top: 50px;
+}
+#createGroceryFormCloseBtn{
+    align-self: flex-start;
+}

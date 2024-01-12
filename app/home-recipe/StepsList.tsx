@@ -44,13 +44,16 @@ const StepList = ({ stepsInput, setStepsInput }: StepsListProps ) => {
              {
                 stepsInput.map((step, idx) => {
                     return (
-                        <div id="stepsParts" key= {step.id}>
-                            <div className="ingredientSubLabel" >
-                                <div>
-                                    <input type="textfield" value = {step.step} onChange={(e) => handleInputChange(idx, 'step', e.target.value)} />
+                        <div key= {step.id}>
+                            <div className="stepsParts" >
+                                <div id="StepListInputContainer">
+                                    <input id="StepListInput" type="text" value = {step.step} onChange={(e) => handleInputChange(idx, 'step', e.target.value)} />
+                                </div>
+                                <div id="deleteIngredientRow" onClick={ () => deleteRow(step.id) }>
+                                { idx != 0 && <div> - </div> }
                                 </div>
                             </div>
-                            <div id="deleteIngredientRow" onClick={ () => deleteRow(step.id) }></div>
+                            
                         </div>
                     )
                 })

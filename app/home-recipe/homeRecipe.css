@@ -57,6 +57,10 @@ li.pageContent:hover{
     width: 400px;
 }
 /* Middle Row */
+.createNewRecipe{
+    display: flex;
+    justify-content: space-between;
+}
 .middleRow{
     margin-top: 10px;
     display: flex;
@@ -210,8 +214,20 @@ input[type='radio']:checked:after {
     color: aliceblue;
     background-color: rgb(129, 59, 59);
     padding: 0 5px 0 5px;
-    border: 1px solid black;
     border-radius: 5px;
+    cursor: pointer;
+}
+.stepsParts{
+    width: 100%;
+    padding:5px;
+    display: flex;
+    justify-content: space-between;
+}
+#StepListInputContainer{
+    width: 100%;
+}
+#StepListInput{
+    width: 90%;
 }
 
 #addStepsBtn{
@@ -248,6 +264,7 @@ input[type='radio']:checked:after {
     justify-content: flex-start;
     width: 100%;
     font-size: 4em;
+    padding: 10px 0px 10px 0px;
 
 }
 .detailedRecipe{
@@ -255,7 +272,7 @@ input[type='radio']:checked:after {
     font-family: 'Arial';
     padding: 10px 20px 20px 20px;
     margin: 0px 0px 0px 10px;
-    width: 70%;
+    width: 80%;
     height: 90vh;
     position: absolute;
     overflow:scroll;
@@ -307,9 +324,7 @@ input[type='radio']:checked:after {
     align-self: flex-start;
     
 }
-.deleteRecipe{
 
-}
 .deleteRecipeBtn{
     padding: 0% 10px 0% 10px;
     border: 0.5px solid var(--lighterColor);
@@ -319,6 +334,7 @@ input[type='radio']:checked:after {
     background-color: rgb(47, 46, 46);
     box-shadow: 1px 3px 5px rgb(72, 69, 69);
 }
+
 
 /* ImageSlider */
 .imgSliderContainer{

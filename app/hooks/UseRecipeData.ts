@@ -35,7 +35,7 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
   
   const [recipeList, setRecipeList] = useState<Array<ReceipeData>>([]);
 
-  const fetchData = (action: ACTION) => async ({ recipeName, form, recipeIDTMP, recipeIcon }: Props) => {
+  const fetchData = (action: ACTION, directory: string) => async ({ recipeName, form, recipeIDTMP, recipeIcon }: Props) => {
 
     try {
       const recipeID = recipeIDTMP as string;
@@ -44,7 +44,7 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
       formData.append("recipeIcon", recipeIcon as Blob);
 
       if(action === ACTION.get) {
-        await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
+        await fetch(process.env.NEXT_PUBLIC_API_URL + directory, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -55,6 +55,7 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
         .then((data) => {
           if(data !== null && data !== undefined && data !== "")
             setRecipeList(data)
+          return data;
         })
       }else if(action === ACTION.delete) {
         fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
@@ -98,17 +99,18 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
     }
   };
 
-  const postData = fetchData(ACTION.post);
-  const getData = fetchData(ACTION.get);
-  const updateRecipeIcon = fetchData(ACTION.put);
-  const updateData = fetchData(ACTION.put);
-  const deleteData = fetchData(ACTION.delete);
+  const postData = fetchData(ACTION.post, "");
+  const getRandomRecipe = fetchData(ACTION.get, "/recipe/getRandomRecipe");
+  const getData = fetchData(ACTION.get,"/recipe");
+  const updateRecipeIcon = fetchData(ACTION.put,"");
+  const updateData = fetchData(ACTION.put,"");
+  const deleteData = fetchData(ACTION.delete,"");
   
   useEffect(() => {
     getData({recipeName: "GetData"});
   }, []);
 
-  return { recipeList, fetchData, postData, getData, updateData, deleteData, updateRecipeIcon}
+  return { recipeList, fetchData, postData, getData, updateData, deleteData, updateRecipeIcon, getRandomRecipe}
 
 }
 

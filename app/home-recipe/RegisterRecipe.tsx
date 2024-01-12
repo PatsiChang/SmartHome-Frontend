@@ -23,7 +23,7 @@ export type UploadFormError = {
     setError: React.Dispatch<React.SetStateAction<string | null>>
 };
 export type UploadFormState = UploadFormFile & UploadFormError;
-type onchangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type onchangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export type Form = {
     recipeName : string | null;
@@ -67,6 +67,11 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
         setSelectedOptionRadio(value as RecipeTypes); 
     };
 
+    //Edit Recipe
+    const updateRecipe = () => {
+
+    }
+
     //Upload Recipe Image
     const changeHandler = (e: onchangeEvent) => {
         if (!e.target.files) return;
@@ -82,7 +87,6 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
             setError('Not an image file (png or jpeg)');
         }
     }
-
     // useful library: lodash , yui for form
 
     const getFormValue = (formData: FormData) => (key: string) => {
@@ -126,13 +130,10 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger }: RegisterRecipeProps) 
             ingredient, 
             steps,
         }
-
         const recipeID = await uploadForm(form);
         if(recipeID!== null && recipeID !== undefined){
             updateRecipeIcon({recipeIDTMP: recipeID, recipeIcon: imgURL});
         }
-       
-        
         //  window.location.reload();
     };
 

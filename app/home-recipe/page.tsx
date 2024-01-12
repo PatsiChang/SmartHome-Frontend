@@ -8,6 +8,7 @@ import RegisterRecipe from './RegisterRecipe';
 import { Dispatch, SetStateAction, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
+import useRecipeData from '../hooks/UseRecipeData';
 // import RecipeDetails from './RecipeDetails';
 
 export type HomeRecipeState = {
@@ -16,9 +17,15 @@ export type HomeRecipeState = {
 };
 
 function HomeRecipe() {
+
+  const { getRandomRecipe }  = useRecipeData();
   const[propsTrigger, setPropsTrigger] = useState(false);
   const toggleRegisterNewRecipe = () => {
     setPropsTrigger(true)
+  }
+  const generateRandomRecipe = () => {
+    getRandomRecipe({});
+    console.log( getRandomRecipe({}))
   }
 
   return (
@@ -31,12 +38,13 @@ function HomeRecipe() {
         <div id='addRecipe'> My Recipe </div>
       </div>
       <div className='createNewRecipe'>
-        <button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe </button>
+        <div><button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe +</button></div>
+        <div><button onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
       </div>
       <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} /></div>
       <div><HandleRecipe /></div>
       <div className='imgSliderContainer'><ImgSlider /></div>
-      <div><ImageGrid /></div>
+      {/* <div><ImageGrid /></div> */}
     </main>
   
   )

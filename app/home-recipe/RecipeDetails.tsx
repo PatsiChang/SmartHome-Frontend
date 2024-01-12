@@ -44,13 +44,14 @@ const RecipeDetails = ({recipe, closeRecipeDetails} : {recipe: ReceipeData | nul
                     </div>
                     <br></br>
                     <div>Steps</div>
-                    <p>{ recipe.steps.map((step)=>{
+                    <div className="ingredientName">
+                        { recipe.steps.map((step, index)=>{
                         return(
-                            <div>
+                            <div key={ index }>
                                 {step}
                             </div>
                         )
-                    })}</p>
+                    })}</div>
                 </div>   
             </div>
         </div>
