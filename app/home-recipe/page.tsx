@@ -3,7 +3,7 @@ import Image from 'next/image';
 import './homeRecipe.css';
 import HomeRecipeNavBar from './NavBar';
 import sashimiDemo from '../IMG/sashimiDemo.jpg';
-import ImageGrid from './ImageGrid';
+// import ImageGrid from './ImageGrid';
 import RegisterRecipe from './RegisterRecipe';
 import { Dispatch, SetStateAction, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
