@@ -1,9 +1,10 @@
 'use client'
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 import './grocery.css'
 import { CreateNewGroceryFormProps } from "./page";
+import UseGroceryData, { groceryRestfulType } from "../hooks/UseGroceryData";
 
-enum GroceryItemType {
+enum GroceryType {
     Carbohydrates = "Carbohydrates",
     MeatEggs = "MeatEggs",
     Bakery = "Bakery",
@@ -19,8 +20,8 @@ enum GroceryItemType {
 }
 export type GroceryItem = {
     groceryItemName : string,
-    groceryItemType : GroceryItemType,
-    groceryItemcount : string,
+    groceryItemType : GroceryType,
+    groceryItemCount : string,
     groceryItemPrice: string,
     groceryShop: string,
 
@@ -29,6 +30,16 @@ export type GroceryItem = {
 
 const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFormProps ) => {
 
+    const useGroceryData = UseGroceryData;
+    const[selectedGroceryItemType, setSelectedGroceryItemType] = useState<GroceryType>(GroceryType.Carbohydrates);
+
+    //Set groceryType DropDown menu value
+    const handleGroceryTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const { value } = event.target;
+        setSelectedGroceryItemType(value as GroceryType); 
+    };
+
+
     const getFormValue = (formData: FormData) => (key: string) => {
         const field = formData.get(key);
         if (field === null || field === undefined || field === "") {
@@ -36,25 +47,28 @@ const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFo
         } 
         return field;
     };
-
-    const SubmitNewGroceryItem: FormEventHandler<HTMLFormElement> = async (event) => ( submitType : string ) => {
+    // => ( submitType : string ) 
+    const SubmitNewGroceryItem: FormEventHandler<HTMLFormElement> = async (event) => {
         //Prevent browser reload content
         event.preventDefault();
+        console.log("Inside Submit")
         const { currentTarget } = event;
         const formData = new FormData(currentTarget);
         const groceryItemName = getFormValue(formData)("groceryItemName") as string;
-        const groceryItemType = getFormValue(formData)("groceryItemType") as GroceryItemType;
-        const groceryItemcount = getFormValue(formData)("groceryItemcount") as string;
+        const groceryItemType = selectedGroceryItemType;
+        const groceryItemCount = getFormValue(formData)("groceryItemCount") as string;
         const groceryItemPrice = getFormValue(formData)("groceryItemPrice") as string;
         const groceryShop = getFormValue(formData)("groceryShop") as string;
      
         const groceryItem: GroceryItem = {
            groceryItemName,
            groceryItemType,
-           groceryItemcount,
+           groceryItemCount,
            groceryItemPrice,
            groceryShop,
         }
+        useGroceryData({action: groceryRestfulType.POST, groceryRegisterForm: groceryItem});
+        console.log("Inside Submit called hook")
     };
 
     const closeGroceryForm = () => { setVisibility(false); }
@@ -72,17 +86,17 @@ const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFo
                 </div>
                 <div>
                     <label htmlFor="groceryType">Type: </label>
-                    <select name="groceryType" id="groceryType">
-                        <option value="Carbohydrates">Carbohydrates</option>
-                        <option value="Meat/Eggs">Meat/Eggs</option>
-                        <option value="Bakery">Bakery</option>
-                        <option value="Frozen">Frozen</option>
-                        <option value="Vegetables">Vegetables</option>
-                        <option value="Fruits">Fruits</option>
-                        <option value="Beverage">Beverage</option>
-                        <option value="Household">Household</option>
-                        <option value="Pets">Pets</option>
-                        <option value="Others">Others</option>
+                    <select name="groceryType" id="groceryType" onChange={handleGroceryTypeChange}>
+                        <option value={GroceryType.Carbohydrates} >Carbohydrates</option>
+                        <option value={GroceryType.MeatEggs}>Meat/Eggs</option>
+                        <option value={GroceryType.Bakery}>Bakery</option>
+                        <option value={GroceryType.Frozen}>Frozen</option>
+                        <option value={GroceryType.Vegetables}>Vegetables</option>
+                        <option value={GroceryType.Fruits}>Fruits</option>
+                        <option value={GroceryType.Beverage}>Beverage</option>
+                        <option value={GroceryType.Household}>Household</option>
+                        <option value={GroceryType.Pets}>Pets</option>
+                        <option value={GroceryType.Others}>Others</option>
                     </select>
                 </div>
                 <div>
@@ -91,7 +105,7 @@ const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFo
                 </div>
                 <div>
                     <label htmlFor="groceryItemPrice">Minimum Price: </label>
-                    <input type="text" id="groceryItemPrice" name="groceryItemCount" placeholder=" £10"/>
+                    <input type="text" id="groceryItemPrice" name="groceryItemPrice" placeholder=" £10"/>
                 </div>
                 <div>
                     <label htmlFor="groceryShop">Grocery Shop: </label>

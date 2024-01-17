@@ -278,7 +278,6 @@ input[type='radio']:checked:after {
     position: absolute;
     overflow:scroll;
     background-color: var(--lighterColor);
-    opacity: 0.95;
     max-height:70vh;
     border-radius: 10px;
     color: black
