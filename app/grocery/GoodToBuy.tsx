@@ -1,11 +1,25 @@
-import { useState } from "react";
-import { GroceryItem } from "./CreateNewGroceryItem";
+import UseGroceryData, { groceryRestfulType } from "../hooks/useGroceryData";
+import './grocery.css'
 
 
 
 const GoodToBuy = () => {
-    const[goodToBuyGroceryList, setgoodToBuyGroceryList] = useState<GroceryItem | null>(null);
-    
+    const { goodToBuyGroceryList } = UseGroceryData();
+    if (!goodToBuyGroceryList) {
+        return null; // or return an empty array: return [];
+      }
+ 
+    return(
+        <div className="goodToBuyList">
+            {goodToBuyGroceryList.map((groceryItem, index) => (
+                <div className="goodToBuyGrocery" key = {groceryItem.groceryItemName}>
+                    <div>{groceryItem.groceryItemName}</div>
+                </div>
+
+             ))}
+        </div>
+    )
+
 }
 
 export default GoodToBuy;

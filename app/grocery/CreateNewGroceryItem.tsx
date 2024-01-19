@@ -2,7 +2,7 @@
 import { FormEventHandler, useState } from "react";
 import './grocery.css'
 import { CreateNewGroceryFormProps } from "./page";
-import UseGroceryData, { groceryRestfulType } from "../hooks/UseGroceryData";
+import UseGroceryData, { groceryRestfulType } from "../hooks/useGroceryData";
 
 enum GroceryType {
     Carbohydrates = "Carbohydrates",
@@ -30,7 +30,7 @@ export type GroceryItem = {
 
 const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFormProps ) => {
 
-    const useGroceryData = UseGroceryData;
+    const { postData }= UseGroceryData();
     const[selectedGroceryItemType, setSelectedGroceryItemType] = useState<GroceryType>(GroceryType.Carbohydrates);
 
     //Set groceryType DropDown menu value
@@ -67,7 +67,9 @@ const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFo
            groceryItemPrice,
            groceryShop,
         }
-        useGroceryData({action: groceryRestfulType.POST, groceryRegisterForm: groceryItem});
+        // console.log("Check type before post:", typeof groceryItemType);
+        await postData({ groceryRegisterForm: groceryItem });
+        setVisibility(false);
         console.log("Inside Submit called hook")
     };
 

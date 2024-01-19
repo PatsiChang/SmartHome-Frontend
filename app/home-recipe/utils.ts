@@ -1,5 +1,5 @@
 // Add functions for global use
-import { ReceipeData } from "../hooks/UseRecipeData";
+import { ReceipeData } from "../hooks/useRecipeData";
 import { Form } from "./RegisterRecipe";
 
 

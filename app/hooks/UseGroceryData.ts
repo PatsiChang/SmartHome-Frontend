@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { GroceryItem } from "../grocery/CreateNewGroceryItem";
 
 
@@ -8,40 +9,62 @@ export enum groceryRestfulType {
     DELETE = "DELETE",
 }
 type UseGroceryProps = {
-    action : groceryRestfulType,
-    groceryRegisterForm : GroceryItem,
+    action? : groceryRestfulType,
+    groceryRegisterForm? : GroceryItem,
 }
 
-const UseGroceryData = async ({ action, groceryRegisterForm } : UseGroceryProps) => {
-    if(action === groceryRestfulType.GET) {
-        await fetch(process.env.NEXT_PUBLIC_API_URL+ "/groceryItem", {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data !== null && data !== undefined && data !== "")
-          console.log(data);
-            // setRecipeList(data)
-          return data;
-        })
-    }else if(action === groceryRestfulType.POST) {
-        await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem", {
-          method: 'POST',
-          headers: {
-            "Content-Type": 'application/json'
-          },
-          body: JSON.stringify(groceryRegisterForm)
-            // ...form,
-            // ingredient: Array.from(form?.ingredient.entries())
-          // }),
-        })
+const useGroceryData = () => {
+
+  const[goodToBuyGroceryList, setgoodToBuyGroceryList] = useState<Array<GroceryItem>>([]);
+
+  const fetchData = (action: groceryRestfulType) => async ({groceryRegisterForm}: UseGroceryProps) => {
+
+    
+    try {
+      if(action === groceryRestfulType.GET) {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL+ "/groceryItem", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+          })
+          if (response.ok){
+            const data = await response.json();
+            console.log("After get:",data);
+            setgoodToBuyGroceryList(data);
+            console.log("After get and inside state:",goodToBuyGroceryList);
+            return goodToBuyGroceryList;
+          }
+           
+          
+      }else if(action === groceryRestfulType.POST) {
+          await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem", {
+            method: 'POST',
+            headers: {
+              "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(groceryRegisterForm)
+          })
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setgoodToBuyGroceryList([]);
     }
 
+  }
+  const postData = fetchData(groceryRestfulType.POST);
+  const getData = fetchData(groceryRestfulType.GET);
+  const deleteData = fetchData(groceryRestfulType.DELETE);
+  
+
+    
+    
+    useEffect(() => {
+      getData({groceryRegisterForm: undefined});
+    }, []);
+    return { goodToBuyGroceryList, fetchData, postData, getData, deleteData }
 }
 
-export default UseGroceryData;
+export default useGroceryData;
   

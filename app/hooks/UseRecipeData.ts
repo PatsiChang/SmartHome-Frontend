@@ -58,14 +58,15 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
           return data;
         })
       }else if(action === ACTION.delete) {
-        fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
+        await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'DELETE',
           headers: {
             "Content-Type": 'application/json'
           },
           body: JSON.stringify(recipeID),
         })
-          await getData({recipeName: "GetData"});
+        await getData({recipeName: "GetData"});
+          
       }else if(action === ACTION.post) {
         const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'POST',
@@ -79,6 +80,7 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
         })
         
       const recipeID = await response.json();
+      await getData({recipeName: "GetData"});
       return recipeID;
 
       }else if (action === ACTION.put) {
@@ -108,8 +110,9 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
   
   useEffect(() => {
     getData({recipeName: "GetData"});
+    
   }, []);
-
+  
   return { recipeList, fetchData, postData, getData, updateData, deleteData, updateRecipeIcon, getRandomRecipe}
 
 }

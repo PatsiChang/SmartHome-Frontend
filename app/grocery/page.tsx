@@ -3,6 +3,8 @@ import { Dispatch, SetStateAction, useState } from "react"
 import HomeRecipeNavBar from "../home-recipe/NavBar"
 import CreateNewGroceryItem from "./CreateNewGroceryItem"
 import './grocery.css'
+import GoodToBuy from "./GoodToBuy"
+import useRecipeData from "../hooks/useRecipeData"
 
 // export type Grocery = {
 //     groceryName : string,
@@ -14,7 +16,8 @@ export type CreateNewGroceryFormProps = {
     setVisibility: Dispatch<SetStateAction<boolean>>
   };
 
-const groceryHome = () => {
+const GroceryHome = () => {
+    
     const [visibility, setVisibility] = useState<boolean>(false);
 
     const openNewGroceryFrom = () => {
@@ -36,6 +39,7 @@ const groceryHome = () => {
                     <div id="GoodToBuy"> 
                         <label>Good To Buy </label>
                         <button onClick={openNewGroceryFrom} className="addGroceryBtn"> + </button>
+                        <div>< GoodToBuy/></div>
                     </div>
                 </div>
         
@@ -53,4 +57,4 @@ const groceryHome = () => {
     )
 }
 
-export default groceryHome;
+export default GroceryHome;

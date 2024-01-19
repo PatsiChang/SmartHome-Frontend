@@ -8,7 +8,7 @@ import RegisterRecipe from './RegisterRecipe';
 import { Dispatch, SetStateAction, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
-import useRecipeData from '../hooks/UseRecipeData';
+import useRecipeData from '../hooks/useRecipeData';
 // import RecipeDetails from './RecipeDetails';
 
 export type HomeRecipeState = {
@@ -27,7 +27,6 @@ function HomeRecipe() {
     getRandomRecipe({});
     console.log( getRandomRecipe({}))
   }
-
   return (
     <main>
       <div className='homeRecipe'>

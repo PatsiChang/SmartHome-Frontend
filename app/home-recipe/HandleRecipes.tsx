@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useRecipeData, { ACTION, GetRecipeType, ReceipeData } from "../hooks/UseRecipeData";
+import useRecipeData, { ACTION, GetRecipeType, ReceipeData } from "../hooks/useRecipeData";
 import RecipeDetails from "./RecipeDetails";
 // import RecipeDetails from "./RecipeDetails";
 
@@ -8,8 +8,8 @@ type ShowdetailedRecipe = (recipe: ReceipeData) => React.MouseEventHandler<HTMLB
 export type CloseRecipeDetails = React.MouseEventHandler<HTMLButtonElement>
 
 const HandleRecipe = () => {
+    const {recipeList, deleteData } = useRecipeData();
 
-    const { recipeList, deleteData } = useRecipeData();
     const[detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
 
     const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipeID) => (event) => {
@@ -17,7 +17,7 @@ const HandleRecipe = () => {
         // event.stopPropagation();
         if(isConfirmed){
             deleteData({recipeIDTMP: recipeID});
-            window.location.reload();
+            // window.location.reload();
         }
     }
 

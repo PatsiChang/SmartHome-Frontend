@@ -38,7 +38,8 @@
     flex-direction: column;
     border: 1px solid var(--darkColor);
     border-radius: 5px;
-    padding: 20px 10% 20px 10%;
+    width: 90%;
+    padding: 20px 5% 20px 5%;
     overflow: scroll;
     /* width: 25%; */
 
@@ -52,6 +53,11 @@
 }
 :hover{
     size: larger;
+}
+.goodToBuyGrocery{
+    display: flex;
+    justify-content: flex-start;
+    /* width: 90%; */
 }
 #CreateNewGroceryItemParent{
     opacity: 90%;
@@ -83,24 +89,6 @@ input[type="text"]:focus {
     border:1px solid #9b8383;
 
 }
-/* input[type='radio']:after {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color:rgb(255, 255, 255);
-    content: '';
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid white;
-} */
-/* input[type='radio']:checked:after {
-    background-color: rgb(217, 117, 117);
-    display: inline-block;
-    border: 2px solid white;
-} */
 #createGroceryForm{
     background-color: #9b8383;
     display: flex;

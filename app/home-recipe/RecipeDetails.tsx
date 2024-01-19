@@ -1,7 +1,7 @@
 // import useRecipeData, { ReceipeData } from "../hooks/UseRecipeData";
 
 import { useEffect } from "react";
-import useRecipeData, { ReceipeData } from "../hooks/UseRecipeData";
+import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
 import { CloseRecipeDetails } from "./HandleRecipes";
 
 const RecipeDetails = ({recipe, closeRecipeDetails} : {recipe: ReceipeData | null; closeRecipeDetails: CloseRecipeDetails}) => {
