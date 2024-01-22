@@ -11,13 +11,14 @@ export enum groceryRestfulType {
 type UseGroceryProps = {
     action? : groceryRestfulType,
     groceryRegisterForm? : GroceryItem,
+    groceryID?: string
 }
 
 const useGroceryData = () => {
 
   const[goodToBuyGroceryList, setgoodToBuyGroceryList] = useState<Array<GroceryItem>>([]);
 
-  const fetchData = (action: groceryRestfulType) => async ({groceryRegisterForm}: UseGroceryProps) => {
+  const fetchData = (action: groceryRestfulType) => async ({groceryRegisterForm, groceryID}: UseGroceryProps) => {
 
     
     try {
@@ -31,9 +32,7 @@ const useGroceryData = () => {
           })
           if (response.ok){
             const data = await response.json();
-            console.log("After get:",data);
             setgoodToBuyGroceryList(data);
-            console.log("After get and inside state:",goodToBuyGroceryList);
             return goodToBuyGroceryList;
           }
            
@@ -46,6 +45,16 @@ const useGroceryData = () => {
             },
             body: JSON.stringify(groceryRegisterForm)
           })
+      }else if(action === groceryRestfulType.DELETE) {
+        await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem", {
+          method: 'DELETE',
+          headers: {
+            "Content-Type": 'application/json'
+          },
+          body: JSON.stringify(groceryID),
+        })
+        await getData({groceryID: "GetData"});
+          
       }
     } catch (error) {
       console.error('Error:', error);

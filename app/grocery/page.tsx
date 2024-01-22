@@ -31,24 +31,37 @@ const GroceryHome = () => {
                 <div>Grocery List</div>
                 <div>Grocery Shops</div>
             </div>
-            <div id="CreateNewGroceryItemParent"><CreateNewGroceryItem visibility = {visibility} setVisibility = {setVisibility}/></div>
+            <div style={{ width: "100vw" }}><CreateNewGroceryItem visibility = {visibility} setVisibility = {setVisibility}/></div>
 
              <div id="GroceryMainPageBody">
                 {/* Good To buy, Must Buy, Stock */}
                 <div className="GrocerytoByList">
-                    <div id="GoodToBuy"> 
-                        <label>Good To Buy </label>
+                    <div id="goodToBuyLabel">
+                        <label>Good To Buy </label> 
                         <button onClick={openNewGroceryFrom} className="addGroceryBtn"> + </button>
+                    </div>
+                    <div id="GoodToBuy"> 
                         <div>< GoodToBuy/></div>
                     </div>
                 </div>
         
                 <div className="GrocerytoByList">
-                    <div id="GoodToBuy"> Must Buy </div>
-
+                    <div id="goodToBuyLabel">
+                        <label>Must Buy </label> 
+                        <button onClick={openNewGroceryFrom} className="addGroceryBtn"> + </button>
+                    </div>
+                    <div id="GoodToBuy"> 
+                        <div>< GoodToBuy/></div>
+                    </div>
                 </div>
                 <div className="GrocerytoByList">
-                    <div id="GoodToBuy"> Home Stock </div>
+                    <div id="goodToBuyLabel">
+                        <label>Home Stock</label> 
+                        <button onClick={openNewGroceryFrom} className="addGroceryBtn"> + </button>
+                    </div>
+                    <div id="GoodToBuy"> 
+                        <div>< GoodToBuy/></div>
+                    </div>
 
                 </div>
              </div>

@@ -4,7 +4,7 @@ import './grocery.css'
 import { CreateNewGroceryFormProps } from "./page";
 import UseGroceryData, { groceryRestfulType } from "../hooks/useGroceryData";
 
-enum GroceryType {
+export enum GroceryType {
     Carbohydrates = "Carbohydrates",
     MeatEggs = "MeatEggs",
     Bakery = "Bakery",
@@ -16,14 +16,15 @@ enum GroceryType {
     Pets = "Pets",
     Others = "Others",
 
-
 }
 export type GroceryItem = {
+    groceryID?: string
     groceryItemName : string,
     groceryItemType : GroceryType,
     groceryItemCount : string,
     groceryItemPrice: string,
     groceryShop: string,
+    // groceryBuyState: string,
 
 
 }
@@ -80,7 +81,8 @@ const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFo
     return visibility? (
 
         // onSubmit={SubmitNewGroceryItem}
-        <form id="createGroceryForm"  onSubmit={SubmitNewGroceryItem}>
+        <div id="createGroceryFormContainer">
+            <form id="createGroceryForm"  onSubmit={SubmitNewGroceryItem}>
             <div id="createGroceryInputForm" >
                 <div>
                     <label htmlFor="groceryItemName">Name: </label>
@@ -118,7 +120,9 @@ const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFo
             </div>
             <button id="createGroceryFormCloseBtn" onClick={closeGroceryForm}>Close</button>
           
-        </form>
+            </form>
+        </div>
+        
     ) : <></>;
 }
 
