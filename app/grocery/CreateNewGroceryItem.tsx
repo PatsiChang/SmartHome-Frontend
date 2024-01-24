@@ -15,6 +15,11 @@ export enum GroceryType {
     Household = "Household",
     Pets = "Pets",
     Others = "Others",
+}
+export enum GroceryBuyState {
+    GoodToBuy = "GoodToBuy",
+    MustBuy = "MustBuy",
+    HomeStock = "HomeStock"
 
 }
 export type GroceryItem = {
@@ -24,12 +29,10 @@ export type GroceryItem = {
     groceryItemCount : string,
     groceryItemPrice: string,
     groceryShop: string,
-    // groceryBuyState: string,
-
-
+    groceryBuyState: GroceryBuyState,
 }
 
-const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFormProps ) => {
+const CreateNewGroceryItem = ( { visibility, setVisibility, groceryBuyState}: CreateNewGroceryFormProps ) => {
 
     const { postData }= UseGroceryData();
     const[selectedGroceryItemType, setSelectedGroceryItemType] = useState<GroceryType>(GroceryType.Carbohydrates);
@@ -67,9 +70,10 @@ const CreateNewGroceryItem = ( { visibility, setVisibility }: CreateNewGroceryFo
            groceryItemCount,
            groceryItemPrice,
            groceryShop,
+           groceryBuyState,
         }
         // console.log("Check type before post:", typeof groceryItemType);
-        await postData({ groceryRegisterForm: groceryItem });
+        await postData({ groceryRegisterForm: groceryItem, groceryBuyState: groceryBuyState });
         setVisibility(false);
         console.log("Inside Submit called hook")
     };

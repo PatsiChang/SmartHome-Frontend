@@ -22,9 +22,13 @@
     justify-content: space-evenly;
     font-size: smaller;
     width: 100%;
-    padding: 10px;
+    padding: 10px 0px 10px 0px;
     background-color: var(--middleColor);
 }
+/* #GroceryListNav{
+    padding: 0px 100px 0px 100px;
+    background-color: var(--middleColor0);
+} */
 #GroceryMainPageBody{
     z-index: 5;
     display: flex;

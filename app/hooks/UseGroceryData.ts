@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GroceryItem } from "../grocery/CreateNewGroceryItem";
+import { GroceryBuyState, GroceryItem } from "../grocery/CreateNewGroceryItem";
 
 
 export enum groceryRestfulType {
@@ -12,17 +12,19 @@ type UseGroceryProps = {
     action? : groceryRestfulType,
     groceryRegisterForm? : GroceryItem,
     groceryID?: string
+    groceryBuyState?: GroceryBuyState,
 }
 
 const useGroceryData = () => {
 
   const[goodToBuyGroceryList, setgoodToBuyGroceryList] = useState<Array<GroceryItem>>([]);
+  const[mustBuyGroceryList, setMustBuyGroceryList] = useState<Array<GroceryItem>>([]);
 
-  const fetchData = (action: groceryRestfulType) => async ({groceryRegisterForm, groceryID}: UseGroceryProps) => {
+  const fetchData = (action: groceryRestfulType) => async ({groceryRegisterForm, groceryID, groceryBuyState}: UseGroceryProps) => {
 
     
     try {
-      if(action === groceryRestfulType.GET) {
+      if(action === groceryRestfulType.GET && groceryBuyState === GroceryBuyState.GoodToBuy) {
         const response = await fetch(process.env.NEXT_PUBLIC_API_URL+ "/groceryItem", {
             method: 'GET',
             headers: {
@@ -37,7 +39,22 @@ const useGroceryData = () => {
           }
            
           
-      }else if(action === groceryRestfulType.POST) {
+      }else if(action === groceryRestfulType.GET && groceryBuyState === GroceryBuyState.MustBuy) {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL+ "/groceryItem/groceryMustBuyItem", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+          })
+          if (response.ok){
+            const data = await response.json();
+            setMustBuyGroceryList(data);
+            return mustBuyGroceryList;
+          }
+           
+          
+      }else if(action === groceryRestfulType.POST && groceryBuyState === GroceryBuyState.GoodToBuy) {
           await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem", {
             method: 'POST',
             headers: {
@@ -45,7 +62,15 @@ const useGroceryData = () => {
             },
             body: JSON.stringify(groceryRegisterForm)
           })
-      }else if(action === groceryRestfulType.DELETE) {
+      }else if(action === groceryRestfulType.POST && groceryBuyState === GroceryBuyState.MustBuy) {
+        await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem/groceryMustBuyItem", {
+          method: 'POST',
+          headers: {
+            "Content-Type": 'application/json'
+          },
+          body: JSON.stringify(groceryRegisterForm)
+        })
+      }else if(action === groceryRestfulType.DELETE && groceryBuyState === GroceryBuyState.GoodToBuy) {
         await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem", {
           method: 'DELETE',
           headers: {
@@ -53,7 +78,15 @@ const useGroceryData = () => {
           },
           body: JSON.stringify(groceryID),
         })
-        await getData({groceryID: "GetData"});
+          
+      }else if(action === groceryRestfulType.DELETE && groceryBuyState === GroceryBuyState.MustBuy) {
+        await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem/groceryMustBuyItem", {
+          method: 'DELETE',
+          headers: {
+            "Content-Type": 'application/json'
+          },
+          body: JSON.stringify(groceryID),
+        })
           
       }
     } catch (error) {
@@ -70,9 +103,10 @@ const useGroceryData = () => {
     
     
     useEffect(() => {
-      getData({groceryRegisterForm: undefined});
+      getData({groceryBuyState:GroceryBuyState.GoodToBuy});
+      getData({groceryBuyState:GroceryBuyState.MustBuy});
     }, []);
-    return { goodToBuyGroceryList, fetchData, postData, getData, deleteData }
+    return { goodToBuyGroceryList, mustBuyGroceryList, fetchData, postData, getData, deleteData }
 }
 
 export default useGroceryData;
