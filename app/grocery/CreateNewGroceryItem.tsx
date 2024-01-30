@@ -1,7 +1,7 @@
 'use client'
-import { FormEventHandler, useState } from "react";
+import { ChangeEvent, FormEventHandler, useEffect, useState } from "react";
 import './grocery.css'
-import { CreateNewGroceryFormProps } from "./page";
+import { CreateNewGroceryFormProps, emptyFormValue } from "./page";
 import UseGroceryData, { groceryRestfulType } from "../hooks/useGroceryData";
 
 export enum GroceryType {
@@ -32,55 +32,105 @@ export type GroceryItem = {
     groceryBuyState: GroceryBuyState,
 }
 
-const CreateNewGroceryItem = ( { visibility, setVisibility, groceryBuyState}: CreateNewGroceryFormProps ) => {
+const CreateNewGroceryItem = ( {existingFormValue, setExistingFormValue, visibility, setVisibility, groceryBuyState}: CreateNewGroceryFormProps ) => {
+    const { postData, getData } = UseGroceryData();
+    const [groceryItemState, setGroceryItemState] = useState<GroceryItem>(existingFormValue);
+    console.log(existingFormValue.groceryID)
 
-    const { postData }= UseGroceryData();
-    const[selectedGroceryItemType, setSelectedGroceryItemType] = useState<GroceryType>(GroceryType.Carbohydrates);
+    useEffect(() => {
+        setGroceryItemState(existingFormValue)
+    }, [existingFormValue]) 
+
+    const handleGroceryNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setGroceryItemState({
+            ...groceryItemState,
+            groceryItemName: e.target.value
+        })
+    };
+    const handleGroceryTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setGroceryItemState({
+            ...groceryItemState,
+            groceryItemType: e.target.value as GroceryType
+        })
+    };
+    const handleGroceryCountChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setGroceryItemState({
+            ...groceryItemState,
+            groceryItemCount: e.target.value
+        })
+    };
+    const handleGroceryPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setGroceryItemState({
+            ...groceryItemState,
+            groceryItemPrice: e.target.value
+        })
+    };
+    const handleGroceryShopChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setGroceryItemState({
+            ...groceryItemState,
+            groceryShop: e.target.value
+        })
+    };
+
 
     //Set groceryType DropDown menu value
-    const handleGroceryTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const { value } = event.target;
-        setSelectedGroceryItemType(value as GroceryType); 
-    };
+ 
 
 
-    const getFormValue = (formData: FormData) => (key: string) => {
-        const field = formData.get(key);
-        if (field === null || field === undefined || field === "") {
-            return null;
-        } 
-        return field;
-    };
+    // const getFormValue = (formData: FormData) => (key: string) => {
+    //     const field = formData.get(key);
+    //     if (field === null || field === undefined || field === "") {
+    //         return null;
+    //     } 
+    //     return field;
+    // };
     // => ( submitType : string ) 
     const SubmitNewGroceryItem: FormEventHandler<HTMLFormElement> = async (event) => {
         //Prevent browser reload content
         event.preventDefault();
         console.log("Inside Submit")
-        const { currentTarget } = event;
-        const formData = new FormData(currentTarget);
-        const groceryItemName = getFormValue(formData)("groceryItemName") as string;
-        const groceryItemType = selectedGroceryItemType;
-        const groceryItemCount = getFormValue(formData)("groceryItemCount") as string;
-        const groceryItemPrice = getFormValue(formData)("groceryItemPrice") as string;
-        const groceryShop = getFormValue(formData)("groceryShop") as string;
-     
-        const groceryItem: GroceryItem = {
-           groceryItemName,
-           groceryItemType,
-           groceryItemCount,
-           groceryItemPrice,
-           groceryShop,
-           groceryBuyState,
+        // const { currentTarget } = event;
+        // const formData = new FormData(currentTarget);
+        const groceryItemName = groceryItemState.groceryItemName;
+        const groceryItemType = groceryItemState.groceryItemType;
+        const groceryItemCount = groceryItemState.groceryItemCount;
+        const groceryItemPrice = groceryItemState.groceryItemPrice;
+        const groceryShop = groceryItemState.groceryShop;
+        if (groceryItemState.groceryID !== null && groceryItemState.groceryID !== undefined ){
+            const groceryID = groceryItemState.groceryID;
+            const groceryItem: GroceryItem = {
+                groceryID,
+                groceryItemName,
+                groceryItemType,
+                groceryItemCount,
+                groceryItemPrice,
+                groceryShop,
+                groceryBuyState,
+            }
+            await postData({ groceryRegisterForm: groceryItem, groceryBuyState: groceryBuyState });
+            await getData({groceryBuyState: groceryBuyState});
+            setExistingFormValue(emptyFormValue);
+            setGroceryItemState(existingFormValue);
+            setVisibility(false);
+        }else{
+            const groceryItem: GroceryItem = {
+                groceryItemName,
+                groceryItemType,
+                groceryItemCount,
+                groceryItemPrice,
+                groceryShop,
+                groceryBuyState,
+            }
+            await postData({ groceryRegisterForm: groceryItem, groceryBuyState: groceryBuyState });
+            await getData({groceryBuyState: groceryBuyState});
+            setExistingFormValue(emptyFormValue);
+            setGroceryItemState(existingFormValue);
+            setVisibility(false);
         }
-        // console.log("Check type before post:", typeof groceryItemType);
-        await postData({ groceryRegisterForm: groceryItem, groceryBuyState: groceryBuyState });
-        setVisibility(false);
-        console.log("Inside Submit called hook")
+     
     };
 
     const closeGroceryForm = () => { setVisibility(false); }
-
-
 
     return visibility? (
 
@@ -90,34 +140,35 @@ const CreateNewGroceryItem = ( { visibility, setVisibility, groceryBuyState}: Cr
             <div id="createGroceryInputForm" >
                 <div>
                     <label htmlFor="groceryItemName">Name: </label>
-                    <input type="text" id="groceryItemName" name="groceryItemName" placeholder=" Brown Rice"/>
+                    <input type="text" id="groceryItemName" name="groceryItemName" placeholder=" Rice"
+                    onChange={handleGroceryNameChange} 
+                    value={groceryItemState.groceryItemName}/>
                 </div>
                 <div>
                     <label htmlFor="groceryType">Type: </label>
-                    <select name="groceryType" id="groceryType" onChange={handleGroceryTypeChange}>
-                        <option value={GroceryType.Carbohydrates} >Carbohydrates</option>
-                        <option value={GroceryType.MeatEggs}>Meat/Eggs</option>
-                        <option value={GroceryType.Bakery}>Bakery</option>
-                        <option value={GroceryType.Frozen}>Frozen</option>
-                        <option value={GroceryType.Vegetables}>Vegetables</option>
-                        <option value={GroceryType.Fruits}>Fruits</option>
-                        <option value={GroceryType.Beverage}>Beverage</option>
-                        <option value={GroceryType.Household}>Household</option>
-                        <option value={GroceryType.Pets}>Pets</option>
-                        <option value={GroceryType.Others}>Others</option>
+                    <select name="groceryType" id="groceryType" onChange={handleGroceryTypeChange} value={groceryItemState.groceryItemType}>
+                        {Object.values(GroceryType).map((groceryType) =>{
+                                return( <option key={groceryType} value={groceryType}> {groceryType} </option>)
+                        })}
                     </select>
                 </div>
                 <div>
                     <label htmlFor="groceryItemCount">Count: </label>
-                    <input type="text" id="groceryItemCount" name="groceryItemCount" placeholder=" 3 Pieces"/>
+                    <input type="text" id="groceryItemCount" name="groceryItemCount" placeholder=" 3 Pieces"
+                     onChange={handleGroceryCountChange} 
+                     value={groceryItemState.groceryItemCount} />
                 </div>
                 <div>
                     <label htmlFor="groceryItemPrice">Minimum Price: </label>
-                    <input type="text" id="groceryItemPrice" name="groceryItemPrice" placeholder=" £10"/>
+                    <input type="text" id="groceryItemPrice" name="groceryItemPrice" placeholder=" £10"
+                     onChange={handleGroceryPriceChange} 
+                     value={groceryItemState.groceryItemPrice} />
                 </div>
                 <div>
                     <label htmlFor="groceryShop">Grocery Shop: </label>
-                    <input type="text" id="groceryShop" name="groceryShop" placeholder=" Morrisons"/>
+                    <input type="text" id="groceryShop" name="groceryShop" placeholder=" Morrisons"
+                     onChange={handleGroceryShopChange} 
+                     value={groceryItemState.groceryShop} />
                 </div>
                 <button type="submit" id="SubmitGroceryItem">Submit Item</button>
                 <div id="errorCode"></div>

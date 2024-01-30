@@ -99,8 +99,9 @@ const useGroceryData = () => {
   const getData = fetchData(groceryRestfulType.GET);
   const deleteData = fetchData(groceryRestfulType.DELETE);
   
+  const convertGroceryItemsToGroceryForm = (GroceryItemsLi: Array<GroceryItem>) => {
 
-    
+  }
     
     useEffect(() => {
       getData({groceryBuyState:GroceryBuyState.GoodToBuy});

@@ -6,6 +6,7 @@
 :root{
     --darkColor: rgb(66, 62, 62);
     --middleColor0: rgb(166, 159, 159);
+    --middleColor1: rgb(148, 141, 141);
     --middleColor: rgb(113, 108, 108);
     --lighterColor: rgb(223, 223, 223);
     --modernPink: #9b8383;
@@ -75,7 +76,6 @@
     justify-content: space-evenly;
     align-self: flex-start;
     width: 100%;
-
     
 }
 .ListByType{
@@ -87,26 +87,35 @@
     margin: 0.6px;
 }
 .ListByType :hover{
-    background-color: var(--middleColor);
-    color: var(--lighterColor);
+    background-color: var(--middleColor1);
 }
 .ListByType label:hover {
     background-color: initial; /* Set the background color back to its initial value */
     color: var(--lighterColor); /* Set the text color back to its initial value */
 }
-
 .goodToBuyGrocery{
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     font-size: smaller;
-    color: #645858;
+    color: #4d4343;
     padding: 0px 0px 0px 4px;
+    user-select: none;
+    overflow: hidden;
+}
+#groceryItemDetails{
+    font-size:x-small;
+    color: var(--lighterColor);
+    padding: 0px 0px 0px 8px;
+    background-color: var(--middleColor);
+}
+#groceryItemDetails :hover{
+    background-color: var(--middleColor);
 }
 #removeGroceryItemBtn{
-    width: 25px;
-    height: 25px;
-    margin-top: -5px;
+    width: 20px;
+    height: 20px;
+    /* margin-top: -5px; */
     background-color: var(--modernPink);
     border: 1px solid var(--lighterColor);
     border-radius: 10%;

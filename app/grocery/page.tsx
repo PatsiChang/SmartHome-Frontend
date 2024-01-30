@@ -1,10 +1,9 @@
 'use client'
 import { Dispatch, SetStateAction, useState } from "react"
 import HomeRecipeNavBar from "../home-recipe/NavBar"
-import CreateNewGroceryItem, { GroceryBuyState } from "./CreateNewGroceryItem"
+import CreateNewGroceryItem, { GroceryBuyState, GroceryItem, GroceryType } from "./CreateNewGroceryItem"
 import './grocery.css'
 import GoodToBuy from "./GoodToBuy"
-import useRecipeData from "../hooks/useRecipeData"
 
 // export type Grocery = {
 //     groceryName : string,
@@ -12,19 +11,38 @@ import useRecipeData from "../hooks/useRecipeData"
 //     groceryImg : string,
 // }
 export type CreateNewGroceryFormProps = {
-    visibility: boolean;
-    setVisibility: Dispatch<SetStateAction<boolean>>
-    groceryBuyState: GroceryBuyState,
-
-  };
+    existingFormValue: GroceryItem,
+    setExistingFormValue: Dispatch<SetStateAction<GroceryItem>>,
+    visibility: boolean,
+    setVisibility: Dispatch<SetStateAction<boolean>>,
+    groceryBuyState: GroceryBuyState
+};
+export type GoodToBuyProps = {
+    existingFormValue?: GroceryItem,
+    setExistingFormValue: Dispatch<SetStateAction<GroceryItem>>,
+    visibility: boolean,
+    setVisibility: Dispatch<SetStateAction<boolean>>,
+    groceryBuyState: GroceryBuyState
+};
+export const emptyFormValue : GroceryItem = {
+    groceryID: undefined,
+    groceryItemName: "",
+    groceryItemType: GroceryType.Carbohydrates,
+    groceryItemCount: "",
+    groceryItemPrice: "",
+    groceryShop: "",
+    groceryBuyState: GroceryBuyState.GoodToBuy,
+}
 
 const GroceryHome = () => {
-    
+
     const [visibility, setVisibility] = useState<boolean>(false);
-    const [groceryBuyState, setgGroceryBuyState] = useState<GroceryBuyState>(GroceryBuyState.GoodToBuy);
+    const [existingFormValue, setExistingFormValue] = useState<GroceryItem>(emptyFormValue);
+    const [groceryBuyState, setGroceryBuyState] = useState<GroceryBuyState>(GroceryBuyState.GoodToBuy);
 
     const openNewGroceryFrom = (groceryBuyStateParam: GroceryBuyState) => {
-        setgGroceryBuyState(groceryBuyStateParam);
+        setExistingFormValue(emptyFormValue);
+        setGroceryBuyState(groceryBuyStateParam);
         setVisibility(true);
         window.scrollTo({top: 0, behavior: 'smooth'})
     }
@@ -36,8 +54,14 @@ const GroceryHome = () => {
                 <div id="GroceryListNav">Grocery List</div>
                 <div>Grocery Shops</div>
             </div>
-            <div style={{ width: "100vw" }}><CreateNewGroceryItem visibility = {visibility} 
-            setVisibility = {setVisibility} groceryBuyState = {groceryBuyState}/></div>
+            <div style={{ width: "100vw" }}>
+                <CreateNewGroceryItem 
+                    setExistingFormValue = {setExistingFormValue}
+                    existingFormValue = {existingFormValue}
+                    visibility = {visibility} 
+                    setVisibility = {setVisibility} 
+                    groceryBuyState = {groceryBuyState}/>
+            </div>
 
              <div id="GroceryMainPageBody">
                 {/* Good To buy, Must Buy, Stock */}
@@ -47,7 +71,11 @@ const GroceryHome = () => {
                         <button onClick={()=>openNewGroceryFrom(GroceryBuyState.GoodToBuy)} className="addGroceryBtn"> + </button>
                     </div>
                     <div id="GoodToBuy"> 
-                        <div>< GoodToBuy groceryBuyState={GroceryBuyState.GoodToBuy}/></div>
+                        <div>< GoodToBuy visibility = {visibility} 
+                        existingFormValue = {existingFormValue}
+                        setExistingFormValue = {setExistingFormValue}
+                        setVisibility = {setVisibility} 
+                        groceryBuyState={GroceryBuyState.GoodToBuy}/></div>
                     </div>
                 </div>
         
@@ -57,7 +85,11 @@ const GroceryHome = () => {
                         <button onClick={()=>openNewGroceryFrom(GroceryBuyState.MustBuy)} className="addGroceryBtn"> + </button>
                     </div>
                     <div id="GoodToBuy"> 
-                        <div>< GoodToBuy groceryBuyState={GroceryBuyState.MustBuy}/></div>
+                        <div>< GoodToBuy visibility = {visibility} 
+                        existingFormValue = {existingFormValue}
+                        setExistingFormValue = {setExistingFormValue}
+                        setVisibility = {setVisibility}
+                        groceryBuyState={GroceryBuyState.MustBuy}/></div>
                     </div>
                 </div>
                 <div className="GrocerytoByList">
@@ -66,7 +98,11 @@ const GroceryHome = () => {
                         <button onClick={()=>openNewGroceryFrom(GroceryBuyState.GoodToBuy)} className="addGroceryBtn"> + </button>
                     </div>
                     <div id="GoodToBuy"> 
-                        <div>< GoodToBuy groceryBuyState={GroceryBuyState.HomeStock}/></div>
+                        <div>< GoodToBuy visibility = {visibility} 
+                        existingFormValue = {existingFormValue}
+                        setExistingFormValue = {setExistingFormValue}
+                        setVisibility = {setVisibility} 
+                        groceryBuyState={GroceryBuyState.HomeStock}/></div>
                     </div>
 
                 </div>
