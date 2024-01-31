@@ -2,7 +2,7 @@
 import { ChangeEvent, FormEventHandler, useEffect, useState } from "react";
 import './grocery.css'
 import { CreateNewGroceryFormProps, emptyFormValue } from "./page";
-import UseGroceryData, { groceryRestfulType } from "../hooks/useGroceryData";
+import UseGroceryData from "../hooks/useGroceryData";
 
 export enum GroceryType {
     Carbohydrates = "Carbohydrates",
@@ -72,62 +72,16 @@ const CreateNewGroceryItem = ( {existingFormValue, setExistingFormValue, visibil
         })
     };
 
-
-    //Set groceryType DropDown menu value
- 
-
-
-    // const getFormValue = (formData: FormData) => (key: string) => {
-    //     const field = formData.get(key);
-    //     if (field === null || field === undefined || field === "") {
-    //         return null;
-    //     } 
-    //     return field;
-    // };
     // => ( submitType : string ) 
     const SubmitNewGroceryItem: FormEventHandler<HTMLFormElement> = async (event) => {
         //Prevent browser reload content
         event.preventDefault();
         console.log("Inside Submit")
-        // const { currentTarget } = event;
-        // const formData = new FormData(currentTarget);
-        const groceryItemName = groceryItemState.groceryItemName;
-        const groceryItemType = groceryItemState.groceryItemType;
-        const groceryItemCount = groceryItemState.groceryItemCount;
-        const groceryItemPrice = groceryItemState.groceryItemPrice;
-        const groceryShop = groceryItemState.groceryShop;
-        if (groceryItemState.groceryID !== null && groceryItemState.groceryID !== undefined ){
-            const groceryID = groceryItemState.groceryID;
-            const groceryItem: GroceryItem = {
-                groceryID,
-                groceryItemName,
-                groceryItemType,
-                groceryItemCount,
-                groceryItemPrice,
-                groceryShop,
-                groceryBuyState,
-            }
-            await postData({ groceryRegisterForm: groceryItem, groceryBuyState: groceryBuyState });
-            await getData({groceryBuyState: groceryBuyState});
-            setExistingFormValue(emptyFormValue);
-            setGroceryItemState(existingFormValue);
-            setVisibility(false);
-        }else{
-            const groceryItem: GroceryItem = {
-                groceryItemName,
-                groceryItemType,
-                groceryItemCount,
-                groceryItemPrice,
-                groceryShop,
-                groceryBuyState,
-            }
-            await postData({ groceryRegisterForm: groceryItem, groceryBuyState: groceryBuyState });
-            await getData({groceryBuyState: groceryBuyState});
-            setExistingFormValue(emptyFormValue);
-            setGroceryItemState(existingFormValue);
-            setVisibility(false);
-        }
-     
+        await postData({ groceryRegisterForm: groceryItemState, groceryBuyState: groceryBuyState });
+        await getData({groceryBuyState: groceryBuyState});
+        setExistingFormValue(emptyFormValue);
+        setGroceryItemState(existingFormValue);
+        setVisibility(false);
     };
 
     const closeGroceryForm = () => { setVisibility(false); }
