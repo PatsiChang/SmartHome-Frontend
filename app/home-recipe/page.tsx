@@ -8,7 +8,8 @@ import RegisterRecipe from './RegisterRecipe';
 import { Dispatch, SetStateAction, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
-import useRecipeData from '../hooks/useRecipeData';
+import useRecipeData, { ReceipeData } from '../hooks/useRecipeData';
+import RandomRecipe from './RandomRecipe';
 // import RecipeDetails from './RecipeDetails';
 
 export type HomeRecipeState = {
@@ -16,16 +17,24 @@ export type HomeRecipeState = {
   setPropsTrigger: Dispatch<SetStateAction<boolean>>
 };
 
+export type RandomRecipeProps = {
+  randomRecipeVisibility: boolean,
+  setRandomRecipeVisibility: Dispatch<SetStateAction<boolean>>,
+}
+
 function HomeRecipe() {
 
   const { getRandomRecipe }  = useRecipeData();
   const[propsTrigger, setPropsTrigger] = useState(false);
+  const[randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
+
   const toggleRegisterNewRecipe = () => {
     setPropsTrigger(true)
   }
-  const generateRandomRecipe = () => {
-    getRandomRecipe({});
-    console.log( getRandomRecipe({}))
+  const generateRandomRecipe = async () => {
+    await getRandomRecipe({});
+    setRandomRecipeVisibility(true)
+
   }
   return (
     <main>
@@ -40,6 +49,7 @@ function HomeRecipe() {
         <div><button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe +</button></div>
         <div><button onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
       </div>
+      <div><RandomRecipe randomRecipeVisibility={randomRecipeVisibility} setRandomRecipeVisibility={setRandomRecipeVisibility} /></div>
       <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} /></div>
       <div><HandleRecipe /></div>
       <div className='imgSliderContainer'><ImgSlider /></div>

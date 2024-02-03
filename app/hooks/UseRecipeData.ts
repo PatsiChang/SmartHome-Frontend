@@ -34,6 +34,9 @@ type Props = {
 const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
   
   const [recipeList, setRecipeList] = useState<Array<ReceipeData>>([]);
+  const [currentRandomRecipe, setCurrentRandomRecipe] = useState<ReceipeData>();
+
+  
 
   const fetchData = (action: ACTION, directory: string) => async ({ recipeName, form, recipeIDTMP, recipeIcon }: Props) => {
 
@@ -44,6 +47,7 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
       formData.append("recipeIcon", recipeIcon as Blob);
 
       if(action === ACTION.get) {
+        
         await fetch(process.env.NEXT_PUBLIC_API_URL + directory, {
           method: 'GET',
           headers: {
@@ -53,9 +57,15 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
         })
         .then((response) => response.json())
         .then((data) => {
-          if(data !== null && data !== undefined && data !== "")
-            setRecipeList(data)
-          return data;
+          if(data !== null && data !== undefined && data !== ""){
+            if(directory=="/recipe"){
+              setRecipeList(data)
+            }else if (directory==="/recipe/getRandomRecipe"){
+              setCurrentRandomRecipe(data)
+            }
+           
+           return data;
+          }
         })
       }else if(action === ACTION.delete) {
         await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
@@ -74,9 +84,7 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
             "Content-Type": 'application/json'
           },
           body: JSON.stringify(form)
-            // ...form,
-            // ingredient: Array.from(form?.ingredient.entries())
-          // }),
+          
         })
         
       const recipeID = await response.json();
@@ -87,9 +95,6 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
         if (!recipeID) throw new Error("No recipeID!");
         fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe/addRecipeIcon", {
           method: 'PUT',
-          // headers: {
-          //   "Content-Type": 'application/json'
-          // },
           body: formData,
         })
 
@@ -110,10 +115,10 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
   
   useEffect(() => {
     getData({recipeName: "GetData"});
-    
+    getRandomRecipe({});
   }, []);
   
-  return { recipeList, fetchData, postData, getData, updateData, deleteData, updateRecipeIcon, getRandomRecipe}
+  return { recipeList, currentRandomRecipe, setCurrentRandomRecipe, fetchData, postData, getData, updateData, deleteData, updateRecipeIcon, getRandomRecipe}
 
 }
 
