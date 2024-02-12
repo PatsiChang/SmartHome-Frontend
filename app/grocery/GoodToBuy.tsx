@@ -43,7 +43,6 @@ const GoodToBuy = ({existingFormValue, setExistingFormValue, visibility, setVisi
             
     }
     useEffect(() => {
-        // This code will run after setExistingFormValue has updated the state
         if (existingFormValue?.groceryID!== undefined){
             setVisibility(true);
         }

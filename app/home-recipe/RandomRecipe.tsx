@@ -6,8 +6,6 @@ import { RandomRecipeProps } from "./page";
 const RandomRecipe = ({randomRecipeVisibility, setRandomRecipeVisibility}: RandomRecipeProps) => {
     const { currentRandomRecipe, getRandomRecipe, setCurrentRandomRecipe }  = useRecipeData();
     const [ decided, setDecided ] = useState<boolean>(false);
-
-
  
     // const firstRandomRecipe = getRandomRecipe();
 

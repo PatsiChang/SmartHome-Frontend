@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useState } from "react";
 import { v4 as uuidv4 } from "uuid"
 
 export interface Steps {
@@ -7,33 +7,52 @@ export interface Steps {
     [key: string]: string | number;
 }
 interface StepsListProps {
-    stepsInput: Steps[];
-    setStepsInput: React.Dispatch<React.SetStateAction<Steps[]>>;
+    stepsInput: string[];
+    setStepsInput: React.Dispatch<React.SetStateAction<string[]>>;
   }
 
 const StepList = ({ stepsInput, setStepsInput }: StepsListProps ) => {
+    
+    const [stepListInStepsType, setStepListInStepsType] = useState<Steps[]>([{ id: '', step: '' }])
+
+    const changeStepToString = ( steps: Steps[]) => {
+        let stepInStringType : string[] = [];
+        steps.forEach((step)=>{
+            stepInStringType.push(step.step);
+        })
+        setStepsInput(stepInStringType)
+    }
+    const changeStringToStep = ( steps: string[]) => {
+        let stepInStepType : Steps[] = [];
+        steps.forEach((step)=>{
+            stepInStepType.push({ id: uuidv4(), step: step})
+        })
+        setStepListInStepsType(stepInStepType)
+    }
+    changeStringToStep;
 
     //Add new Input Fields
     const addNewStepsInputFields : MouseEventHandler<HTMLButtonElement> = (e) => {
-        setStepsInput( ( previousInput ) => [...previousInput, { id: uuidv4(), step: ''}]);
+        setStepListInStepsType( ( previousInput ) => [...previousInput, { id: uuidv4(), step: ''}]);
     }
 
     //Change IngredientState with input fields Index
     const handleInputChange = (idx: number, field: string, value: string) => {
-        const newStepsInput = [...stepsInput];
+        const newStepsInput = [...stepListInStepsType];
         newStepsInput[idx][field] = value;
         if(newStepsInput[idx].id!==""){
-            setStepsInput(newStepsInput);
+            setStepListInStepsType(newStepsInput);
+            changeStepToString(stepListInStepsType);
         }else{
             newStepsInput[idx].id = uuidv4();
-            setStepsInput(newStepsInput);
+            setStepListInStepsType(newStepsInput);
         }
         
     };
 
     //Delete Row
     const deleteRow = (id: string) => {
-        setStepsInput((prevSteps) => prevSteps.filter(
+        setStepListInStepsType((prevSteps) => prevSteps.filter(
             (step) => step.id !== id )
         );
     }
@@ -42,7 +61,7 @@ const StepList = ({ stepsInput, setStepsInput }: StepsListProps ) => {
         <div id="ingredientListBody">
              {/* <label htmlFor="stepsParts">Steps: </label> */}
              {
-                stepsInput.map((step, idx) => {
+                stepListInStepsType.map((step, idx) => {
                     return (
                         <div key= {step.id}>
                             <div className="stepsParts" >

@@ -76,6 +76,7 @@ const CreateNewGroceryItem = ( {existingFormValue, setExistingFormValue, visibil
     const SubmitNewGroceryItem: FormEventHandler<HTMLFormElement> = async (event) => {
         //Prevent browser reload content
         event.preventDefault();
+        event.stopPropagation;
         console.log("Inside Submit")
         await postData({ groceryRegisterForm: groceryItemState, groceryBuyState: groceryBuyState });
         await getData({groceryBuyState: groceryBuyState});

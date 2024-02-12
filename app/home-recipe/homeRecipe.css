@@ -52,7 +52,8 @@ li.pageContent:hover{
     margin-top: 10px;
     display: flex;
     justify-content: center;
-    justify-self: center
+    justify-self: center;
+    max-height: 20%;
 }
 #sashimiDemo{
     margin-top: 20px;
@@ -62,6 +63,7 @@ li.pageContent:hover{
 .createNewRecipe{
     display: flex;
     justify-content: space-between;
+    color: var(--lighterColor)
 }
 .middleRow{
     margin-top: 10px;
@@ -325,6 +327,7 @@ input[type='radio']:checked:after {
     background-color: rgb(37, 36, 36);
     display: flex;
     justify-content: flex-start;
+    color: white;
 }
 #recipeNames{
     margin: 0px 0px 5px 10px;
@@ -345,12 +348,12 @@ input[type='radio']:checked:after {
 
 /* Random Recipe Generate */
 #randomRecipeContainer{
-    width: 60vw;
+    width: 50vw;
     height: 70vh;
     background-color: var(--darkColor0);
     position: fixed;
     top: 15%;
-    left: 20%;
+    left: 25%;
     color: var(--lighterColor);
     border: 2px solid var(--middleColor);
     border-radius: 10px;

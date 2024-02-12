@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Form } from '../home-recipe/RegisterRecipe';
+import { Form, RecipeTypes } from '../home-recipe/RegisterRecipe';
 import { Ingredient } from '../home-recipe/IngredientList';
 
 export type GetRecipeType = {
@@ -10,7 +10,7 @@ export type GetRecipeType = {
 export type ReceipeData = {
   recipeID?: string;
   recipeName: string;
-  type: string;
+  type: RecipeTypes;
   ingredient: Ingredient[];
   steps: string[];
   imgURL?: string;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import useRecipeData, { ACTION, GetRecipeType, ReceipeData } from "../hooks/useRecipeData";
 import RecipeDetails from "./RecipeDetails";
 // import RecipeDetails from "./RecipeDetails";
@@ -7,7 +7,12 @@ type DeleteRecipeBtnOnClickHandler = (recipeID: string) => React.MouseEventHandl
 type ShowdetailedRecipe = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
 export type CloseRecipeDetails = React.MouseEventHandler<HTMLButtonElement>
 
-const HandleRecipe = () => {
+export type HandleRecipeProps = {
+    existingFormValue: ReceipeData,
+    setExistingFormValue: Dispatch<SetStateAction<ReceipeData>>,
+}
+
+const HandleRecipe = ( {existingFormValue, setExistingFormValue} : HandleRecipeProps) => {
     const {recipeList, deleteData } = useRecipeData();
 
     const[detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
@@ -33,10 +38,15 @@ const HandleRecipe = () => {
         setDetailedRecipe(recipe); 
     }
 
-    const closeRecipeDetails: CloseRecipeDetails = (e) =>{
+    const closeRecipeDetails: CloseRecipeDetails = (e) => {
         e.stopPropagation();
         setDetailedRecipe(null);
     }
+    const updateRecipeEditBtnFunction = (recipe: ReceipeData) => {
+        setExistingFormValue(recipe);
+        
+        // e.stopPropagation();
+}
 
     return (
         <div className="recipeList">
@@ -52,7 +62,7 @@ const HandleRecipe = () => {
                             <h2>{ recipe.recipeName }</h2>
                             <h3>{ recipe.type }</h3>
                             <br></br>
-                            <button>Edit</button>
+                            <button onClick={()=>updateRecipeEditBtnFunction(recipe)}>Edit</button>
                         </div>
                     </div>
        

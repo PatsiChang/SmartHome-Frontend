@@ -41,32 +41,36 @@ const IngredientList = ({ ingredientInput, setIngredientInput }: IngredientListP
         );
     }
 
+    const createIngredientRows = (ingredientInput: Ingredient[]) => {
+        return(
+            ingredientInput.map((ingredient, idx) => {
+                return (
+                    <div id="ingredientParts" key= {ingredient.id || idx}>
+                        <div className="ingredientSubLabel" >
+                            { idx === 0 && <div>Ingredient </div> }
+                            <div>
+                                <input type="text" value = {ingredient.ingredientName} onChange={(e) => handleInputChange(idx, 'ingredientName', e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="ingredientSubLabel" >
+                            { idx === 0 && <div >Amount </div> }
+                            <div>
+                                <input type="text" value = {ingredient.ingredientAmount}  onChange={(e) => handleInputChange(idx, 'ingredientAmount', e.target.value)} />
+                            </div>
+                        </div>
+                        <div id="deleteIngredientRow" onClick={ () => deleteRow(ingredient.id) }>
+                            { idx != 0 && <div> - </div> }
+                        </div>
+                    </div>
+                )
+            })
+        )
+    }
+
     return(
         <div id="ingredientListBody">
              <label htmlFor="ingredientParts">Recipe Ingredient: </label>
-             {
-                ingredientInput.map((ingredient, idx) => {
-                    return (
-                        <div id="ingredientParts" key= {ingredient.id}>
-                            <div className="ingredientSubLabel" >
-                                { idx === 0 && <div>Ingredient </div> }
-                                <div>
-                                    <input type="text" value = {ingredient.ingredientName} onChange={(e) => handleInputChange(idx, 'ingredientName', e.target.value)} />
-                                </div>
-                            </div>
-                            <div className="ingredientSubLabel" >
-                                { idx === 0 && <div >Amount </div> }
-                                <div>
-                                    <input type="text" value = {ingredient.ingredientAmount}  onChange={(e) => handleInputChange(idx, 'ingredientAmount', e.target.value)} />
-                                </div>
-                            </div>
-                            <div id="deleteIngredientRow" onClick={ () => deleteRow(ingredient.id) }>
-                                { idx != 0 && <div> - </div> }
-                            </div>
-                        </div>
-                    )
-                })
-            }
+             { createIngredientRows(ingredientInput) }
             <button type="button" id="addIngredient" onClick={ addNewIngredientInputFields }>Add Ingredients</button>
         </div>               
     )
