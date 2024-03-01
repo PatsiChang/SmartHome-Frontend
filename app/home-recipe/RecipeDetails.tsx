@@ -14,7 +14,7 @@ const RecipeDetails = ({recipe, closeRecipeDetails} : {recipe: ReceipeData | nul
             <div key = {recipe.recipeID}>
                 <div id="detailedRecipeUpperRow">
                     <img src={`http://localhost:8080/${recipe.recipeID}.jpg`} alt={'recipeIcon'}  width="300px"/>
-                    <div>{ recipe.recipeName }</div>
+                    <div id="recipeDetailName">{ recipe.recipeName }</div>
                 </div> 
                 <div>
                     <div id="ingredientRow">

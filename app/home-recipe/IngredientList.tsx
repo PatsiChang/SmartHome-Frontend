@@ -1,7 +1,8 @@
 
 //Return solely the Ingredient Input fields and values
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid"
+import { ReceipeData } from "../hooks/useRecipeData";
 
 export interface Ingredient {
     id: string;
@@ -12,9 +13,10 @@ export interface Ingredient {
 interface IngredientListProps {
     ingredientInput: Ingredient[];
     setIngredientInput: React.Dispatch<React.SetStateAction<Ingredient[]>>;
+    setRecipeFormData: React.Dispatch<React.SetStateAction<ReceipeData>>;
   }
 
-const IngredientList = ({ ingredientInput, setIngredientInput }: IngredientListProps ) => {
+const IngredientList = ({ ingredientInput, setIngredientInput, setRecipeFormData }: IngredientListProps ) => {
 
     //Add new Input Fields
     const addNewIngredientInputFields : MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -27,12 +29,17 @@ const IngredientList = ({ ingredientInput, setIngredientInput }: IngredientListP
         newIngredientInput[idx][field] = value;
         if(newIngredientInput[idx].id!==""){
             setIngredientInput(newIngredientInput);
+            console.log("Added ingredient new lineee1", ingredientInput);
+
         }else{
             newIngredientInput[idx].id = uuidv4();
             setIngredientInput(newIngredientInput);
+            console.log("Added ingredient new lineee2", ingredientInput);
+
         }
         
     };
+
 
     //Delete Row
     const deleteRow = (id: string) => {

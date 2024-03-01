@@ -10,26 +10,29 @@ type Props = {
     passwordHashed: string,
 }
 
-
-
 const useLogInData  = () => {
     
     const fetchData = (logInRestfulType: LogInRestfulType) => 
     async({ userId, passwordHashed } : Props)=>{
 
-        const logInParam = {
-          userId: userId,
-          passwordHashed: passwordHashed,
-        }
+      const formData = new FormData();
+      formData.append("userId", userId as string);
+      formData.append("passwordHashed", passwordHashed as string);
+
+        // const formData: FormData = {
+        //   userId: userId,
+        //   passwordHashed: passwordHashed,
+        // }
+
         try{
-            if(logInRestfulType === LogInRestfulType.POST ) {
+            if(logInRestfulType === LogInRestfulType.PUT ) {
                 const response = await fetch(process.env.NEXT_PUBLIC_API_URL1 + "/login", {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(logInParam)
+                    method: 'PUT',
+                    // headers: {
+                    //   'Content-Type': 'application/json',
+                    //   'Accept': 'application/json'
+                    // },
+                    body: formData
                   })
                   .then((response) => response.json())
                   if (response === "true"){
@@ -44,9 +47,9 @@ const useLogInData  = () => {
         }
     }
 
-
   const postData = fetchData(LogInRestfulType.POST);
-  return { postData };
+  const putData = fetchData(LogInRestfulType.PUT);
+  return { postData, putData };
 
 } 
 

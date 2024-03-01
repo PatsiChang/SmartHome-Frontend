@@ -144,15 +144,9 @@ input[type="text"]:focus {
     border:1px solid #9b8383;
 
 }
-/* #createGroceryFormContainer{
 
-    position: absolute;
-    opacity: 0.9;
-    display: flex;
-    align-self: center;
-} */
 #createGroceryForm{
-    width: 78%;
+    width: 88%;
     background-color: #9b8383;
     display: flex;
     justify-content: space-between; 
@@ -165,7 +159,9 @@ input[type="text"]:focus {
     justify-content: flex-start;
     flex-direction: column;
     gap: 20px;
+    color: var(--lighterColor);
 }
+
 #SubmitGroceryItem{
     /* align-self: flex-end; */
     margin-top: 30px;

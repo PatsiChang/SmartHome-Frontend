@@ -53,7 +53,6 @@ const HandleRecipe = ( {existingFormValue, setExistingFormValue} : HandleRecipeP
             {recipeList.map((recipe, index) => (
                 //Not recommended because of Event Bubbling: e.stopPropagation();
                 <div className="recipePreview" key = {recipe.recipeID}>
-                   
                     <div id="recipeIconFrontPage">
                         <img src={handleRecipeIcons(recipe.imgURL)} alt={'recipeIcon'}  width="150px"/>
                     </div>    

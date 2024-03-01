@@ -2,10 +2,12 @@
 import './globals.css'
 import { FormEventHandler } from 'react';
 import useLogInData from './hooks/useLogInData'
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
 
-  const { postData } = useLogInData();
+  const { putData } = useLogInData();
+  const router = useRouter();
 
     const getFormValue = (formData: FormData) => (key: string) => {
         const field = formData.get(key);
@@ -19,15 +21,16 @@ const Home = () => {
     const userId = getFormValue(formData)("loginNameField") as string;
     const passwordHashed = getFormValue(formData)("loginNameField") as string;
     event.preventDefault();
-    await postData({userId: userId, passwordHashed: passwordHashed});
+    await putData({userId: userId, passwordHashed: passwordHashed});
     // directToRecipeHome;
   }
 
-  // const directToRecipeHome = () => {
-  //   return(
-  //     <a href='./home-recipe'></a>
-  //   )
-  // }
+  const directToRecipeHome = () => {
+    router.push('./home-recipe')
+  }
+  const directToSignUpPage = () => {
+    router.push('./signUp')
+  }
 
   return (
     <div id="logInPageContentContainer">
@@ -45,7 +48,10 @@ const Home = () => {
             <input type="text" id="loginPasswordField" 
             name="loginPasswordField" placeholder='********'></input>
           </div>
-          <button id="PersonSignUpLogInBtn" type='submit'>Log In</button>
+          <div className="logInBtns">
+            <div><button id="PersonSignUpLogInBtn" onClick={directToRecipeHome} type='submit'>Log In</button></div>
+            <div><button id="PersonSignUpLogInBtn" onClick={directToSignUpPage}  >Sign Up</button>
+          </div></div>
         </div>
       </form>
     </div>

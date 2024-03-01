@@ -60,12 +60,12 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
     const[imgState, setImgState] = useState<string | null>("Add Recipe Icon");
     // const[selectedOptionRadio, setSelectedOptionRadio] = useState<RecipeTypes>(() => existingFormValue.type);
     const[ingredientInput, setIngredientInput] = useState<Ingredient[]>([{ id: '', ingredientName: '', ingredientAmount: '' }]);
-    const[stepsInput, setStepsInput] = useState<string[]>([""]);
-    const[recipeState, setRecipeState] = useState<ReceipeData>(existingFormValue);
+    const[stepsInput, setStepsInput] = useState<Steps[]>([{ id: '', step: '' }]);
+    // const[recipeState, setRecipeState] = useState<ReceipeData>(existingFormValue);
     const[recipeFormData, setRecipeFormData] = useState<ReceipeData>(() => existingFormValue);
 
     console.log("RegisterRecipe recipeFormData.type", recipeFormData.type)
-    const { postData, recipeList }  = useRecipeData();
+    const { postData, recipeList, updateRecipeIcon}  = useRecipeData();
 
 
     useEffect(()=>{
@@ -124,28 +124,13 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
         })
     };
     const handleReipeTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
-        // e.preventDefault();
         e.stopPropagation();
-        // console.log("handleReipeTypeChange e.currentTarget.value ", e.currentTarget.value)
-        // console.log("handleReipeTypeChange e.target.value ", e.target.value)
-        // console.log("before",recipeState.type)   
-      
-        // setSelectedOptionRadio(e.currentTarget.value as RecipeTypes);
-        // console.log("After selectedOptionRadio",selectedOptionRadio)
-        // setRecipeState(prevState => {
-        //     return {
-        //         ...prevState,
-        //         type: e.target.value as RecipeTypes
-        //     }
-
-        // })  
         setRecipeFormData(prevState => {
             return {
                 ...prevState,
                 type: e.target.value as RecipeTypes
             }
         })
-        // console.log("after",recipeState.type)   
     };
 
 
@@ -154,47 +139,30 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
             //Prevent browser reload content
             event.preventDefault();
             const { currentTarget } = event;
-            const formData = new FormData(currentTarget);
-            // const recipeName = getFormValue(formData)("recipeName") as string;
-            // const type = selectedOptionRadio;
-            // const ingredient = createIngredientMap();
-            // const ingredient = ingredientInput;
-            let steps : string[] = [];
-            // stepsInput.forEach((step)=>steps.push(step.step));
+            let stepsInStringArray : string[] = [];
+            stepsInput.forEach((step)=>stepsInStringArray.push(step.step));
             const imgURL = imgBytes as Blob;
-        
-            // const form: Form = {
-            //     recipeName, 
-            //     type, 
-            //     ingredient, 
-            //     steps,
-            // }
-            // const recipeID = await uploadForm(form);
-            // if(recipeID!== null && recipeID !== undefined && imgURL){
-            //     await updateRecipeIcon({recipeIDTMP: recipeID, recipeIcon: imgURL});
-            // }
+            const form : ReceipeData = {
+                ...recipeFormData,
+                ingredient: ingredientInput,
+                steps: stepsInStringArray,
+            }
+            const recipeID = await uploadForm(form);
+            if(recipeID!== null && recipeID !== undefined && imgURL){
+                await updateRecipeIcon({recipeIDTMP: recipeID, recipeIcon: imgURL});
+            }
         //  window.location.reload();
         } catch (error) {
             console.error(error)
         }
 
     };
-
-
     const handleCloseBtnOnClick = () => {
         setPropsTrigger(false);
         setExistingFormValue(emptyFormValue);
     };
 
-    console.log("RegisterRecipe recipeFormData", recipeFormData)
-    console.log("RegisterRecipe recipeFormData.type", recipeFormData.type)
-    console.log("RegisterRecipe rRecipeTypes.LUNCH", RecipeTypes.LUNCH)
-    console.log("recipeFormData.type  === RecipeTypes.LUNCH", recipeFormData.type  === RecipeTypes.LUNCH)
-
     const isChecked = (type: RecipeTypes) => {
-        console.log("ischecked type", type)
-        console.log("ischecked recipeFormData.type", recipeFormData.type)
-        console.log("ischecked recipeFormData.type === type", recipeFormData.type === type)
         return recipeFormData.type === type
     }
     
@@ -245,7 +213,7 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
                             onChange={handleReipeTypeChange}/>
                         </div>
                     </div>
-                    <div><IngredientList ingredientInput={ingredientInput} setIngredientInput={setIngredientInput} /></div>
+                    <div><IngredientList ingredientInput={ingredientInput} setIngredientInput={setIngredientInput} setRecipeFormData={setRecipeFormData} /></div>
                     <span>Recipe Steps: </span>
                     <div><StepsList stepsInput={stepsInput} setStepsInput={setStepsInput}/></div>
 

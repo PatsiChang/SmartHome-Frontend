@@ -64,7 +64,7 @@ const Page = () => {
  
 
     return(
-        <form id="RegisterSignUpContainer">
+        <form id="RegisterSignUpContainer" onSubmit={submitPersonForm}>
             <div id="personSignUpLabel">Sign Up</div>
             <div id="RegisterSignUpFlexContainer">
                 <div className="registerSignUpItem">
@@ -77,7 +77,7 @@ const Page = () => {
                     <label htmlFor="PersonName">Name: </label>
                     <input type="text" className="personSignUpInputField" id="PersonName" name="PersonName" placeholder=" Elon Musk"
                     onChange={handlePersonNameChange} 
-                    value={person.logInName}/>
+                    value={person.name}/>
                 </div>
                 <div className="registerSignUpItem">
                     <label htmlFor="PersonEmail">Email: </label>

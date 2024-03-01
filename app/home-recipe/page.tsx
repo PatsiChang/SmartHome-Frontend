@@ -61,7 +61,7 @@ function HomeRecipe() {
         <div className='recipeDisplayBanner'><Image id="sashimiDemo" src={sashimiDemo} alt="Sashimi"/></div>
       </div>
       <div className='middleRow'> 
-        <div id='addRecipe'> My Recipe </div>
+        <div id='addRecipe'> My Recipes </div>
       </div>
       <div className='createNewRecipe'>
         <div><button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe +</button></div> 
