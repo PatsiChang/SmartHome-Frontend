@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid"
 
 export interface Steps {
@@ -9,11 +9,13 @@ export interface Steps {
 interface StepsListProps {
     stepsInput: Steps[];
     setStepsInput: React.Dispatch<React.SetStateAction<Steps[]>>;
+    stepsInStringArray?: string[];
   }
 
-const StepList = ({ stepsInput, setStepsInput }: StepsListProps ) => {
+const StepList = ({ stepsInput, setStepsInput, stepsInStringArray}: StepsListProps ) => {
+    console.log(stepsInput);
     
-    // const [stepListInStepsType, setStepListInStepsType] = useState<Steps[]>([{ id: '', step: '' }])
+
 
     //Add new Input Fields
     const addNewStepsInputFields : MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -31,8 +33,29 @@ const StepList = ({ stepsInput, setStepsInput }: StepsListProps ) => {
             setStepsInput(newStepsInput);
 
         }
-        
     };
+    // const [stepListInStepsType, setStepListInStepsType] = useState<Steps[]>([{ id: '', step: '' }])
+    // const changeRecipeStepsToStepType = () => {
+    //     if(stepsInStringArray!== undefined){
+    //         stepsInStringArray.map((step, idx) => {
+    //             console.log("Inside Steps Idx",idx);
+    //             console.log("Inside Steps steps",step);
+    //             if(idx > 0){
+    //                 setStepsInput( ( previousInput ) => [...previousInput, { id: uuidv4(), step: step}]);
+                    
+    //             }else{
+    //                 const newStepsInput = [...stepsInput];
+    //                 newStepsInput[idx].id = uuidv4();
+    //                 newStepsInput[idx].step = step;
+    //                 setStepsInput(newStepsInput);
+    //             }
+    //         })
+    //     }
+    //     }
+    // useEffect(()=>{
+    //     changeRecipeStepsToStepType();
+    // },[])
+    
 
     //Delete Row
     const deleteRow = (id: string) => {

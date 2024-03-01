@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, FormEventHandler, useRef, Dispatch, SetStateAction, ChangeEvent, useEffect } from "react";
+import React, { useState, FormEventHandler, Dispatch, SetStateAction, ChangeEvent, useEffect } from "react";
 import { HomeRecipeState, emptyFormValue } from "./page";
 import ProgressBar from "./ProgressBar";
 import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
@@ -8,6 +8,7 @@ import IngredientList, { Ingredient } from "./IngredientList";
 import { newRecipeValidation } from "./utils";
 import StepsList, { Steps } from "./StepsList";
 import { v4 as uuidv4 } from "uuid"
+
 
 // import { newRecipeValidation } from "./utils";
 
@@ -36,7 +37,6 @@ export type Form = {
     steps : string[] | null;
    
 }
-// imgURL: File | null;
 
 //Restrict File Types
 const ImgTypes = ['image/png', 'image/jpeg']
@@ -50,7 +50,6 @@ export enum RecipeTypes {
 
 }
 const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setExistingFormValue }: RegisterRecipeProps) => {
-    console.log("RegisterRecipe existingFormValue.type", existingFormValue.type)
     //useState Hooks
     const[imgUrl, setImgUrl] = useState<string | null>(null);
     const[imgBytes, setImgBytes] = useState<File | null>(null);
@@ -58,21 +57,18 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
     const[error, setError] = useState<string | null>(null);
     const[errorCode, setErrorCode] = useState<string | null>("");
     const[imgState, setImgState] = useState<string | null>("Add Recipe Icon");
-    // const[selectedOptionRadio, setSelectedOptionRadio] = useState<RecipeTypes>(() => existingFormValue.type);
     const[ingredientInput, setIngredientInput] = useState<Ingredient[]>([{ id: '', ingredientName: '', ingredientAmount: '' }]);
     const[stepsInput, setStepsInput] = useState<Steps[]>([{ id: '', step: '' }]);
-    // const[recipeState, setRecipeState] = useState<ReceipeData>(existingFormValue);
+    const[stepsInStringArray, setStepsInStringArray] = useState<string[]>();
     const[recipeFormData, setRecipeFormData] = useState<ReceipeData>(() => existingFormValue);
 
-    console.log("RegisterRecipe recipeFormData.type", recipeFormData.type)
     const { postData, recipeList, updateRecipeIcon}  = useRecipeData();
 
 
     useEffect(()=>{
-        // console.log("Inside Set State useEffect existingFormValue.type", existingFormValue.type)
-        // setRecipeState(existingFormValue)
         setRecipeFormData(existingFormValue)
         setIngredientInput(existingFormValue.ingredient)
+        setStepsInStringArray(existingFormValue.steps)
     },[existingFormValue])
 
 
@@ -100,6 +96,24 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
     //     } 
     //     return field;
     // };
+    const changeRecipeStepsToStepType = () => {
+        if(stepsInStringArray!== undefined){
+            stepsInStringArray.map((step, idx) => {
+                if(idx > 0){
+                    setStepsInput( ( previousInput ) => [...previousInput, { id: uuidv4(), step: step}]);
+                    
+                }else{
+                    const newStepsInput = [...stepsInput];
+                    newStepsInput[idx].id = uuidv4();
+                    newStepsInput[idx].step = step;
+                    setStepsInput(newStepsInput);
+                }
+            })
+        }
+        }
+    useEffect(()=>{
+        changeRecipeStepsToStepType();
+    },[stepsInStringArray])
 
     const uploadForm = async (form: Form) => {
         // const recipeID: string = await postData({ form: form });
@@ -160,6 +174,8 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
     const handleCloseBtnOnClick = () => {
         setPropsTrigger(false);
         setExistingFormValue(emptyFormValue);
+        setIngredientInput([{ id: '', ingredientName: '', ingredientAmount: '' }]);
+        setStepsInput([{ id: '', step: '' }]);
     };
 
     const isChecked = (type: RecipeTypes) => {
@@ -213,9 +229,11 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
                             onChange={handleReipeTypeChange}/>
                         </div>
                     </div>
-                    <div><IngredientList ingredientInput={ingredientInput} setIngredientInput={setIngredientInput} setRecipeFormData={setRecipeFormData} /></div>
+                    <div><IngredientList ingredientInput={ingredientInput} setIngredientInput={setIngredientInput} 
+                            setRecipeFormData={setRecipeFormData} /></div>
                     <span>Recipe Steps: </span>
-                    <div><StepsList stepsInput={stepsInput} setStepsInput={setStepsInput}/></div>
+                    <div><StepsList stepsInput={stepsInput} setStepsInput={setStepsInput}
+                            stepsInStringArray={stepsInStringArray} /></div>
 
                     {/* <input type="textfield" id="steps" name="steps" placeholder=" Steps"/> */}
                     <span id="responce"></span>

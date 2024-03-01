@@ -36,7 +36,7 @@ function HomeRecipe() {
   const { getRandomRecipe }  = useRecipeData();
   const[propsTrigger, setPropsTrigger] = useState(false);
   const[randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
-  const [existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
+  const[existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
 
 
   const toggleRegisterNewRecipe = () => {
@@ -48,7 +48,6 @@ function HomeRecipe() {
 
   }
   useEffect(() => {
-    console.log("useEffect")
     if (existingFormValue?.recipeID!== undefined){
       setPropsTrigger(true);
     }
