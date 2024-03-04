@@ -10,7 +10,6 @@ import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
 import useRecipeData, { ReceipeData } from '../hooks/useRecipeData';
 import RandomRecipe from './RandomRecipe';
-// import RecipeDetails from './RecipeDetails';
 
 export type HomeRecipeState = {
   propsTrigger: boolean;
@@ -57,8 +56,9 @@ function HomeRecipe() {
     <main>
       <div className='homeRecipe'>
         <div><HomeRecipeNavBar /></div>
-        <div className='recipeDisplayBanner'><Image id="sashimiDemo" src={sashimiDemo} alt="Sashimi"/></div>
       </div>
+      <div><ImgSlider /></div>
+
       <div className='middleRow'> 
         <div id='addRecipe'> My Recipes </div>
       </div>
@@ -69,8 +69,6 @@ function HomeRecipe() {
       <div><RandomRecipe randomRecipeVisibility={randomRecipeVisibility} setRandomRecipeVisibility={setRandomRecipeVisibility} /></div>
       <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue}/></div>
       <div><HandleRecipe existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue}/></div>
-      <div className='imgSliderContainer'><ImgSlider /></div>
-      {/* <div><ImageGrid /></div> */}
     </main>
   
   )

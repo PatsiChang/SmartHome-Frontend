@@ -4,7 +4,7 @@ body{
     padding: 10px;
     max-width: 100vw;
     overflow-x: hidden;
-    margin: 2% 5% 2% 5%;
+    margin: 2% 7% 2% 7%;
 }
 :root{
     --darkColor: rgb(66, 62, 62);
@@ -55,19 +55,15 @@ li.pageContent:hover{
     align-items: end;
     list-style-type: none;
 }
-
 /* Banner */
-.recipeDisplayBanner{
-    margin-top: 10px;
+#imgSliderParent{
     display: flex;
     justify-content: center;
     justify-self: center;
-    max-height: 20%;
+    width: 100%;
+    height: 40vh;
 }
-#sashimiDemo{
-    margin-top: 20px;
-    width: 400px;
-}
+
 /* Middle Row */
 .createNewRecipe{
     display: flex;
@@ -84,7 +80,6 @@ li.pageContent:hover{
     height: 0;
     width: 0;
     opacity: 0;
-
 }
 #addRecipeIcons{
     max-height: 20vh;
@@ -108,19 +103,6 @@ li.pageContent:hover{
     font-size: 20px;
     font-family: 'Poppins-thin', 'arial';
 }
-.img-grid{
-    margin: 20px auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 40px;
-}
-.img-wrap{
-    /* overflow: hidden; */
-    height: 0;
-    padding: 50% 0;
-    position: relative;
-    opacity: 0.8;
-}
 
 /* ProgressBar */
 .progress-bar{
@@ -142,6 +124,7 @@ li.pageContent:hover{
     max-height:90%;
     border-radius: 10px;
     overflow-y: scroll;
+    z-index: 1000; 
 }
 ::-webkit-scrollbar {
     display: none;

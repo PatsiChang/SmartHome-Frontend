@@ -47,7 +47,6 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
       formData.append("recipeIcon", recipeIcon as Blob);
 
       if(action === ACTION.get) {
-        
         await fetch(process.env.NEXT_PUBLIC_API_URL + directory, {
           method: 'GET',
           headers: {
@@ -76,7 +75,6 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
           body: JSON.stringify(recipeID),
         })
         await getData({recipeName: "GetData"});
-          
       }else if(action === ACTION.post) {
         const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/recipe", {
           method: 'POST',
@@ -86,7 +84,6 @@ const useRecipeData = ({ recipeIDTMP, recipeName, form } : Props = {}) => {
           body: JSON.stringify(form)
           
         })
-        
       const recipeID = await response.json();
       await getData({recipeName: "GetData"});
       return recipeID;

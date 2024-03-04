@@ -152,7 +152,6 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
         try {
             //Prevent browser reload content
             event.preventDefault();
-            const { currentTarget } = event;
             let stepsInStringArray : string[] = [];
             stepsInput.forEach((step)=>stepsInStringArray.push(step.step));
             const imgURL = imgBytes as Blob;

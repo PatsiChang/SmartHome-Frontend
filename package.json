@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/uuid": "^9.0.7",
+    "bootstrap": "^5.3.3",
     "firebase": "^10.6.0",
     "next": "14.0.3",
     "react": "^18",
