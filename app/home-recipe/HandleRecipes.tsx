@@ -53,19 +53,23 @@ const HandleRecipe = ({ setExistingFormValue }: HandleRecipeProps) => {
         setRecipeTypeState(recipeType);
     }
     return (
-        <div className="row g-2">
+        <div className= {`row g-2 {$zindex-dropdown}`} >
             <div className="row justify-content-center" style={{ margin: "3% 0% 2% 0%" }}>
                 <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.BREAKFAST)} className="btn btn-dark me-2">Breakfast</button>
+                    <button type="button" onClick={() => filterRecipe(RecipeTypes.BREAKFAST)} 
+                    className="btn btn-dark me-2">Breakfast</button>
                 </div>
                 <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.LUNCH)} className="btn btn-dark me-2">Lunch</button>
+                    <button type="button" onClick={() => filterRecipe(RecipeTypes.LUNCH)} 
+                    className="btn btn-dark me-2">Lunch</button>
                 </div>
                 <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.DINNER)} className="btn btn-dark me-2">Dinner</button>
+                    <button type="button" onClick={() => filterRecipe(RecipeTypes.DINNER)} 
+                    className="btn btn-dark me-2">Dinner</button>
                 </div>
                 <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.DESSERT)} className="btn btn-dark me-2">Dessert</button>
+                    <button type="button" onClick={() => filterRecipe(RecipeTypes.DESSERT)} 
+                    className="btn btn-dark me-2">Dessert</button>
                 </div>
             </div>
             {recipeList.filter(recipe => recipe.type === recipeTypeState).map((recipe, index) => (

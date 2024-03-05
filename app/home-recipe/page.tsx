@@ -58,16 +58,17 @@ function HomeRecipe() {
         <div><HomeRecipeNavBar /></div>
       </div>
       <div><ImgSlider /></div>
-
-      <div className='middleRow'>
-        <div id='addRecipe'> My Recipes </div>
-      </div>
       <div className='createNewRecipe'>
         <div><button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe +</button></div>
         <div><button onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
       </div>
-      <div><RandomRecipe randomRecipeVisibility={randomRecipeVisibility} setRandomRecipeVisibility={setRandomRecipeVisibility} /></div>
-      <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>
+      <div className="position-fixed top-50 start-50 translate-middle" style={{zIndex: "9999" }}>
+        <RandomRecipe randomRecipeVisibility={randomRecipeVisibility}
+          setRandomRecipeVisibility={setRandomRecipeVisibility} />
+      </div>
+      <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
+        existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} />
+      </div>
       <div><HandleRecipe existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>
     </main>
 

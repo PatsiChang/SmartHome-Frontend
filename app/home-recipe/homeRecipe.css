@@ -295,7 +295,8 @@ input[type='radio']:checked:after {
     border-radius: 5px;
     background-color: var(--middleColor0);
     padding: 15px;
-    gap: 50px
+    gap: 50px;
+    
 }
 /* Random Recipe Generate */
 #randomRecipeContainer{
@@ -331,10 +332,10 @@ input[type='radio']:checked:after {
     border-radius: 10px;
     display: flex;
     justify-content: center;
+    z-index: 2000; 
+
 }
 #randomRecipeOverlay{
-    width: 100%;
-    height: 100%;
     overflow: scroll;
 }
 #randomRecipeOverlaySteps{
@@ -362,8 +363,8 @@ input[type='radio']:checked:after {
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
-    height: 100%;
-    margin: 0px 0px 3% 0px;
+    background-Color: var(--darkColor);
+    height: 80%;
 }
 #randomRecipeDecisionContainer{
     display: flex;
