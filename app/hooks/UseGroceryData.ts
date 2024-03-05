@@ -22,23 +22,53 @@ const useGroceryData = () => {
 
   const fetchData = (action: groceryRestfulType) => async ({groceryRegisterForm, groceryID, groceryBuyState}: UseGroceryProps) => {
 
-    
-    try {
-      if(action === groceryRestfulType.GET && groceryBuyState === GroceryBuyState.GoodToBuy) {
-        const response = await fetch(process.env.NEXT_PUBLIC_API_URL+ "/groceryItem", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-          })
-          if (response.ok){
-            const data = await response.json();
-            setgoodToBuyGroceryList(data);
-            return goodToBuyGroceryList;
-          }
-           
+  // const getRequestConfig = (action: groceryRestfulType) => <T>(input: T) => {
+  //   switch(action) {
+  //     case "GET": {
+  //       return {}
+  //     }
+  //     case "POST": {
+  //       return {
+  //         body: JSON.stringify({ groceryRegisterForm: input})
+  //       }
+  //     }
+  //     case "DELETE": {
+  //       return {
+  //         body: JSON.stringify({ groceryID: input})
+  //       }
+  //     }
+  //     default: 
+  //       throw Error(`Unsuppost method: ${action}`)
+  //   }
+  // }
+  // try{
+  //   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/groceryItem", {
+  //     method: action,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     },
+  //     ...getRequestConfig(action)(groceryRegisterForm)
+  //   });
+  // }
+  
+
+  try {
+    if(action === groceryRestfulType.GET && groceryBuyState === GroceryBuyState.GoodToBuy) {
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL+ "/groceryItem", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        })
+        if (response.ok){
+          const data = await response.json();
+          setgoodToBuyGroceryList(data);
+          return goodToBuyGroceryList;
+        }
           
+        
       }else if(action === groceryRestfulType.GET && groceryBuyState === GroceryBuyState.MustBuy) {
         const response = await fetch(process.env.NEXT_PUBLIC_API_URL+ "/groceryItem/groceryMustBuyItem", {
             method: 'GET',
@@ -99,9 +129,6 @@ const useGroceryData = () => {
   const getData = fetchData(groceryRestfulType.GET);
   const deleteData = fetchData(groceryRestfulType.DELETE);
   
-  const convertGroceryItemsToGroceryForm = (GroceryItemsLi: Array<GroceryItem>) => {
-
-  }
     
     useEffect(() => {
       getData({groceryBuyState:GroceryBuyState.GoodToBuy});

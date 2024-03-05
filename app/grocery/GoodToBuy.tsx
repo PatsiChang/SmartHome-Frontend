@@ -7,7 +7,7 @@ import { GoodToBuyProps } from "./page";
 
 type DeleteGroceryItemBtn = (groceryID: string, groceryBuyState: GroceryBuyState) => React.MouseEventHandler<HTMLButtonElement>
 
-const GoodToBuy = ({existingFormValue, setExistingFormValue, visibility, setVisibility, groceryBuyState} : GoodToBuyProps) => {
+const GoodToBuy = ({ existingFormValue, setExistingFormValue, visibility, setVisibility, groceryBuyState }: GoodToBuyProps) => {
     const { goodToBuyGroceryList, mustBuyGroceryList, deleteData, getData } = UseGroceryData();
     const [groceryItemVisibility, setGroceryItemVisibility] = useState<boolean>(false)
     console.log("GoodToBuy", goodToBuyGroceryList)
@@ -18,9 +18,9 @@ const GoodToBuy = ({existingFormValue, setExistingFormValue, visibility, setVisi
     const deleteGroceryItemBtn: DeleteGroceryItemBtn = (groceryID) => async (event) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this recipe?");
         // event.stopPropagation();
-        if(isConfirmed){
-            await deleteData({groceryID: groceryID, groceryBuyState: groceryBuyState});
-            await getData({groceryBuyState: groceryBuyState});
+        if (isConfirmed) {
+            await deleteData({ groceryID: groceryID, groceryBuyState: groceryBuyState });
+            await getData({ groceryBuyState: groceryBuyState });
             // window.location.reload();
         }
     }
@@ -28,29 +28,29 @@ const GoodToBuy = ({existingFormValue, setExistingFormValue, visibility, setVisi
         if ((e.target as HTMLElement).id === 'removeGroceryItemBtn') {
             return;
         }
-        return groceryItemVisibility? setGroceryItemVisibility(false) : setGroceryItemVisibility(true);
+        return groceryItemVisibility ? setGroceryItemVisibility(false) : setGroceryItemVisibility(true);
     }
     const groceryItemDetails = (groceryItem: GroceryItem) => {
-        return groceryItemVisibility? (
-            <div id="groceryItemDetails" onClick={()=>updateGroceryItem(groceryItem)}>
-               <div>{groceryItem.groceryItemPrice}</div>
-               <div>{groceryItem.groceryShop}</div>
+        return groceryItemVisibility ? (
+            <div id="groceryItemDetails" onClick={() => updateGroceryItem(groceryItem)}>
+                <div>{groceryItem.groceryItemPrice}</div>
+                <div>{groceryItem.groceryShop}</div>
             </div>
-        ): <></>;
+        ) : <></>;
     }
     const updateGroceryItem = (groceryItem: GroceryItem) => {
-            setExistingFormValue(groceryItem);
-            
+        setExistingFormValue(groceryItem);
+
     }
     useEffect(() => {
-        if (existingFormValue?.groceryID!== undefined){
+        if (existingFormValue?.groceryID !== undefined) {
             setVisibility(true);
         }
-      }, [existingFormValue]);
- 
+    }, [existingFormValue]);
+
     const renderGroceryIndividuals = (groceryItem: GroceryItem) => {
-        return(
-            <div key = {groceryItem.groceryID}>
+        return (
+            <div key={groceryItem.groceryID}>
                 <div onClick={toggleGroceryItemDetails} className="goodToBuyGrocery">
                     <div>{groceryItem.groceryItemName}</div>
                     <div>
@@ -63,7 +63,7 @@ const GoodToBuy = ({existingFormValue, setExistingFormValue, visibility, setVisi
         )
     }
     const renderGroceryIndividualsType = (groceryList: GroceryItem[], groceryType: GroceryType) => {
-        return(
+        return (
             <div className="ListByType">
                 <label>{groceryType}</label>
                 {groceryList
@@ -76,10 +76,10 @@ const GoodToBuy = ({existingFormValue, setExistingFormValue, visibility, setVisi
         )
     }
     const renderGroceryListWithBuyState = (groceryList: GroceryItem[]) => {
-        return(
+        return (
             <div>
                 {Object.values(GroceryType).map((groceryType) => {
-                    return(
+                    return (
                         <div key={groceryType}>
                             {renderGroceryIndividualsType(groceryList, groceryType)}
                         </div>
@@ -88,10 +88,10 @@ const GoodToBuy = ({existingFormValue, setExistingFormValue, visibility, setVisi
             </div>
         )
     }
-  
-    return(
+
+    return (
         <div>
-             <div className="goodToBuyList">
+            <div className="goodToBuyList">
                 {groceryBuyState === GroceryBuyState.GoodToBuy && renderGroceryListWithBuyState(goodToBuyGroceryList)}
                 {groceryBuyState === GroceryBuyState.MustBuy && renderGroceryListWithBuyState(mustBuyGroceryList)}
             </div>

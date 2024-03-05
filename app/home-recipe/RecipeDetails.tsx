@@ -1,19 +1,18 @@
 // import useRecipeData, { ReceipeData } from "../hooks/UseRecipeData";
 
-import { useEffect } from "react";
-import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
+import { ReceipeData } from "../hooks/useRecipeData";
 import { CloseRecipeDetails } from "./HandleRecipes";
 
 const RecipeDetails = ({recipe, closeRecipeDetails} : {recipe: ReceipeData | null; closeRecipeDetails: CloseRecipeDetails}) => {
 
     return recipe? (
         <div className="detailedRecipe">
-            <div id="closeDetailedRecipeBtn">
+            <div id="closeDetailedRecipeBtn" >
                 <button onClick={closeRecipeDetails}> close </button>
             </div>
             <div key = {recipe.recipeID}>
                 <div id="detailedRecipeUpperRow">
-                    <img src={`http://localhost:8080/${recipe.recipeID}.jpg`} alt={'recipeIcon'}  width="300px"/>
+                    <div><img src={`http://localhost:8080/${recipe.recipeID}.jpg`} alt={'recipeIcon'} style={{width: "250px", height: "200px"}}/></div>
                     <div id="recipeDetailName">{ recipe.recipeName }</div>
                 </div> 
                 <div>

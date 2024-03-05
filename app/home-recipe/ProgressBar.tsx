@@ -11,25 +11,25 @@ type ProgressBarProps = {
 type ProgressBarError = {
     error: UploadFormError["error"];
     setError: UploadFormError["setError"];
-    
+
 }
 
-const ProgressBar = ({file, setFile} : ProgressBarProps) => {
+const ProgressBar = ({ file, setFile }: ProgressBarProps) => {
     //useStorage will trigger useEffect in useStorage hook and return the url and progress
     const { url, progress } = useStorage(file);
 
-    console.log("ProgressBar main", { url, progress, file } )
+    console.log("ProgressBar main", { url, progress, file })
     useEffect(() => {
-        console.log("ProgressBar useEffect", { url, progress, file } )
-        if(url) {
+        console.log("ProgressBar useEffect", { url, progress, file })
+        if (url) {
             setFile(null);
         }
     }, [url, setFile])
 
-    return(
-        <div className='progress-bar' style={{ width: progress + '%'}}></div>
+    return (
+        <div className='progress-bar' style={{ width: progress + '%' }}></div>
     );
-    
+
 }
 
 export default ProgressBar;

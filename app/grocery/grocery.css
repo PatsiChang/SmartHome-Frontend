@@ -1,9 +1,10 @@
 /* Home Page */
-::selection{
+::selection {
     color: rgb(223, 223, 223);
     background-color: var(--middleColor);
 }
-:root{
+
+:root {
     --darkColor: rgb(66, 62, 62);
     --middleColor0: rgb(166, 159, 159);
     --middleColor1: rgb(148, 141, 141);
@@ -12,13 +13,15 @@
     --modernPink: #9b8383;
     --darkerPink: #645858;
 }
-.body{    
+
+.body {
     height: 100%;
     width: 100%;
     background-color: var(--darkColor);
     overflow: scroll;
 }
-#subNav{
+
+#subNav {
     display: flex;
     justify-content: space-evenly;
     font-size: smaller;
@@ -26,11 +29,12 @@
     padding: 10px 0px 10px 0px;
     background-color: var(--middleColor);
 }
+
 /* #GroceryListNav{
     padding: 0px 100px 0px 100px;
     background-color: var(--middleColor0);
 } */
-#GroceryMainPageBody{
+#GroceryMainPageBody {
     z-index: 5;
     display: flex;
     justify-content: space-evenly;
@@ -39,7 +43,8 @@
     background-color: var(--middleColor0);
     /* padding: 10px 5px 10px 5px; */
 }
-.GrocerytoByList{
+
+.GrocerytoByList {
     border: 2px solid var(--darkColor);
     border-radius: 5px;
     width: 100%;
@@ -47,18 +52,20 @@
     padding: 10px 5px 10px 5px;
     overflow: scroll;
 }
-#goodToBuyLabel{
+
+#goodToBuyLabel {
     display: flex;
     justify-content: center;
     width: 100%;
     gap: 5px;
     padding: 0px 0px 20px 0px;
 }
-#GoodToBuy{
+
+#GoodToBuy {
     height: 80vh;
 }
 
-.addGroceryBtn{
+.addGroceryBtn {
     width: 35px;
     height: 35px;
     border: 1px solid var(--lighterColor);
@@ -66,19 +73,22 @@
     margin-top: -5px;
     border-radius: 50%;
 }
-:hover{
+
+:hover {
     size: larger;
 }
-.goodToBuyList{
+
+.goodToBuyList {
     height: 100%;
     flex-direction: column;
     display: flex;
     justify-content: space-evenly;
     align-self: flex-start;
     width: 100%;
-    
+
 }
-.ListByType{
+
+.ListByType {
     border: 0.5px solid var(--darkColor);
     border-radius: 3%;
     height: 100px;
@@ -86,14 +96,19 @@
     overflow: scroll;
     margin: 0.6px;
 }
-.ListByType :hover{
+
+.ListByType :hover {
     background-color: var(--middleColor1);
 }
+
 .ListByType label:hover {
-    background-color: initial; /* Set the background color back to its initial value */
-    color: var(--lighterColor); /* Set the text color back to its initial value */
+    background-color: initial;
+    /* Set the background color back to its initial value */
+    color: var(--lighterColor);
+    /* Set the text color back to its initial value */
 }
-.goodToBuyGrocery{
+
+.goodToBuyGrocery {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -103,16 +118,19 @@
     user-select: none;
     overflow: hidden;
 }
-#groceryItemDetails{
-    font-size:x-small;
+
+#groceryItemDetails {
+    font-size: x-small;
     color: var(--lighterColor);
     padding: 0px 0px 0px 8px;
     background-color: var(--middleColor);
 }
-#groceryItemDetails :hover{
+
+#groceryItemDetails :hover {
     background-color: var(--middleColor);
 }
-#removeGroceryItemBtn{
+
+#removeGroceryItemBtn {
     width: 20px;
     height: 20px;
     /* margin-top: -5px; */
@@ -132,6 +150,7 @@ input[type="text"] {
     border-radius: 5px;
     background-color: var(--darkerPink);
 }
+
 select {
     padding: 1px 5px 1px 5px;
     border-radius: 5px;
@@ -139,21 +158,22 @@ select {
 }
 
 input[type="text"]:focus {
-    outline:auto rgb(184, 119, 119);
+    outline: auto rgb(184, 119, 119);
     box-shadow: 0px 0px 5px rgb(217, 117, 117);
-    border:1px solid #9b8383;
+    border: 1px solid #9b8383;
 
 }
 
-#createGroceryForm{
+#createGroceryForm {
     width: 88%;
     background-color: #9b8383;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     padding: 20px;
     /* color: black; */
 }
-#createGroceryInputForm{
+
+#createGroceryInputForm {
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -162,10 +182,11 @@ input[type="text"]:focus {
     color: var(--lighterColor);
 }
 
-#SubmitGroceryItem{
+#SubmitGroceryItem {
     /* align-self: flex-end; */
     margin-top: 30px;
 }
-#createGroceryFormCloseBtn{
+
+#createGroceryFormCloseBtn {
     align-self: flex-start;
 }

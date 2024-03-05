@@ -21,7 +21,7 @@ export type RandomRecipeProps = {
   setRandomRecipeVisibility: Dispatch<SetStateAction<boolean>>,
 }
 
-export const emptyFormValue : ReceipeData = {
+export const emptyFormValue: ReceipeData = {
   recipeID: undefined,
   recipeName: "",
   type: RecipeTypes.BREAKFAST,
@@ -32,10 +32,10 @@ export const emptyFormValue : ReceipeData = {
 
 function HomeRecipe() {
 
-  const { getRandomRecipe }  = useRecipeData();
-  const[propsTrigger, setPropsTrigger] = useState(false);
-  const[randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
-  const[existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
+  const { getRandomRecipe } = useRecipeData();
+  const [propsTrigger, setPropsTrigger] = useState(false);
+  const [randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
+  const [existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
 
 
   const toggleRegisterNewRecipe = () => {
@@ -47,7 +47,7 @@ function HomeRecipe() {
 
   }
   useEffect(() => {
-    if (existingFormValue?.recipeID!== undefined){
+    if (existingFormValue?.recipeID !== undefined) {
       setPropsTrigger(true);
     }
   }, [existingFormValue]);
@@ -59,18 +59,18 @@ function HomeRecipe() {
       </div>
       <div><ImgSlider /></div>
 
-      <div className='middleRow'> 
+      <div className='middleRow'>
         <div id='addRecipe'> My Recipes </div>
       </div>
       <div className='createNewRecipe'>
-        <div><button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe +</button></div> 
+        <div><button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe +</button></div>
         <div><button onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
       </div>
       <div><RandomRecipe randomRecipeVisibility={randomRecipeVisibility} setRandomRecipeVisibility={setRandomRecipeVisibility} /></div>
-      <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue}/></div>
-      <div><HandleRecipe existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue}/></div>
+      <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>
+      <div><HandleRecipe existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>
     </main>
-  
+
   )
 }
 

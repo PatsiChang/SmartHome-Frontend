@@ -7,7 +7,7 @@ import Image from 'next/image';
 const ImgSlider = () => {
     return(
         <main>
-            <div className="row justify-content-center" style={{ marginTop: '1%'}}>
+            <div className="row justify-content-center" style={{ marginTop: '1%', zIndex: 100}}>
                 <div className="col-md-7">
                     <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">

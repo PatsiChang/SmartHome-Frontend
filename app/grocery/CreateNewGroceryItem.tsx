@@ -11,7 +11,7 @@ export enum GroceryType {
     Frozen = "Frozen",
     Vegetables = "Vegetables",
     Fruits = "Fruits",
-    Beverage = "Beverage",
+    Beverage = "Beverßage",
     Household = "Household",
     Pets = "Pets",
     Others = "Others",
@@ -24,22 +24,22 @@ export enum GroceryBuyState {
 }
 export type GroceryItem = {
     groceryID?: string
-    groceryItemName : string,
-    groceryItemType : GroceryType,
-    groceryItemCount : string,
+    groceryItemName: string,
+    groceryItemType: GroceryType,
+    groceryItemCount: string,
     groceryItemPrice: string,
     groceryShop: string,
     groceryBuyState: GroceryBuyState,
 }
 
-const CreateNewGroceryItem = ( {existingFormValue, setExistingFormValue, visibility, setVisibility, groceryBuyState}: CreateNewGroceryFormProps ) => {
+const CreateNewGroceryItem = ({ existingFormValue, setExistingFormValue, visibility, setVisibility, groceryBuyState }: CreateNewGroceryFormProps) => {
     const { postData, getData } = UseGroceryData();
     const [groceryItemState, setGroceryItemState] = useState<GroceryItem>(existingFormValue);
     console.log(existingFormValue.groceryID)
 
     useEffect(() => {
         setGroceryItemState(existingFormValue)
-    }, [existingFormValue]) 
+    }, [existingFormValue])
 
     const handleGroceryNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setGroceryItemState({
@@ -79,7 +79,7 @@ const CreateNewGroceryItem = ( {existingFormValue, setExistingFormValue, visibil
         event.stopPropagation;
         console.log("Inside Submit")
         await postData({ groceryRegisterForm: groceryItemState, groceryBuyState: groceryBuyState });
-        await getData({groceryBuyState: groceryBuyState});
+        await getData({ groceryBuyState: groceryBuyState });
         setExistingFormValue(emptyFormValue);
         setGroceryItemState(existingFormValue);
         setVisibility(false);
@@ -87,52 +87,52 @@ const CreateNewGroceryItem = ( {existingFormValue, setExistingFormValue, visibil
 
     const closeGroceryForm = () => { setVisibility(false); }
 
-    return visibility? (
+    return visibility ? (
 
         // onSubmit={SubmitNewGroceryItem}
         <div id="createGroceryFormContainer">
-            <form id="createGroceryForm"  onSubmit={SubmitNewGroceryItem}>
-            <div id="createGroceryInputForm" >
-                <div>
-                    <label htmlFor="groceryItemName">Name: </label>
-                    <input type="text" id="groceryItemName" name="groceryItemName" placeholder=" Rice"
-                    onChange={handleGroceryNameChange} 
-                    value={groceryItemState.groceryItemName}/>
+            <form id="createGroceryForm" onSubmit={SubmitNewGroceryItem}>
+                <div id="createGroceryInputForm" >
+                    <div>
+                        <label htmlFor="groceryItemName">Name: </label>
+                        <input type="text" id="groceryItemName" name="groceryItemName" placeholder=" Rice"
+                            onChange={handleGroceryNameChange}
+                            value={groceryItemState.groceryItemName} />
+                    </div>
+                    <div>
+                        <label htmlFor="groceryType">Type: </label>
+                        <select name="groceryType" id="groceryType" onChange={handleGroceryTypeChange} value={groceryItemState.groceryItemType}>
+                            {Object.values(GroceryType).map((groceryType) => {
+                                return (<option key={groceryType} value={groceryType}> {groceryType} </option>)
+                            })}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="groceryItemCount">Count: </label>
+                        <input type="text" id="groceryItemCount" name="groceryItemCount" placeholder=" 3 Pieces"
+                            onChange={handleGroceryCountChange}
+                            value={groceryItemState.groceryItemCount} />
+                    </div>
+                    <div>
+                        <label htmlFor="groceryItemPrice">Minimum Price: </label>
+                        <input type="text" id="groceryItemPrice" name="groceryItemPrice" placeholder=" £10"
+                            onChange={handleGroceryPriceChange}
+                            value={groceryItemState.groceryItemPrice} />
+                    </div>
+                    <div>
+                        <label htmlFor="groceryShop">Grocery Shop: </label>
+                        <input type="text" id="groceryShop" name="groceryShop" placeholder=" Morrisons"
+                            onChange={handleGroceryShopChange}
+                            value={groceryItemState.groceryShop} />
+                    </div>
+                    <button type="submit" id="SubmitGroceryItem">Submit Item</button>
+                    <div id="errorCode"></div>
                 </div>
-                <div>
-                    <label htmlFor="groceryType">Type: </label>
-                    <select name="groceryType" id="groceryType" onChange={handleGroceryTypeChange} value={groceryItemState.groceryItemType}>
-                        {Object.values(GroceryType).map((groceryType) =>{
-                                return( <option key={groceryType} value={groceryType}> {groceryType} </option>)
-                        })}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="groceryItemCount">Count: </label>
-                    <input type="text" id="groceryItemCount" name="groceryItemCount" placeholder=" 3 Pieces"
-                     onChange={handleGroceryCountChange} 
-                     value={groceryItemState.groceryItemCount} />
-                </div>
-                <div>
-                    <label htmlFor="groceryItemPrice">Minimum Price: </label>
-                    <input type="text" id="groceryItemPrice" name="groceryItemPrice" placeholder=" £10"
-                     onChange={handleGroceryPriceChange} 
-                     value={groceryItemState.groceryItemPrice} />
-                </div>
-                <div>
-                    <label htmlFor="groceryShop">Grocery Shop: </label>
-                    <input type="text" id="groceryShop" name="groceryShop" placeholder=" Morrisons"
-                     onChange={handleGroceryShopChange} 
-                     value={groceryItemState.groceryShop} />
-                </div>
-                <button type="submit" id="SubmitGroceryItem">Submit Item</button>
-                <div id="errorCode"></div>
-            </div>
-            <button id="createGroceryFormCloseBtn" onClick={closeGroceryForm}>Close</button>
-          
+                <button id="createGroceryFormCloseBtn" onClick={closeGroceryForm}>Close</button>
+
             </form>
         </div>
-        
+
     ) : <></>;
 }
 

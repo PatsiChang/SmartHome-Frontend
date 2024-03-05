@@ -24,7 +24,7 @@ export type GoodToBuyProps = {
     setVisibility: Dispatch<SetStateAction<boolean>>,
     groceryBuyState: GroceryBuyState
 };
-export const emptyFormValue : GroceryItem = {
+export const emptyFormValue: GroceryItem = {
     groceryID: undefined,
     groceryItemName: "",
     groceryItemType: GroceryType.Carbohydrates,
@@ -44,21 +44,21 @@ const GroceryHome = () => {
         setExistingFormValue(emptyFormValue);
         setGroceryBuyState(groceryBuyStateParam);
         setVisibility(true);
-        window.scrollTo({top: 0, behavior: 'smooth'})
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }
     const renderToBuys = (groceryBuyState: GroceryBuyState) => {
-        return(
-            <div id="GoodToBuy"> 
-                <div>< GoodToBuy visibility = {visibility} 
-                existingFormValue = {existingFormValue}
-                setExistingFormValue = {setExistingFormValue}
-                setVisibility = {setVisibility} 
-                groceryBuyState={groceryBuyState}/>
+        return (
+            <div id="GoodToBuy">
+                <div>< GoodToBuy visibility={visibility}
+                    existingFormValue={existingFormValue}
+                    setExistingFormValue={setExistingFormValue}
+                    setVisibility={setVisibility}
+                    groceryBuyState={groceryBuyState} />
                 </div>
             </div>
         )
     }
-    return(
+    return (
         <div className="body">
             <div><HomeRecipeNavBar /></div>
             <br></br>
@@ -67,40 +67,40 @@ const GroceryHome = () => {
                 <div>Grocery Shops</div>
             </div>
             <div style={{ width: "100vw" }}>
-                <CreateNewGroceryItem 
-                    setExistingFormValue = {setExistingFormValue}
-                    existingFormValue = {existingFormValue}
-                    visibility = {visibility} 
-                    setVisibility = {setVisibility} 
-                    groceryBuyState = {groceryBuyState}/>
+                <CreateNewGroceryItem
+                    setExistingFormValue={setExistingFormValue}
+                    existingFormValue={existingFormValue}
+                    visibility={visibility}
+                    setVisibility={setVisibility}
+                    groceryBuyState={groceryBuyState} />
             </div>
 
-             <div id="GroceryMainPageBody">
+            <div id="GroceryMainPageBody">
                 {/* Good To buy, Must Buy, Stock */}
                 <div className="GrocerytoByList">
                     <div id="goodToBuyLabel">
-                        <label>Good To Buy </label> 
-                        <button onClick={()=>openNewGroceryFrom(GroceryBuyState.GoodToBuy)} className="addGroceryBtn"> + </button>
+                        <label>Good To Buy </label>
+                        <button onClick={() => openNewGroceryFrom(GroceryBuyState.GoodToBuy)} className="addGroceryBtn"> + </button>
                     </div>
                     {renderToBuys(GroceryBuyState.GoodToBuy)}
                 </div>
-        
+
                 <div className="GrocerytoByList">
                     <div id="goodToBuyLabel">
-                        <label>Must Buy </label> 
-                        <button onClick={()=>openNewGroceryFrom(GroceryBuyState.MustBuy)} className="addGroceryBtn"> + </button>
+                        <label>Must Buy </label>
+                        <button onClick={() => openNewGroceryFrom(GroceryBuyState.MustBuy)} className="addGroceryBtn"> + </button>
                     </div>
                     {renderToBuys(GroceryBuyState.MustBuy)}
                 </div>
                 <div className="GrocerytoByList">
                     <div id="goodToBuyLabel">
-                        <label>Home Stock</label> 
-                        <button onClick={()=>openNewGroceryFrom(GroceryBuyState.GoodToBuy)} className="addGroceryBtn"> + </button>
+                        <label>Home Stock</label>
+                        <button onClick={() => openNewGroceryFrom(GroceryBuyState.GoodToBuy)} className="addGroceryBtn"> + </button>
                     </div>
                     {renderToBuys(GroceryBuyState.HomeStock)}
 
                 </div>
-             </div>
+            </div>
 
         </div>
     )
