@@ -10,3 +10,12 @@ export const newRecipeValidation = ({ form, recipeList }: { form: Form, recipeLi
     })
     return recipeNameExist;
 }
+
+//Return Images
+export const getImages = (imgURL: string|undefined) => {
+    if (imgURL != null || imgURL != undefined) {
+        return `http://localhost:8080/${imgURL}.jpg`;
+    } else {
+        return `http://localhost:8080/recipeIconAlt.jpg`;
+    }
+}

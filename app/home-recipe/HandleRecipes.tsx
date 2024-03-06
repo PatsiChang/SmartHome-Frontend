@@ -2,12 +2,12 @@ import { Dispatch, SetStateAction, useState } from "react";
 import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
 import RecipeDetails from "./RecipeDetails";
 import { RecipeTypes } from "./RegisterRecipe";
+import { getImages } from "./utils";
 // import RecipeDetails from "./RecipeDetails";
 
 type DeleteRecipeBtnOnClickHandler = (recipeID: string) => React.MouseEventHandler<HTMLButtonElement>
 type ShowdetailedRecipe = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
 export type CloseRecipeDetails = React.MouseEventHandler<HTMLButtonElement>
-
 
 export type HandleRecipeProps = {
     existingFormValue: ReceipeData,
@@ -30,11 +30,7 @@ const HandleRecipe = ({ setExistingFormValue }: HandleRecipeProps) => {
     }
 
     const handleRecipeIcons = (recipeID: string | undefined) => {
-        if (recipeID != null || recipeID != undefined) {
-            return `http://localhost:8080/${recipeID}.jpg`;
-        } else {
-            return `http://localhost:8080/recipeIconAlt.jpg`;
-        }
+        return getImages(recipeID);
     }
 
     const showRecipeDetails: ShowdetailedRecipe = (recipe) => (e) => {
