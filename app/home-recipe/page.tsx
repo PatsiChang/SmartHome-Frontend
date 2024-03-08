@@ -1,9 +1,6 @@
 'use client'
-import Image from 'next/image';
 import './homeRecipe.css';
 import HomeRecipeNavBar from './NavBar';
-import sashimiDemo from '../IMG/sashimiDemo.jpg';
-// import ImageGrid from './ImageGrid';
 import RegisterRecipe, { RecipeTypes } from './RegisterRecipe';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
@@ -59,8 +56,8 @@ function HomeRecipe() {
       </div>
       <div><ImgSlider /></div>
       <div className='createNewRecipe'>
-        <div><button className='createNewRecipeBtn' onClick={toggleRegisterNewRecipe}>Register New Recipe +</button></div>
-        <div><button onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
+        <div><button className="btn btn-dark" onClick={toggleRegisterNewRecipe}>Register Recipe +</button></div>
+        <div><button className="btn btn-dark" onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
       </div>
       <div className="position-fixed top-50 start-50 translate-middle" style={{zIndex: "9999" }}>
         <RandomRecipe randomRecipeVisibility={randomRecipeVisibility}

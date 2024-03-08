@@ -43,7 +43,6 @@ const ImgTypes = ['image/png', 'image/jpeg']
 
 export enum RecipeTypes {
     BREAKFAST = "BREAKFAST",
-    BRUNCH = "BRUNCH",
     LUNCH = "LUNCH",
     DINNER = "DINNER",
     DESSERT = "DESSERT",
@@ -146,7 +145,6 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
             }
         })
     };
-
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         try {

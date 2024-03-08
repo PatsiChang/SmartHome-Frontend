@@ -14,7 +14,6 @@ const HomeRecipeNavBar = () => {
                     <a className="navbar-item me-4" href="/home-recipe">Recipes</a>
                     <a className="navbar-item me-4" href="/grocery">Groceries</a>
                     <a className="navbar-item me-4 disabled-link" href="/grocery">Login</a>
-
                 </div>
                 <a className="navbar-item" href="/personalInfo">
                     <Image id="personalIcon" src={personalInfo} alt="icon" />

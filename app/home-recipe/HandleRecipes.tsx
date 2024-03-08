@@ -3,9 +3,13 @@ import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
 import RecipeDetails from "./RecipeDetails";
 import { RecipeTypes } from "./RegisterRecipe";
 import { getImages } from "./utils";
-// import RecipeDetails from "./RecipeDetails";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import React from "react";
+import Slider from "react-slick";
+import SmartHomeLogger from "../logger";
 
-type DeleteRecipeBtnOnClickHandler = (recipeID: string) => React.MouseEventHandler<HTMLButtonElement>
+type DeleteRecipeBtnOnClickHandler = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
 type ShowdetailedRecipe = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
 export type CloseRecipeDetails = React.MouseEventHandler<HTMLButtonElement>
 
@@ -16,16 +20,22 @@ export type HandleRecipeProps = {
 
 const HandleRecipe = ({ setExistingFormValue }: HandleRecipeProps) => {
     const { recipeList, deleteData } = useRecipeData();
-
     const [detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
     const [recipeTypeState, setRecipeTypeState] = useState<RecipeTypes>(RecipeTypes.DESSERT)
 
-    const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipeID) => (event) => {
+    const RecipeCount = (recipeType: RecipeTypes) => {
+        return recipeList
+            .filter(recipe => recipe.type === recipeTypeState)
+            .length
+    }
+    const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipe) => (event) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this recipe?");
         // event.stopPropagation();
-        if (isConfirmed) {
-            deleteData({ recipeIDTMP: recipeID });
+        if (isConfirmed && RecipeCount(recipe.type) >= 3) {
+            deleteData({ recipeIDTMP: recipe.recipeID });
             // window.location.reload();
+        } else {
+            SmartHomeLogger.log("At least 2 recipe needed")
         }
     }
 
@@ -48,48 +58,69 @@ const HandleRecipe = ({ setExistingFormValue }: HandleRecipeProps) => {
     const filterRecipe = (recipeType: RecipeTypes) => {
         setRecipeTypeState(recipeType);
     }
-    return (
-        <div className= {`row g-2 {$zindex-dropdown}`} >
-            <div className="row justify-content-center" style={{ margin: "3% 0% 2% 0%" }}>
-                <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.BREAKFAST)} 
-                    className="btn btn-dark me-2">Breakfast</button>
-                </div>
-                <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.LUNCH)} 
-                    className="btn btn-dark me-2">Lunch</button>
-                </div>
-                <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.DINNER)} 
-                    className="btn btn-dark me-2">Dinner</button>
-                </div>
-                <div className="col-auto">
-                    <button type="button" onClick={() => filterRecipe(RecipeTypes.DESSERT)} 
-                    className="btn btn-dark me-2">Dessert</button>
-                </div>
-            </div>
-            {recipeList.filter(recipe => recipe.type === recipeTypeState).map((recipe, index) => (
-                <div className="col-sm-4 mb-3 mb-sm-0" key={recipe.recipeID}>
-                    <div className="card" style={{ backgroundColor: 'var(--middleColor0)' }}>
-                        <div className="card-body">
-                            <div style={{width: "100%", height: "200px", overflow: "hidden", margin: "0% 0% 2% 0%"}}>
-                                <img src={handleRecipeIcons(recipe.imgURL)} alt={'recipeIcon'} style={{width: "100%", height: "100%", objectFit: "cover"}} />
-                            </div>
-                            <h5 className="card-title">{recipe.recipeName}</h5>
-                            <p className="card-text">{recipe.type}</p>
-                            <br></br>
-                            <div>
-                                <button className="btn btn-dark me-2"
-                                    onClick={() => updateRecipeEditBtnFunction(recipe)}>Edit</button>
-                                <button className="btn btn-dark me-2"
-                                    onClick={deleteRecipeBtnOnClickHandler(recipe.recipeID as string)}>Delete</button>
-                                <button className="btn btn-dark me-2" onClick={showRecipeDetails(recipe)}>Details</button>
-                            </div>
-                        </div>
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        // initialSlide: 2,
+    };
+
+    //Return individual Recipe Card
+    const recipeCardIndividual = (recipe: ReceipeData) => {
+        return (
+            <div className="card" style={{ backgroundColor: 'var(--middleColor0)' }}>
+                <div className="card-body">
+                    <div style={{ width: "100%", height: "200px", overflow: "hidden", margin: "0% 0% 2% 0%" }}>
+                        <img src={handleRecipeIcons(recipe.imgURL)} alt={'recipeIcon'} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    </div>
+                    <h5 className="card-title">{recipe.recipeName}</h5>
+                    <p className="card-text">{recipe.type}</p>
+                    <br></br>
+                    <div>
+                        <button className="btn btn-dark me-2"
+                            onClick={() => updateRecipeEditBtnFunction(recipe)}>Edit</button>
+                        <button className="btn btn-dark me-2"
+                            onClick={deleteRecipeBtnOnClickHandler(recipe)}>Delete</button>
+                        <button className="btn btn-dark me-2" onClick={showRecipeDetails(recipe)}>Details</button>
                     </div>
                 </div>
-            ))}
-            <div id="recipeDetailsParent" >
+            </div>
+        )
+    }
+    return (
+        <div>
+            <div className={`row g-2 {$zindex-dropdown}`} >
+                {/* Return the recipe Types buttons */}
+                <div className="row justify-content-center" style={{ margin: "3% 0% 2% 0%" }}>
+                    {Object.values(RecipeTypes)
+                        .map((recipeTypes, index) => {
+                            return (
+                                <div className="col-auto" key={index}>
+                                    <button type="button" onClick={() => filterRecipe(recipeTypes)}
+                                        className="btn btn-dark me-2">{recipeTypes}</button>
+                                </div>
+                            )
+                        })}
+                </div>
+                <div className="slider-container">
+                    <Slider {...settings}>
+                        {recipeList
+                            .filter(recipe => recipe.type === recipeTypeState)
+                            .map((recipe, index) => {
+                                return (
+                                    <div key={index}>
+                                        <h3>{recipeCardIndividual(recipe)}</h3>
+                                    </div>
+                                )
+                            })}
+                    </Slider>
+                </div>
+
+            </div>
+            <div className="position-fixed top-50 start-50 translate-middle" style={{ zIndex: "9999" }} >
                 {<RecipeDetails recipe={detailedRecipe as ReceipeData} closeRecipeDetails={closeRecipeDetails} />}
             </div>
         </div>

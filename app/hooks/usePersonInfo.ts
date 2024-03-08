@@ -10,8 +10,6 @@ type RegisterPersonProps = {
     person: Person;
 }
 
-
-
 const useRegisterPersonData  = () => {
     
     const fetchData = ( registerPersonType : RegisterPersonType ) => 
@@ -28,9 +26,12 @@ const useRegisterPersonData  = () => {
                     body: JSON.stringify(person)
                   })
                   .then((response) => response.json())
-                  if (response === "true"){
+             
+                  if (response === true){
                     console.log("Front End successfully Post Person");
                   }else{
+                    console.log("response",response);
+                    console.log(typeof response)
                     console.log("Returned false");
                   }
                   
