@@ -6,6 +6,11 @@ body{
     overflow-x: hidden;
     margin: 2% 7% 2% 7%;
 }
+.disabled-link {
+    color: #6c757d; /* Gray color */
+    pointer-events: none; /* Prevents the link from being clickable */
+    text-decoration: none; /* Optional: Remove underline */
+}
 :root{
     --darkColor: rgb(66, 62, 62);
     --darkColor0: rgb(51, 46, 46);
@@ -56,14 +61,6 @@ li.pageContent:hover{
     list-style-type: none;
 }
 /* Banner */
-#imgSliderParent{
-    display: flex;
-    justify-content: center;
-    justify-self: center;
-    /* max-height: 20vh;
-    width: 250px;
-    height: 200px; */
-}
 .carousel-item img {
     max-width: 100%;
     max-height: 300px; 

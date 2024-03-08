@@ -19,7 +19,7 @@ const useRegisterPersonData  = () => {
 
         try{
             if(registerPersonType === RegisterPersonType.POST ) {
-                const response = await fetch(process.env.NEXT_PUBLIC_API_URL1 + "/RegisterPerson", {
+                const response = await fetch(process.env.NEXT_PUBLIC_API_URL1 + "/PersonInfo", {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',

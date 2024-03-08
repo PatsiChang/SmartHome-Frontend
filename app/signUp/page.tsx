@@ -1,6 +1,6 @@
 'use client'
 import { ChangeEvent, FormEventHandler, useState } from "react"
-import useRegisterPersonData from "../hooks/useRegisterPersonData"
+import useRegisterPersonData from "../hooks/usePersonInfo"
 
 export type Person = {
     userId: string,
@@ -12,16 +12,16 @@ export type Person = {
 const emptyPerson = {
     userId: "",
     name: "",
-    email:"",
-    logInName:"",
-    logInPasswordHashed:"",
+    email: "",
+    logInName: "",
+    logInPasswordHashed: "",
 }
 
 const Page = () => {
     const [person, setPerson] = useState<Person>(emptyPerson);
-    const {postData} = useRegisterPersonData();
+    const { postData } = useRegisterPersonData();
 
-    const submitPersonForm : FormEventHandler<HTMLFormElement> = async (event) => {
+    const submitPersonForm: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         event.stopPropagation;
         console.log("Inside Submit")
@@ -61,11 +61,44 @@ const Page = () => {
             logInPasswordHashed: e.target.value,
         })
     };
- 
 
-    return(
-        <form id="RegisterSignUpContainer" onSubmit={submitPersonForm}>
-            <div id="personSignUpLabel">Sign Up</div>
+
+    return (
+        <div id="logInPageContentContainer">
+            <div id="loginLabel">
+                Sign Up
+            </div>
+            <form onSubmit={submitPersonForm} id="LogInInput">
+                <div className="form-floating mb-3" style={{ margin: "0% 10% 0% 10%" }}>
+                    <input type="text" className="form-control" id="PersonUserID" name="PersonUserID"
+                        onChange={handlePersonUserIdChange} value={person.userId} />
+                    <label htmlFor="PersonUserID">userID:</label>
+                </div>
+                <div className="form-floating mb-3" style={{ margin: "0% 10% 0% 10%" }}>
+                    <input type="text" className="form-control" id="PersonName" name="PersonName"
+                        onChange={handlePersonNameChange}
+                        value={person.name} />
+                    <label htmlFor="PersonName">Name:</label>
+                </div>
+                <div className="form-floating mb-3" style={{ margin: "0% 10% 0% 10%" }}>
+                    <input type="text" className="form-control" id="PersonEmail" name="PersonEmail"
+                        onChange={handlePersonEmailChange}
+                        value={person.email} />
+                    <label htmlFor="PersonEmail">Email:</label>
+                </div>
+                <div className="form-floating mb-3" style={{ margin: "0% 10% 0% 10%" }}>
+                    <input type="text" className="form-control" id="logInPassword" name="logInPassword"
+                       onChange={handlePersonlogInPasswordChange} 
+                       value={person.logInPasswordHashed}/>
+                    <label htmlFor="logInPassword">Name:</label>
+                </div>
+                <div className="logInBtns">
+                    <div><button id="PersonSignUpLogInBtn" type="submit">Sign Up</button></div>
+                </div>
+            </form>
+        </div>
+
+        /* <div id="personSignUpLabel">Sign Up</div>
             <div id="RegisterSignUpFlexContainer">
                 <div className="registerSignUpItem">
                     <label htmlFor="PersonUserID">userID: </label>
@@ -92,8 +125,7 @@ const Page = () => {
                     value={person.logInPasswordHashed}/>
                 </div>
                 <button id="PersonSignUpLogInBtn" type="submit">Sign Up</button>
-            </div>
-        </form>
+            </div> */
     )
 }
 

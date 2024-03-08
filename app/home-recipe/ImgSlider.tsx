@@ -17,9 +17,9 @@ const ImgSlider = () => {
                             <div className="carousel-item active" data-bs-interval="10000">
                                 <Image src={sashimiDemo} className="d-block w-100" alt="SpaghettiRecipeImg" style={{ width: "100%", height: "300px", overflow: "hidden", objectFit: "cover" }} />
                             </div>
-                            {recipeList.map((recipe) => {
+                            {recipeList.map((recipe, index) => {
                                 return (
-                                    <div className="carousel-item">
+                                    <div className="carousel-item" key={index}>
                                         <img src={getImagesFromRecipeList(recipe.imgURL)} className="d-block w-100" alt="SpaghettiRecipeImg" style={{ width: "100%", height: "300px", overflow: "hidden", objectFit: "cover" }} />
                                     </div>
                                 )
