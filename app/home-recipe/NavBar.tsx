@@ -1,9 +1,6 @@
-import Link from 'next/link';
 import './homeRecipe.css';
 import personalInfo from '../IMG/personalInfo.png';
 import Image from 'next/image';
-
-
 
 const HomeRecipeNavBar = () => {
     return (
@@ -13,6 +10,8 @@ const HomeRecipeNavBar = () => {
                     <a className="navbar-brand me-5" href="/home-recipe">Smart Home</a>
                     <a className="navbar-item me-4" href="/home-recipe">Recipes</a>
                     <a className="navbar-item me-4" href="/grocery">Groceries</a>
+                    <a className="navbar-item me-4" href="/social-media">Social</a>
+
                     <a className="navbar-item me-4 disabled-link" href="/grocery">Login</a>
                 </div>
                 <a className="navbar-item" href="/personalInfo">

@@ -1,19 +1,12 @@
 'use client'
 import { ChangeEvent, FormEventHandler, useState } from "react"
-import useRegisterPersonData from "../hooks/usePersonInfo"
+import useRegisterPersonData, { Person } from "../hooks/usePersonInfo"
 
-export type Person = {
-    userId: string,
-    name: string,
-    email: string,
-    logInName: string,
-    logInPasswordHashed: string,
-}
+
 const emptyPerson = {
     userId: "",
     name: "",
     email: "",
-    logInName: "",
     logInPasswordHashed: "",
 }
 
@@ -24,10 +17,8 @@ const Page = () => {
     const submitPersonForm: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         event.stopPropagation;
-        handlePersonlogInNameChange;
         await postData({ person: person });
     }
-
 
     const handlePersonUserIdChange = (e: ChangeEvent<HTMLInputElement>) => {
         setPerson({
@@ -45,12 +36,6 @@ const Page = () => {
         setPerson({
             ...person,
             email: e.target.value,
-        })
-    };
-    const handlePersonlogInNameChange = () => {
-        setPerson({
-            ...person,
-            logInName: person.userId,
         })
     };
     const handlePersonlogInPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {

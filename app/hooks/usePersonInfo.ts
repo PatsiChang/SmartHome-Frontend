@@ -1,5 +1,3 @@
-import { Person } from "../signUp/page"
-
 export enum RegisterPersonType {
     POST = "POST",
     PUT = "PUT",
@@ -8,6 +6,12 @@ export enum RegisterPersonType {
 }
 type RegisterPersonProps = {
     person: Person;
+}
+export type Person = {
+  userId: string,
+  name: string,
+  email: string,
+  logInPasswordHashed: string,
 }
 
 const useRegisterPersonData  = () => {
