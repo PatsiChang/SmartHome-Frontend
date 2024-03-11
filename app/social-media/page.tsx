@@ -6,26 +6,25 @@ import { ReceipeData } from "../hooks/useRecipeData";
 import { getImages } from "../home-recipe/utils";
 import Link from "next/link";
 
+export const defaultUser: SocialMediaUser = {
+    uid: "",
+    userName: "",
+    userNameChangeCount: 2,
+    displayName: "",
+    email: "",
+    profilePicture: "",
+    bannerPicture: "",
+    accountStatus: AccountStatus.Inactive,
+    accountType: AccountType.publicAccount,
+    biography: "",
+    followersCount: 100,
+    followingCount: 100,
+    displayedRecipes: Array<ReceipeData>(),
+    showcasedRecipes: Array<ReceipeData>(),
+    savedRecipes: Array<ReceipeData>(),
+    userInterest: Array<RecipeCategories>()
+}
 const SocialMediaPage = () => {
-
-    const defaultUser: SocialMediaUser = {
-        uid: "",
-        userName: "Patsi",
-        userNameChangeCount: 2,
-        displayName: "Patsi",
-        email: "",
-        profilePicture: "",
-        BannerPicture: "",
-        accountStatus: AccountStatus.Inactive,
-        accountType: AccountType.publicAccount,
-        biography: "Hi I am Patsi",
-        followersCount: 100,
-        followingCount: 100,
-        displayedRecipes: Array<ReceipeData>(),
-        showcasedRecipes: Array<ReceipeData>(),
-        savedRecipes: Array<ReceipeData>(),
-        userInterest: Array<RecipeCategories>()
-    }
 
     return (
         <main>
@@ -39,7 +38,6 @@ const SocialMediaPage = () => {
                             <div className="col col-lg-9 col-xl-7">
                                 <div className="card">
                                     <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: "#000", height: "200px" }}>
-                                        {/* <Image src={sashimiDemo} className="d-block w-100" alt="Banner" layout="fill" objectFit="cover" style={{zIndex:0}}/> */}
                                         <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
                                             <img src={getImages("379c6a89-4ead-4a72-ab9e-13fe81e47323")}
                                                 alt="Generic placeholder image" className="img-fluid img-thumbnail mt-4 mb-2"

@@ -10,7 +10,7 @@ export interface SocialMediaUser {
     displayName: string,
     email: string,
     profilePicture: string,
-    BannerPicture: string,
+    bannerPicture: string,
     accountStatus: AccountStatus,
     accountType: AccountType,
     biography: string,
@@ -29,22 +29,32 @@ type SocialMediaUserSuccessResponse = SuccessResponse<SocialMediaUser>;
 type SocialMediaUsersSuccessResponse = SuccessResponse<SocialMediaUser[]>;
 type SocialMediaUserResponse = SocialMediaUserSuccessResponse
     | SocialMediaUsersSuccessResponse | FailedResponse;
-type Action = "GET" | "PUT" | "DELETE";
+type Action = "POST" | "GET" | "PUT" | "DELETE";
+type SocialMediaHookProps = {
+    userName?: string,
+    user?: SocialMediaUser,
+}
 
-const getRequestConfig = (action: Action) => <T>(input: T) => {
+const getRequestConfig = (action: Action) => <T>(user: T) => {
     switch (action) {
+        case "POST": {
+            return {
+                body: JSON.stringify(user)
+            }
+        }
         case "GET": {
             return {
+                body: JSON.stringify(user)
             }
         }
         case "PUT": {
             return {
-                body: JSON.stringify({ input })
+                body: JSON.stringify(user)
             }
         }
         case "DELETE": {
             return {
-                body: JSON.stringify({ input })
+                body: JSON.stringify(user)
             }
         }
         default:
@@ -53,11 +63,11 @@ const getRequestConfig = (action: Action) => <T>(input: T) => {
 }
 
 // Convert the format of the data received from the server to frontend
-const convertDataDTOToUser = (user: SocialMediaUser) => {
+// const convertDataDTOToUser = (user: SocialMediaUser) => {
     // return user.map(user => ({ id: duty.id, name: duty.name }));
-};
+// };
 
-const useSocialMediaData = () => {
+const useSocialMediaData = ({userName, user} : SocialMediaHookProps = {}) => {
     const [allSocialMediaUsers, setAllSocialMediaUsers] = useState<SocialMediaUser[]>();
     const [socialMediaUser, setSocialMediaUser] = useState<SocialMediaUser>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -66,6 +76,7 @@ const useSocialMediaData = () => {
     const fetchData = (fetchInput: Parameters<typeof fetch>[0]) => (action: Action) => async <T>(input: T) => {
         try {
             setIsLoading(true);
+            console.log("Inside Fetch Data:",input)
             const response = await fetch(fetchInput, {
                 method: action,
                 headers: {
@@ -90,7 +101,10 @@ const useSocialMediaData = () => {
         } finally {
             setIsLoading(false);
         }
-        return { socialMediaUser, allSocialMediaUsers, isLoading }
     }
+    const postData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
+    const getData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("GET")
+    return { postData, getData, fetchData, socialMediaUser, allSocialMediaUsers, isLoading }
+
 }
 export default useSocialMediaData;
