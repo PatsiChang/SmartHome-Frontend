@@ -59,8 +59,6 @@ const editProfile = () => {
         })
     };
     const createNewProfile: FormEventHandler<HTMLFormElement>  = async (event) => {
-        console.log("Inside createNewProfile")
-        console.log("Before postData, userFormData:", userFormData)
         postData(userFormData);
         event.preventDefault();
     }

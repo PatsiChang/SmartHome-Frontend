@@ -34,12 +34,11 @@ function HomeRecipe() {
   const [randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
   const [existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
 
-
   const toggleRegisterNewRecipe = () => {
     setPropsTrigger(true)
   }
   const generateRandomRecipe = async () => {
-    await getRandomRecipe({});
+    // await getRandomRecipe({});
     setRandomRecipeVisibility(true)
 
   }

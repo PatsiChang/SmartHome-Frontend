@@ -1,7 +1,8 @@
 "use strict"
 import { useState } from "react";
 import { AccountStatus, AccountType, RecipeCategories } from "../Enum/enum";
-import { ReceipeData } from "./useRecipeData"
+import { ReceipeData } from "./useRecipeData";
+import { Action, getRequestConfig } from "./hooks-utils";
 
 export interface SocialMediaUser {
     uid: string,
@@ -29,37 +30,9 @@ type SocialMediaUserSuccessResponse = SuccessResponse<SocialMediaUser>;
 type SocialMediaUsersSuccessResponse = SuccessResponse<SocialMediaUser[]>;
 type SocialMediaUserResponse = SocialMediaUserSuccessResponse
     | SocialMediaUsersSuccessResponse | FailedResponse;
-type Action = "POST" | "GET" | "PUT" | "DELETE";
 type SocialMediaHookProps = {
     userName?: string,
     user?: SocialMediaUser,
-}
-
-const getRequestConfig = (action: Action) => <T>(user: T) => {
-    switch (action) {
-        case "POST": {
-            return {
-                body: JSON.stringify(user)
-            }
-        }
-        case "GET": {
-            return {
-                body: JSON.stringify(user)
-            }
-        }
-        case "PUT": {
-            return {
-                body: JSON.stringify(user)
-            }
-        }
-        case "DELETE": {
-            return {
-                body: JSON.stringify(user)
-            }
-        }
-        default:
-            throw Error(`Unsupport method : ${action}`)
-    }
 }
 
 // Convert the format of the data received from the server to frontend

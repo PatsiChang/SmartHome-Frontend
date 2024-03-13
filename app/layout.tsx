@@ -4,6 +4,7 @@ import './globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect } from 'react'
 import BootstrapClient from './bootstrap/BootstrapClient';
+import RecipeDataProvider from './providers'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,8 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}
+      <body className={inter.className}>
       <BootstrapClient />
+      <RecipeDataProvider>{children}</RecipeDataProvider>
       <div className="container text-center">
       </div>
       </body>

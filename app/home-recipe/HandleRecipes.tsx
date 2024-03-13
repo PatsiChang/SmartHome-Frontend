@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useContext } from "react";
 import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
 import RecipeDetails from "./RecipeDetails";
 import { RecipeTypes } from "./RegisterRecipe";
@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import React from "react";
 import Slider from "react-slick";
 import SmartHomeLogger from "../logger";
+import { RecipeDataContext } from "../providers";
 
 type DeleteRecipeBtnOnClickHandler = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
 type ShowdetailedRecipe = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
@@ -19,7 +20,12 @@ export type HandleRecipeProps = {
 }
 
 const HandleRecipe = ({ setExistingFormValue }: HandleRecipeProps) => {
-    const { recipeList, deleteData } = useRecipeData();
+
+    const recipeDataContext = useContext(RecipeDataContext);
+    if (!recipeDataContext) { return null; }
+    const { recipeList } = recipeDataContext;
+
+    // const { recipeList, getData, deleteData } = useRecipeData();
     const [detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
     const [recipeTypeState, setRecipeTypeState] = useState<RecipeTypes>(RecipeTypes.DESSERT)
 
@@ -32,7 +38,7 @@ const HandleRecipe = ({ setExistingFormValue }: HandleRecipeProps) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this recipe?");
         // event.stopPropagation();
         if (isConfirmed && RecipeCount(recipe.type) >= 3) {
-            deleteData({ recipeIDTMP: recipe.recipeID });
+            // deleteData({ recipeIDTMP: recipe.recipeID });
             // window.location.reload();
         } else {
             SmartHomeLogger.log("At least 2 recipe needed")
