@@ -53,7 +53,7 @@ const useLogInData = () => {
 
 const postData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/login")("POST");
 // const getData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/socialMedia")("GET")
-  return { token, postData };
+  return { token, postData, setToken };
 }
 
 export default useLogInData;

@@ -81,3 +81,10 @@ input[type="text"]:focus {
 .personSignUpInputField{
   color: black;
 }
+/* For Nav Bar */
+#personalIcon{
+  width: 20px;
+  height: 100%;
+  background-color: transparent;
+  filter: brightness(0) invert(0.8);
+}

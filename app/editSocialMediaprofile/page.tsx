@@ -1,30 +1,45 @@
 'use client'
 
-import useSocialMediaData, { SocialMediaUser } from "@/app/hooks/useSocialMediaData";
-import HomeRecipeNavBar from "../../home-recipe/NavBar";
-import { ChangeEvent, FormEventHandler, useEffect, useState } from "react";
-import { defaultUser } from "../page";
-import { v4 as uuidv4 } from "uuid"
-import Link from "next/link";
+import { SocialMediaUser } from "@/app/hooks/useSocialMediaData";
+import HomeRecipeNavBar from "../navbar/page";
+import { ChangeEvent, FormEventHandler, useContext, useEffect, useState } from "react";
+import { defaultUser } from "../social-media/page";
 import { AccountType } from "@/app/Enum/enum";
+import { useRouter } from "next/navigation";
+import { LoginDataContext, SocialMediaDataContext } from "../providers";
 
 
-const editProfile = () => {
-    // const { postData, recipeList, updateRecipeIcon } = useRecipeData();
+const editSocialMediaprofile = () => {
+    const router = useRouter();
+    const directToEditProfilePage = (link: string) => {
+        router.push(link);
+    }
+    const loginDataContext = useContext(LoginDataContext);
+    if (!loginDataContext) {
+        directToEditProfilePage("/");
+        return null;
+    }
+    const { token } = loginDataContext;
+    console.log("token in edit page", token)
 
-    const { postData, getData, socialMediaUser }  = useSocialMediaData();
+    const socialMediaDataContext = useContext(SocialMediaDataContext);
+    if (!socialMediaDataContext) { return null; }
+    const { postData, socialMediaUser } = socialMediaDataContext;
 
     const [userFormData, setUserFormData] = useState<SocialMediaUser>(defaultUser);
     const [editProfileBtn, setEditProfileBtn] = useState<boolean>(true);
 
-    useEffect(()=>{
-        getData(null);
-        if (socialMediaUser !== null && socialMediaUser !== undefined){
+
+
+    useEffect(() => {
+        // getSocialMediaUser(token);
+        if (socialMediaUser !== null && socialMediaUser !== undefined) {
             console.log("socialMediaUser", socialMediaUser)
             setUserFormData(socialMediaUser);
-        }else 
-        setUserFormData(userFormData)
-    }),[]
+        } else
+            // console.log("socialMediaUser:", socialMediaUser);
+            setUserFormData(userFormData)
+    }, [])
 
     const handleDisplayNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUserFormData(prevState => {
@@ -58,8 +73,8 @@ const editProfile = () => {
             }
         })
     };
-    const createNewProfile: FormEventHandler<HTMLFormElement>  = async (event) => {
-        postData(userFormData);
+    const createNewProfile: FormEventHandler<HTMLFormElement> = async (event) => {
+        postData(token)(userFormData);
         event.preventDefault();
     }
 
@@ -89,26 +104,26 @@ const editProfile = () => {
                                 <label className="col-lg-3 control-label">Name:</label>
                                 <div className="col-lg-8">
                                     <input className="form-control" type="text" id="displayName" name="displayName" onChange={handleDisplayNameChange}
-                                    value={userFormData.displayName} placeholder="This will be your profile name" />
+                                        value={userFormData.displayName} placeholder="This will be your profile name" />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label className="col-lg-3 control-label">Biography:</label>
                                 <div className="col-lg-8">
-                                <input className="form-control" type="text" name="biography" onChange={handleBiographyChange}
-                                    value={userFormData.biography}/>
+                                    <input className="form-control" type="text" name="biography" onChange={handleBiographyChange}
+                                        value={userFormData.biography} />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label className="col-lg-3 control-label">Email:</label>
                                 <div className="col-lg-8">
                                     <input className="form-control" type="text" name="email" onChange={handleEmailChange}
-                                    value={userFormData.email}/>
+                                        value={userFormData.email} />
                                 </div>
                             </div>
                             <div className="form-check form-switch">
-                                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" 
-                                onChange={handleAccountTypeChange} checked={userFormData.accountType === AccountType.privateAccount}/>
+                                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                                    onChange={handleAccountTypeChange} checked={userFormData.accountType === AccountType.privateAccount} />
                                 <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Private Account</label>
                             </div>
                             <div className="form-group">
@@ -116,8 +131,8 @@ const editProfile = () => {
                                 <div className="col-md-8">
                                     <input type="submit" className="btn btn-primary" value="Save Changes" />
                                     <span></span>
-                                    <Link href="/social-media" className="btn btn-default"
-                                                data-mdb-ripple-color="dark" style={{ zIndex: 1 }}> Cancel</Link>
+                                    <button onClick={() => directToEditProfilePage("/social-media")} className="btn btn-default"
+                                        data-mdb-ripple-color="dark" style={{ zIndex: 1 }}> Cancel</button>
                                     {/* <input type="reset" className="btn btn-default" value="Cancel" /> */}
                                 </div>
                             </div>
@@ -130,4 +145,4 @@ const editProfile = () => {
     )
 }
 
-export default editProfile;
+export default editSocialMediaprofile;

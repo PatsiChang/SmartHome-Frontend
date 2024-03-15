@@ -1,12 +1,13 @@
 'use client'
 import './homeRecipe.css';
-import HomeRecipeNavBar from './NavBar';
+import HomeRecipeNavBar from '../navbar/page';
 import RegisterRecipe, { RecipeTypes } from './RegisterRecipe';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
-import useRecipeData, { ReceipeData } from '../hooks/useRecipeData';
+import { ReceipeData } from '../hooks/useRecipeData';
 import RandomRecipe from './RandomRecipe';
+import { RecipeDataContext } from '../providers';
 
 export type HomeRecipeState = {
   propsTrigger: boolean;
@@ -28,8 +29,11 @@ export const emptyFormValue: ReceipeData = {
 }
 
 function HomeRecipe() {
+  
+  const recipeDataContext = useContext(RecipeDataContext);
+  if (!recipeDataContext) { return null; }
+  const { recipeList } = recipeDataContext;
 
-  const { getRandomRecipe } = useRecipeData();
   const [propsTrigger, setPropsTrigger] = useState(false);
   const [randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
   const [existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
@@ -65,7 +69,7 @@ function HomeRecipe() {
       <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
         existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} />
       </div>
-      <div><HandleRecipe existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>
+      <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>
     </main>
 
   )

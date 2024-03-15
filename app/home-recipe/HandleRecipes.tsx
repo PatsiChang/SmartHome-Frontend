@@ -15,15 +15,12 @@ type ShowdetailedRecipe = (recipe: ReceipeData) => React.MouseEventHandler<HTMLB
 export type CloseRecipeDetails = React.MouseEventHandler<HTMLButtonElement>
 
 export type HandleRecipeProps = {
+    recipeList: ReceipeData[],
     existingFormValue: ReceipeData,
     setExistingFormValue: Dispatch<SetStateAction<ReceipeData>>,
 }
 
-const HandleRecipe = ({ setExistingFormValue }: HandleRecipeProps) => {
-
-    const recipeDataContext = useContext(RecipeDataContext);
-    if (!recipeDataContext) { return null; }
-    const { recipeList } = recipeDataContext;
+const HandleRecipe = ({recipeList, setExistingFormValue }: HandleRecipeProps) => {
 
     // const { recipeList, getData, deleteData } = useRecipeData();
     const [detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);

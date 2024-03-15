@@ -40,33 +40,27 @@ type SocialMediaHookProps = {
     // return user.map(user => ({ id: duty.id, name: duty.name }));
 // };
 
-const useSocialMediaData = ({userName, user} : SocialMediaHookProps = {}) => {
+const useSocialMediaData = () => {
     const [allSocialMediaUsers, setAllSocialMediaUsers] = useState<SocialMediaUser[]>();
     const [socialMediaUser, setSocialMediaUser] = useState<SocialMediaUser>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
 
-    const fetchData = (fetchInput: Parameters<typeof fetch>[0]) => (action: Action) => async <T>(input: T) => {
+    const fetchData = (fetchInput: Parameters<typeof fetch>[0]) => (action: Action) => (token: string) => 
+    async <T>(input: T) => {
         try {
             setIsLoading(true);
-            console.log("Inside Fetch Data:",input)
             const response = await fetch(fetchInput, {
                 method: action,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
                 },
                 ...getRequestConfig(action)(input)
             });
-            const socialMediaUserResponse: SocialMediaUserResponse = await response.json();
-            if ("error" in socialMediaUserResponse) {
-                throw Error(socialMediaUserResponse.error);
-            }
-            const data = socialMediaUserResponse.data || [];
-            if (Array.isArray(data)) {
-                setAllSocialMediaUsers(data);
-                return allSocialMediaUsers;
-            } else if (typeof data === 'object' && data !== undefined) {
-                setSocialMediaUser(data);
+            const socialMediaUserResponse: SocialMediaUser = await response.json();
+          if (typeof socialMediaUserResponse === 'object' && socialMediaUserResponse !== undefined) {
+                setSocialMediaUser(socialMediaUserResponse);
                 return socialMediaUser;
             }
         } catch (error) {
@@ -76,8 +70,7 @@ const useSocialMediaData = ({userName, user} : SocialMediaHookProps = {}) => {
         }
     }
     const postData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
-    const getData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("GET")
-    return { postData, getData, fetchData, socialMediaUser, allSocialMediaUsers, isLoading }
-
+    const getSocialMediaUser = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("POST")
+    return { postData, getSocialMediaUser, fetchData, socialMediaUser, setSocialMediaUser, isLoading }
 }
 export default useSocialMediaData;

@@ -47,12 +47,6 @@ li.pageContent:hover{
     cursor: pointer;
     background-color: var(--middleColor);
 }
-#personalIcon{
-    width: 20px;
-    height: 100%;
-    background-color: transparent;
-    filter: brightness(0) invert(0.8);
-}
 .links{
     display: flex;
     flex-direction: row;

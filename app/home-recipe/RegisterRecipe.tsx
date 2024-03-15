@@ -119,9 +119,9 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
         //     return recipeID;
         if (!newRecipeValidation({ form, recipeList })) {
             setErrorCode("");
-            const recipeID: string = await postData({ form: form });
+            // const recipeID: string = await postData({ form: form });
             setPropsTrigger(false);
-            return recipeID;
+            // return recipeID;
         } else {
             setErrorCode("Recipe Name Already Exist!");
             setPropsTrigger(true);
@@ -160,7 +160,7 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
             }
             const recipeID = await uploadForm(form);
             if (recipeID !== null && recipeID !== undefined && imgURL) {
-                await updateRecipeIcon({ recipeIDTMP: recipeID, recipeIcon: imgURL });
+                // await updateRecipeIcon({ recipeIDTMP: recipeID, recipeIcon: imgURL });
             }
             //  window.location.reload();
         } catch (error) {

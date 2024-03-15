@@ -1,10 +1,12 @@
 'use client'
-import HomeRecipeNavBar from "../home-recipe/NavBar";
 import { SocialMediaUser } from "../hooks/useSocialMediaData";
 import { AccountStatus, AccountType, RecipeCategories } from "../Enum/enum";
-import { ReceipeData } from "../hooks/useRecipeData";
 import { getImages } from "../home-recipe/utils";
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import HomeRecipeNavBar from "../navbar/page";
+import { useContext } from "react";
+import { RecipeDataContext, SocialMediaDataContext } from "../providers";
+import { ReceipeData } from "../hooks/useRecipeData";
 
 export const defaultUser: SocialMediaUser = {
     uid: "",
@@ -14,17 +16,26 @@ export const defaultUser: SocialMediaUser = {
     email: "",
     profilePicture: "",
     bannerPicture: "",
-    accountStatus: AccountStatus.Inactive,
+    accountStatus: AccountStatus.Active,
     accountType: AccountType.publicAccount,
     biography: "",
-    followersCount: 100,
-    followingCount: 100,
+    followersCount: 0,
+    followingCount: 0,
     displayedRecipes: Array<ReceipeData>(),
     showcasedRecipes: Array<ReceipeData>(),
     savedRecipes: Array<ReceipeData>(),
     userInterest: Array<RecipeCategories>()
 }
+
 const SocialMediaPage = () => {
+    const socialMediaDataContext = useContext(SocialMediaDataContext);
+    if (!socialMediaDataContext) { return null; }
+    const { socialMediaUser } = socialMediaDataContext;
+
+    const router = useRouter();
+    const directToEditProfilePage = (link: string) => {
+        router.push(link);
+    }
 
     return (
         <main>
@@ -42,32 +53,33 @@ const SocialMediaPage = () => {
                                             <img src={getImages("379c6a89-4ead-4a72-ab9e-13fe81e47323")}
                                                 alt="Generic placeholder image" className="img-fluid img-thumbnail mt-4 mb-2"
                                                 style={{ minHeight: '150px', width: '150px', zIndex: 1, objectFit: "cover" }} />
-                                            <Link href="/social-media/edit-profile" className="btn btn-outline-dark"
-                                                data-mdb-ripple-color="dark" style={{ zIndex: 1 }}> Edit profile</Link>
+                                            <button onClick={() => directToEditProfilePage("/editSocialMediaprofile")} className="btn btn-outline-dark"
+                                                data-mdb-ripple-color="dark" style={{ zIndex: 1 }}> Edit profile</button>
                                         </div>
                                         <div className="ms-3" style={{ marginTop: '130px' }}>
-                                            <h5>{defaultUser.displayName}</h5>
+                                            <h5>{socialMediaUser?.displayName ?? "Guest"}</h5>
                                         </div>
                                     </div>
                                     <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
                                         <div className="d-flex justify-content-end text-center py-1">
                                             <div>
-                                                <p className="mb-1 h5">{defaultUser.displayedRecipes.length}</p>
+                                                <p className="mb-1 h5">{socialMediaUser?.displayedRecipes?.length ?? 0}</p>
                                                 <p className="small text-muted mb-0">Photos</p>
                                             </div>
                                             <div className="px-3">
-                                                <p className="mb-1 h5">{defaultUser.followersCount}</p>
+                                                <p className="mb-1 h5">{socialMediaUser?.followersCount ?? 0}</p>
                                                 <p className="small text-muted mb-0">Followers</p>
                                             </div>
                                             <div>
-                                                <p className="mb-1 h5">{defaultUser.followersCount}</p>
+                                                <p className="mb-1 h5">{socialMediaUser?.followersCount ?? 0}</p>
                                                 <p className="small text-muted mb-0">Following</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="mb-2">
                                         <div className="p-4" style={{ backgroundColor: "#f8f9fa;" }}>
-                                            <p className="font-italic mb-1">{defaultUser.biography}</p>
+                                            <p className="font-italic mb-1">{socialMediaUser?.biography ?? ""}</p>
+                                            <p className="font-italic mb-1">{socialMediaUser?.email ?? ""}</p>
                                         </div>
                                     </div>
                                     <div className="card-body p-4 text-black">

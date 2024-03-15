@@ -1,5 +1,5 @@
 import { useState } from "react";
-import HomeRecipeNavBar from "../home-recipe/NavBar";
+import HomeRecipeNavBar from "../navbar/page";
 import './personalInfo.css'
 import { Person } from "../hooks/usePersonInfo";
 

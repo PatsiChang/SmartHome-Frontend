@@ -2,9 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useEffect } from 'react'
 import BootstrapClient from './bootstrap/BootstrapClient';
-import RecipeDataProvider from './providers'
+import { LoginDataProvider, RecipeDataProvider, SocialMediaDataProvider } from './providers'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,10 +21,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <BootstrapClient />
-      <RecipeDataProvider>{children}</RecipeDataProvider>
-      <div className="container text-center">
-      </div>
+        <BootstrapClient />
+        <LoginDataProvider>
+          <RecipeDataProvider>
+            <SocialMediaDataProvider>{children}</SocialMediaDataProvider>
+          </RecipeDataProvider>
+        </LoginDataProvider>
+
+
+
+
+        <div className="container text-center">
+        </div>
       </body>
     </html>
   )

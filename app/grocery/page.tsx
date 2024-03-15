@@ -1,6 +1,6 @@
 'use client'
 import { Dispatch, SetStateAction, useState } from "react"
-import HomeRecipeNavBar from "../home-recipe/NavBar"
+import HomeRecipeNavBar from "../navbar/page"
 import CreateNewGroceryItem, { GroceryBuyState, GroceryItem, GroceryType } from "./CreateNewGroceryItem"
 import './grocery.css'
 import GoodToBuy from "./GoodToBuy"

@@ -11,12 +11,12 @@ export type ReceipeData = {
   steps: string[];
   imgURL?: string;
 };
-type Props = {
-  recipeName?: string,
-  form?: Form,
-  recipeIcon?: File | Blob,
-  recipeIDTMP?: string | null,
-}
+// type Props = {
+//   recipeName?: string,
+//   form?: Form,
+//   recipeIcon?: File | Blob,
+//   recipeIDTMP?: string | null,
+// }
 type SuccessResponse = ReceipeData[];
 type FailedResponse = { error: string; }
 type RecipeResponse = SuccessResponse | FailedResponse;
@@ -66,6 +66,7 @@ const useRecipeData = () => {
         throw Error(recipeListByToken.error);
       }
       const data = recipeListByToken as ReceipeData[];
+      console.log("Checl recipe hook data:", data)
       setRecipeList(data);
       return data;
 

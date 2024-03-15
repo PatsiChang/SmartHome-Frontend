@@ -3,7 +3,7 @@ import './globals.css'
 import { ChangeEvent, FormEventHandler, useEffect, useState, useContext } from 'react';
 import useLogInData from './hooks/useLogInData'
 import { useRouter } from 'next/navigation';
-import { RecipeDataContext } from './providers';
+import { LoginDataContext, RecipeDataContext, SocialMediaDataContext } from './providers';
 
 export type UserLogin = {
   userId: string,
@@ -20,6 +20,15 @@ const Home = () => {
   const recipeDataContext = useContext(RecipeDataContext);
   if (!recipeDataContext) { return null; }
   const { getData } = recipeDataContext;
+
+  const loginDataContext = useContext(LoginDataContext);
+  if (!loginDataContext) { return null; }
+  const { setToken } = loginDataContext;
+
+
+  const socialMediaDataContext = useContext(SocialMediaDataContext)
+  if (!socialMediaDataContext) { return null; }
+  const { getSocialMediaUser } = socialMediaDataContext;
   const router = useRouter();
   const [userLogin, setUserLogin] = useState<UserLogin>(defaultUserLogin);
 
@@ -46,8 +55,11 @@ const Home = () => {
   const validateLogIn: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const token1 = await postData(userLogin);
+
     if (token1 !== null && token1 !== undefined) {
-      const data = await getData(token1);
+      setToken(token1);
+      const socialMediaUser = await getSocialMediaUser(token1)(null);
+      const token = await getData(token1);
       directToRecipeHome();
     }
     // event.preventDefault();
