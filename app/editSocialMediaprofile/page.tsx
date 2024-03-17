@@ -8,7 +8,6 @@ import { AccountType } from "@/app/Enum/enum";
 import { useRouter } from "next/navigation";
 import { ImgDataContext, LoginDataContext, SocialMediaDataContext } from "../providers";
 import { onchangeEvent } from "../home-recipe/RegisterRecipe";
-import useImgData from "../hooks/useImgData";
 
 
 const editSocialMediaprofile = () => {
@@ -87,10 +86,12 @@ const editSocialMediaprofile = () => {
         })
     };
     const handleAccountTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        const newAccountType = isChecked ? AccountType.privateAccount : AccountType.publicAccount;
         setUserFormData(prevState => {
             return {
                 ...prevState,
-                accountType: e.target.value as AccountType,
+                accountType: newAccountType
             }
         })
     };
@@ -107,6 +108,7 @@ const editSocialMediaprofile = () => {
                 ...userFormData,
                 profilePicture: profilePictureID,
             }
+            console.log("accountType", editedFormValue.accountType)
             postData(token)(editedFormValue);
         }
         directToEditProfilePage("/social-media")
@@ -160,7 +162,7 @@ const editSocialMediaprofile = () => {
                                 </div>
                             </div>
                             <div className="form-check form-switch">
-                                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                                <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" role="switch"
                                     onChange={handleAccountTypeChange} checked={userFormData.accountType === AccountType.privateAccount} />
                                 <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Private Account</label>
                             </div>
