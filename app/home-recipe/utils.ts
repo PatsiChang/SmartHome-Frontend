@@ -12,9 +12,18 @@ export const newRecipeValidation = ({ form, recipeList }: { form: Form, recipeLi
 }
 
 //Return Images
-export const getImages = (imgURL: string|undefined) => {
+export const getImages = (imgURL: string | undefined) => {
     if (imgURL != null || imgURL != undefined) {
-        return `http://localhost:8080/${imgURL}.jpg`;
+        return `http://localhost:8080/RecipeIcons/${imgURL}.jpg`;
+    } else {
+        return `http://localhost:8080/recipeIconAlt.jpg`;
+    }
+}
+
+//Return socialMedia Img SocialMediaImg/ProfilePicture/
+export const getSocialMediaImages = (imgURL: string | undefined) => {
+    if (imgURL != null || imgURL != undefined) {
+        return `http://localhost:8080/SocialMediaImg/ProfilePicture//${imgURL}.jpg`;
     } else {
         return `http://localhost:8080/recipeIconAlt.jpg`;
     }

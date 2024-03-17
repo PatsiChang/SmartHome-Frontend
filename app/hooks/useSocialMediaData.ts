@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AccountStatus, AccountType, RecipeCategories } from "../Enum/enum";
 import { ReceipeData } from "./useRecipeData";
 import { Action, getRequestConfig } from "./hooks-utils";
+import { Form } from "../home-recipe/RegisterRecipe";
 
 export interface SocialMediaUser {
     uid: string,
@@ -25,52 +26,54 @@ export interface SocialMediaUser {
 type SuccessResponse<T> = { data: T; };
 type FailedResponse = { error: string; }
 //Get One User
-type SocialMediaUserSuccessResponse = SuccessResponse<SocialMediaUser>;
+// type SocialMediaUserSuccessResponse = SuccessResponse<SocialMediaUser>;
 //Get all Users
-type SocialMediaUsersSuccessResponse = SuccessResponse<SocialMediaUser[]>;
-type SocialMediaUserResponse = SocialMediaUserSuccessResponse
-    | SocialMediaUsersSuccessResponse | FailedResponse;
-type SocialMediaHookProps = {
-    userName?: string,
-    user?: SocialMediaUser,
-}
+// type SocialMediaUsersSuccessResponse = SuccessResponse<SocialMediaUser[]>;
+// type SocialMediaUserResponse = SocialMediaUserSuccessResponse
+//     | SocialMediaUsersSuccessResponse | FailedResponse;
+// type SocialMediaHookProps = {
+//     userName?: string,
+//     user?: SocialMediaUser,
+// }
 
 // Convert the format of the data received from the server to frontend
 // const convertDataDTOToUser = (user: SocialMediaUser) => {
-    // return user.map(user => ({ id: duty.id, name: duty.name }));
+// return user.map(user => ({ id: duty.id, name: duty.name }));
 // };
 
 const useSocialMediaData = () => {
-    const [allSocialMediaUsers, setAllSocialMediaUsers] = useState<SocialMediaUser[]>();
+    // const [allSocialMediaUsers, setAllSocialMediaUsers] = useState<SocialMediaUser[]>();
     const [socialMediaUser, setSocialMediaUser] = useState<SocialMediaUser>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
 
-    const fetchData = (fetchInput: Parameters<typeof fetch>[0]) => (action: Action) => (token: string) => 
-    async <T>(input: T) => {
-        try {
-            setIsLoading(true);
-            const response = await fetch(fetchInput, {
-                method: action,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-                ...getRequestConfig(action)(input)
-            });
-            const socialMediaUserResponse: SocialMediaUser = await response.json();
-          if (typeof socialMediaUserResponse === 'object' && socialMediaUserResponse !== undefined) {
-                setSocialMediaUser(socialMediaUserResponse);
-                return socialMediaUser;
+    const fetchData = (fetchInput: Parameters<typeof fetch>[0]) => (action: Action) => (token: string) =>
+        async <T>(input: T) => {
+            try {
+                setIsLoading(true);
+                const response = await fetch(fetchInput, {
+                    method: action,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                    ...getRequestConfig(action)(input)
+                });
+                const socialMediaUserResponse: SocialMediaUser = await response.json();
+                if (typeof socialMediaUserResponse === 'object' && socialMediaUserResponse !== undefined) {
+                    setSocialMediaUser(socialMediaUserResponse);
+                    return socialMediaUser;
+                }
+            } catch (error) {
+                return null;
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            return null;
-        } finally {
-            setIsLoading(false);
         }
-    }
+
     const postData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
     const getSocialMediaUser = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("POST")
-    return { postData, getSocialMediaUser, fetchData, socialMediaUser, setSocialMediaUser, isLoading }
+    const updateProfilePictures = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/updateProfilePicture")("PUT")
+    return { postData, getSocialMediaUser, updateProfilePictures, socialMediaUser, setSocialMediaUser, isLoading }
 }
 export default useSocialMediaData;

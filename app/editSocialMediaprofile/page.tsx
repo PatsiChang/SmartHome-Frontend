@@ -6,7 +6,9 @@ import { ChangeEvent, FormEventHandler, useContext, useEffect, useState } from "
 import { defaultUser } from "../social-media/page";
 import { AccountType } from "@/app/Enum/enum";
 import { useRouter } from "next/navigation";
-import { LoginDataContext, SocialMediaDataContext } from "../providers";
+import { ImgDataContext, LoginDataContext, SocialMediaDataContext } from "../providers";
+import { onchangeEvent } from "../home-recipe/RegisterRecipe";
+import useImgData from "../hooks/useImgData";
 
 
 const editSocialMediaprofile = () => {
@@ -19,27 +21,46 @@ const editSocialMediaprofile = () => {
         directToEditProfilePage("/");
         return null;
     }
+    const imgDataContext = useContext(ImgDataContext);
+    if (!imgDataContext) {
+        return null;
+    }
+    const { updateProfilePictures } = imgDataContext
     const { token } = loginDataContext;
-    console.log("token in edit page", token)
 
     const socialMediaDataContext = useContext(SocialMediaDataContext);
     if (!socialMediaDataContext) { return null; }
     const { postData, socialMediaUser } = socialMediaDataContext;
 
     const [userFormData, setUserFormData] = useState<SocialMediaUser>(defaultUser);
-    const [editProfileBtn, setEditProfileBtn] = useState<boolean>(true);
-
-
+    // const [editProfileBtn, setEditProfileBtn] = useState<boolean>(true);
+    const [profileImgState, setProfileImgState] = useState<string | null>("//placehold.it/100");
+    const [imgUrl, setImgUrl] = useState<string | null>(null);
+    const [imgBytes, setImgBytes] = useState<File | null>(null);
+    const ImgTypes = ['image/png', 'image/jpeg']
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // getSocialMediaUser(token);
         if (socialMediaUser !== null && socialMediaUser !== undefined) {
-            console.log("socialMediaUser", socialMediaUser)
             setUserFormData(socialMediaUser);
         } else
-            // console.log("socialMediaUser:", socialMediaUser);
             setUserFormData(userFormData)
     }, [])
+
+    //Handle Images
+    const changeHandler = (e: onchangeEvent) => {
+        if (!e.target.files) return;
+        let selected = e.target.files[0];
+        if (selected && ImgTypes.includes(selected.type)) {
+            setImgBytes(selected)
+            setImgUrl(URL.createObjectURL(selected));
+            setProfileImgState("Change Icon");
+            setError('');
+        } else {
+            setError('Not an image file (png or jpeg)');
+        }
+    }
 
     const handleDisplayNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUserFormData(prevState => {
@@ -73,9 +94,22 @@ const editSocialMediaprofile = () => {
             }
         })
     };
+
     const createNewProfile: FormEventHandler<HTMLFormElement> = async (event) => {
-        postData(token)(userFormData);
         event.preventDefault();
+        const imgURL = imgBytes as Blob;
+        const formData = new FormData();
+        formData.append("profilePicture", imgURL as Blob);
+        const profilePictureID = await updateProfilePictures(formData);
+        if (profilePictureID !== null && profilePictureID !== undefined) {
+            console.log(profilePictureID)
+            const editedFormValue: SocialMediaUser = {
+                ...userFormData,
+                profilePicture: profilePictureID,
+            }
+            postData(token)(editedFormValue);
+        }
+        directToEditProfilePage("/social-media")
     }
 
     return (
@@ -90,9 +124,13 @@ const editSocialMediaprofile = () => {
                     {/* Left column */}
                     <div className="col-md-3">
                         <div className="text-center">
-                            <img src="//placehold.it/100" className="avatar img-circle" alt="avatar" />
+                            <div className="output">
+                                {imgUrl && <img id="recipeImg" src={imgUrl} />}
+                                {error && <div className="error">{error}</div>}
+                            </div>
                             <label className="form-label" htmlFor="customFile"></label>
-                            <input type="file" className="form-control" id="customFile" />
+                            <input type="file" className="form-control" id="customFile" onChange={changeHandler} />
+                            <span id="addRecipeIcon"> {profileImgState} </span>
                         </div>
                     </div>
 

@@ -1,7 +1,7 @@
 'use client'
 import { SocialMediaUser } from "../hooks/useSocialMediaData";
 import { AccountStatus, AccountType, RecipeCategories } from "../Enum/enum";
-import { getImages } from "../home-recipe/utils";
+import { getImages, getSocialMediaImages } from "../home-recipe/utils";
 import { useRouter } from 'next/navigation';
 import HomeRecipeNavBar from "../navbar/page";
 import { useContext } from "react";
@@ -31,6 +31,7 @@ const SocialMediaPage = () => {
     const socialMediaDataContext = useContext(SocialMediaDataContext);
     if (!socialMediaDataContext) { return null; }
     const { socialMediaUser } = socialMediaDataContext;
+    console.log("socialMediaUser", socialMediaUser)
 
     const router = useRouter();
     const directToEditProfilePage = (link: string) => {
@@ -50,11 +51,12 @@ const SocialMediaPage = () => {
                                 <div className="card">
                                     <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: "#000", height: "200px" }}>
                                         <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                                            <img src={getImages("379c6a89-4ead-4a72-ab9e-13fe81e47323")}
+                                            <img src={getSocialMediaImages(socialMediaUser?.profilePicture)}
                                                 alt="Generic placeholder image" className="img-fluid img-thumbnail mt-4 mb-2"
                                                 style={{ minHeight: '150px', width: '150px', zIndex: 1, objectFit: "cover" }} />
                                             <button onClick={() => directToEditProfilePage("/editSocialMediaprofile")} className="btn btn-outline-dark"
-                                                data-mdb-ripple-color="dark" style={{ zIndex: 1 }}> Edit profile</button>
+                                                data-mdb-ripple-color="dark" style={{ zIndex: 1 }}
+                                                disabled={socialMediaUser === null || socialMediaUser === undefined}> Edit profile</button>
                                         </div>
                                         <div className="ms-3" style={{ marginTop: '130px' }}>
                                             <h5>{socialMediaUser?.displayName ?? "Guest"}</h5>
@@ -62,9 +64,9 @@ const SocialMediaPage = () => {
                                     </div>
                                     <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
                                         <div className="d-flex justify-content-end text-center py-1">
-                                            <div>
+                                            <div className="px-3">
                                                 <p className="mb-1 h5">{socialMediaUser?.displayedRecipes?.length ?? 0}</p>
-                                                <p className="small text-muted mb-0">Photos</p>
+                                                <p className="small text-muted mb-0">Recipes</p>
                                             </div>
                                             <div className="px-3">
                                                 <p className="mb-1 h5">{socialMediaUser?.followersCount ?? 0}</p>
