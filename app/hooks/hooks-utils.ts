@@ -11,7 +11,7 @@ export const getRequestConfig = (action: Action) => <T>(user: T) => {
         }
         case "GET": {
             return {
-                body: JSON.stringify(user)
+
             }
         }
         case "PUT": {

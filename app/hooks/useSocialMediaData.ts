@@ -72,7 +72,7 @@ const useSocialMediaData = () => {
         }
 
     const postData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
-    const getSocialMediaUser = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("POST")
+    const getSocialMediaUser = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("GET")
     const updateProfilePictures = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/updateProfilePicture")("PUT")
     return { postData, getSocialMediaUser, updateProfilePictures, socialMediaUser, setSocialMediaUser, isLoading }
 }
