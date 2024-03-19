@@ -8,8 +8,6 @@ import { AccountType } from "@/app/Enum/enum";
 import { useRouter } from "next/navigation";
 import { ImgDataContext, LoginDataContext, SocialMediaDataContext } from "../providers";
 import { onchangeEvent } from "../home-recipe/RegisterRecipe";
-import useImgData from "../hooks/useImgData";
-
 
 const editSocialMediaprofile = () => {
     const router = useRouter();

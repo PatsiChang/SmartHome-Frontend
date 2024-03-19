@@ -7,7 +7,7 @@ import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
 import { ReceipeData } from '../hooks/useRecipeData';
 import RandomRecipe from './RandomRecipe';
-import { RecipeDataContext } from '../providers';
+import { ImgDataContext, LoginDataContext, RecipeDataContext } from '../providers';
 
 export type HomeRecipeState = {
   propsTrigger: boolean;
@@ -29,10 +29,16 @@ export const emptyFormValue: ReceipeData = {
 }
 
 function HomeRecipe() {
-  
+
   const recipeDataContext = useContext(RecipeDataContext);
   if (!recipeDataContext) { return null; }
-  const { recipeList } = recipeDataContext;
+  const { recipeList, postData } = recipeDataContext;
+  const loginDataContext = useContext(LoginDataContext);
+  if (!loginDataContext) { return null; }
+  const { token } = loginDataContext;
+  const imgDataContext = useContext(ImgDataContext);
+  if (!imgDataContext) { return null; }
+  const { uploadRecipeIcon } = imgDataContext;
 
   const [propsTrigger, setPropsTrigger] = useState(false);
   const [randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
@@ -62,11 +68,12 @@ function HomeRecipe() {
         <div><button className="btn btn-dark" onClick={toggleRegisterNewRecipe}>Register Recipe +</button></div>
         <div><button className="btn btn-dark" onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
       </div>
-      <div className="position-fixed top-50 start-50 translate-middle" style={{zIndex: "9999" }}>
+      <div className="position-fixed top-50 start-50 translate-middle" style={{ zIndex: "9999" }}>
         <RandomRecipe randomRecipeVisibility={randomRecipeVisibility}
           setRandomRecipeVisibility={setRandomRecipeVisibility} />
       </div>
-      <div><RegisterRecipe propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
+      <div><RegisterRecipe token={token} propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
+        uploadRecipeIcon={uploadRecipeIcon} postData={postData}
         existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} />
       </div>
       <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>

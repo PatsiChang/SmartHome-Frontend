@@ -1,4 +1,3 @@
-
 const useImgData = () => {
     const fetchData = (fetchInput: Parameters<typeof fetch>[0]) => async (input: FormData) => {
         try {
@@ -7,14 +6,15 @@ const useImgData = () => {
                 method: "PUT",
                 body: input,
             });
-            const profilePictureID: string = await response.text();
-            return profilePictureID;
+            const imgId: string = await response.text();
+            return imgId;
         } catch (error) {
             return null;
         }
     }
     const updateProfilePictures = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/updateProfilePicture")
-    return { updateProfilePictures }
+    const uploadRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")
+    return { updateProfilePictures, uploadRecipeIcon }
 
 }
 
