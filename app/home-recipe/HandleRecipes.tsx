@@ -20,13 +20,13 @@ export type HandleRecipeProps = {
     setExistingFormValue: Dispatch<SetStateAction<ReceipeData>>,
 }
 
-const HandleRecipe = ({recipeList, setExistingFormValue }: HandleRecipeProps) => {
+const HandleRecipe = ({ recipeList, setExistingFormValue }: HandleRecipeProps) => {
 
     // const { recipeList, getData, deleteData } = useRecipeData();
     const [detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
     const [recipeTypeState, setRecipeTypeState] = useState<RecipeTypes>(RecipeTypes.DESSERT)
 
-    const RecipeCount = (recipeType: RecipeTypes) => {
+    const RecipeCount = () => {
         return recipeList
             .filter(recipe => recipe.type === recipeTypeState)
             .length
@@ -34,7 +34,7 @@ const HandleRecipe = ({recipeList, setExistingFormValue }: HandleRecipeProps) =>
     const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipe) => (event) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this recipe?");
         // event.stopPropagation();
-        if (isConfirmed && RecipeCount(recipe.type) >= 3) {
+        if (isConfirmed && RecipeCount() >= 3) {
             // deleteData({ recipeIDTMP: recipe.recipeID });
             // window.location.reload();
         } else {

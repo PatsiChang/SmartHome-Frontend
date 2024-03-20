@@ -59,7 +59,7 @@ const Home = () => {
     if (token1 !== null && token1 !== undefined) {
       setToken(token1);
       const socialMediaUser = await getSocialMediaUser(token1)(null);
-      const token = await getData(token1);
+      const token = await getData(token1)(null);
       directToRecipeHome();
     }
     // event.preventDefault();

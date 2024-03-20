@@ -2,18 +2,17 @@
 import React, { useState, FormEventHandler, Dispatch, SetStateAction, ChangeEvent, useEffect } from "react";
 import { HomeRecipeState, emptyFormValue } from "./page";
 import ProgressBar from "./ProgressBar";
-import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
+import { ReceipeData } from "../hooks/useRecipeData";
 // import { newRecipeValidation } from "./utils";
 import IngredientList, { Ingredient } from "./IngredientList";
-import { newRecipeValidation } from "./utils";
 import StepsList, { Steps } from "./StepsList";
 import { v4 as uuidv4 } from "uuid"
 
-
-// import { newRecipeValidation } from "./utils";
-
 //Types
 type RegisterRecipeProps = {
+    token: string,
+    postData: (token: string) => <T>(input: T) => Promise<ReceipeData[] | null>,
+    uploadRecipeIcon: (input: FormData) => Promise<string | null>,
     propsTrigger: HomeRecipeState['propsTrigger'],
     setPropsTrigger: HomeRecipeState["setPropsTrigger"],
     existingFormValue: ReceipeData,
@@ -35,9 +34,7 @@ export type Form = {
     type: RecipeTypes | null;
     ingredient: Ingredient[] | null;
     steps: string[] | null;
-
 }
-
 //Restrict File Types
 const ImgTypes = ['image/png', 'image/jpeg']
 
@@ -48,8 +45,10 @@ export enum RecipeTypes {
     DESSERT = "DESSERT",
 
 }
-const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setExistingFormValue }: RegisterRecipeProps) => {
-    //useState Hooks
+const RegisterRecipe = ({ token, postData, uploadRecipeIcon, propsTrigger, setPropsTrigger,
+    existingFormValue, setExistingFormValue }: RegisterRecipeProps) => {
+    console.log("In Register Recipe: check token", token);
+
     const [imgUrl, setImgUrl] = useState<string | null>(null);
     const [imgBytes, setImgBytes] = useState<File | null>(null);
     const [file, setFile] = useState<File | null>(null);
@@ -60,8 +59,6 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
     const [stepsInput, setStepsInput] = useState<Steps[]>([{ id: '', step: '' }]);
     const [stepsInStringArray, setStepsInStringArray] = useState<string[]>();
     const [recipeFormData, setRecipeFormData] = useState<ReceipeData>(() => existingFormValue);
-
-    const { postData, recipeList, updateRecipeIcon } = useRecipeData();
 
 
     useEffect(() => {
@@ -87,20 +84,11 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
         }
     }
     // useful library: lodash , yui for form
-
-    // const getFormValue = (formData: FormData) => (key: string) => {
-    //     const field = formData.get(key);
-    //     if (field === null || field === undefined || field === "") {
-    //         return null;
-    //     } 
-    //     return field;
-    // };
     const changeRecipeStepsToStepType = () => {
         if (stepsInStringArray !== undefined) {
             stepsInStringArray.map((step, idx) => {
                 if (idx > 0) {
                     setStepsInput((previousInput) => [...previousInput, { id: uuidv4(), step: step }]);
-
                 } else {
                     const newStepsInput = [...stepsInput];
                     newStepsInput[idx].id = uuidv4();
@@ -114,19 +102,17 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
         changeRecipeStepsToStepType();
     }, [stepsInStringArray])
 
-    const uploadForm = async (form: Form) => {
-        // const recipeID: string = await postData({ form: form });
-        //     return recipeID;
-        if (!newRecipeValidation({ form, recipeList })) {
-            setErrorCode("");
-            // const recipeID: string = await postData({ form: form });
-            setPropsTrigger(false);
-            // return recipeID;
-        } else {
-            setErrorCode("Recipe Name Already Exist!");
-            setPropsTrigger(true);
-        }
-    }
+    // const uploadForm = async (form: Form) => {
+    //     if (!newRecipeValidation({ form, recipeList })) {
+    //         setErrorCode("");
+    //         // const recipeID: string = await postData({ form: form });
+    //         setPropsTrigger(false);
+    //         // return recipeID;
+    //     } else {
+    //         setErrorCode("Recipe Name Already Exist!");
+    //         setPropsTrigger(true);
+    //     }
+    // }
 
     const handleReipeNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setRecipeFormData(prevState => {
@@ -148,19 +134,22 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         try {
-            //Prevent browser reload content
             event.preventDefault();
+            const imgURL = imgBytes as Blob;
+            const formData = new FormData();
+            formData.append("recipeIcon", imgURL as Blob);
+            const imgId = await uploadRecipeIcon(formData);
             let stepsInStringArray: string[] = [];
             stepsInput.forEach((step) => stepsInStringArray.push(step.step));
-            const imgURL = imgBytes as Blob;
-            const form: ReceipeData = {
-                ...recipeFormData,
-                ingredient: ingredientInput,
-                steps: stepsInStringArray,
-            }
-            const recipeID = await uploadForm(form);
-            if (recipeID !== null && recipeID !== undefined && imgURL) {
-                // await updateRecipeIcon({ recipeIDTMP: recipeID, recipeIcon: imgURL });
+            if (imgId !== null && imgId !== undefined) {
+                console.log(imgId);
+                const form: ReceipeData = {
+                    ...recipeFormData,
+                    ingredient: ingredientInput,
+                    steps: stepsInStringArray,
+                    imgURL: imgId,
+                }
+                postData(token)(form);
             }
             //  window.location.reload();
         } catch (error) {
@@ -176,7 +165,7 @@ const RegisterRecipe = ({ propsTrigger, setPropsTrigger, existingFormValue, setE
     };
 
     const isChecked = (type: RecipeTypes) => {
-        return recipeFormData.type === type
+        return recipeFormData.type === type;
     }
 
     return propsTrigger ? (
