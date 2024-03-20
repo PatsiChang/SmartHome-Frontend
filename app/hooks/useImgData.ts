@@ -1,3 +1,4 @@
+//This Hook is solely for uploading images
 const useImgData = () => {
     const fetchData = (fetchInput: Parameters<typeof fetch>[0]) => async (input: FormData) => {
         try {
@@ -13,7 +14,7 @@ const useImgData = () => {
         }
     }
     const updateProfilePictures = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/updateProfilePicture")
-    const uploadRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")
+    const uploadRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/addRecipeIcon")
     return { updateProfilePictures, uploadRecipeIcon }
 
 }

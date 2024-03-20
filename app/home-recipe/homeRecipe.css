@@ -166,7 +166,6 @@ input[type='radio']:checked:after {
 .output{
     display: flex;
     justify-content: center;
-    align-items: center;
     max-width: 50vw;
     max-height: 50vh;
     align-self: center;
@@ -174,7 +173,6 @@ input[type='radio']:checked:after {
 #recipeImg{
     border: solid 3px var(--modernPink) ;
     border-radius: 5px;
-    flex-wrap: wrap;
 }
 #radioBtn{
     display: flex;
@@ -372,7 +370,6 @@ input[type='radio']:checked:after {
     border: 1px solid var(--lighterColor);
 
 }
-
 
 /* ImageSlider */
 .imgSliderContainer{

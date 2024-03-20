@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Form, RecipeTypes } from '../home-recipe/RegisterRecipe';
+import { useState } from 'react';
+import { RecipeTypes } from '../home-recipe/RegisterRecipe';
 import { Ingredient } from '../home-recipe/IngredientList';
-import useLogInData from './useLogInData';
 import { getRequestConfig } from './hooks-utils';
 
 export type ReceipeData = {
@@ -47,16 +46,15 @@ const useRecipeData = () => {
       } catch (error) {
         console.log("error: ", error)
         return null;
+      } finally {
+        console.log("finally: ")
+        setIsLoading(false);
       }
-      //  finally {
-      //   console.log("finally: ")
-      //   setIsLoading(false);
-      // }
     }
 
 
   const postData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("POST");
-  const getData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getRecipeByToken")("POST");
+  const getData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getRecipeByToken")("GET");
   const getRandomRecipe = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getRandomRecipe")("GET");
   const updateRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("PUT");
   const deleteData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("DELETE");

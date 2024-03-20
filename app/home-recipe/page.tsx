@@ -32,7 +32,7 @@ function HomeRecipe() {
 
   const recipeDataContext = useContext(RecipeDataContext);
   if (!recipeDataContext) { return null; }
-  const { recipeList, postData } = recipeDataContext;
+  const { recipeList, postData, getData } = recipeDataContext;
   const loginDataContext = useContext(LoginDataContext);
   if (!loginDataContext) { return null; }
   const { token } = loginDataContext;
@@ -73,7 +73,7 @@ function HomeRecipe() {
           setRandomRecipeVisibility={setRandomRecipeVisibility} />
       </div>
       <div><RegisterRecipe token={token} propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
-        uploadRecipeIcon={uploadRecipeIcon} postData={postData}
+        uploadRecipeIcon={uploadRecipeIcon} postData={postData} getData={getData}
         existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} />
       </div>
       <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>

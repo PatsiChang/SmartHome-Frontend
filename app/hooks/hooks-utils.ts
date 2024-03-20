@@ -1,7 +1,6 @@
 
 export type Action = "POST" | "GET" | "PUT" | "DELETE";
 
-
 export const getRequestConfig = (action: Action) => <T>(user: T) => {
     switch (action) {
         case "POST": {
@@ -10,9 +9,7 @@ export const getRequestConfig = (action: Action) => <T>(user: T) => {
             }
         }
         case "GET": {
-            return {
-
-            }
+            return {}
         }
         case "PUT": {
             return {
