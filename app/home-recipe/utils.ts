@@ -1,6 +1,5 @@
 // Add functions for global use
-import { ReceipeData } from "../hooks/useRecipeData";
-import { Form } from "./RegisterRecipe";
+import { Form, ReceipeData } from "../types/recipeTypes";
 
 
 // Validations for Recipe Registration

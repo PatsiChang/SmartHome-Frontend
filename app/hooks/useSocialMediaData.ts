@@ -1,28 +1,10 @@
 "use strict"
 import { useState } from "react";
-import { AccountStatus, AccountType, RecipeCategories } from "../Enum/enum";
-import { ReceipeData } from "./useRecipeData";
 import { Action, getRequestConfig } from "./hooks-utils";
-import { Form } from "../home-recipe/RegisterRecipe";
+import { ReceipeData, RecipeCategories } from "../types/recipeTypes";
+import { AccountStatus, AccountType, SocialMediaUser } from "../types/socialMediaTypes";
 
-export interface SocialMediaUser {
-    uid: string,
-    userName: string,
-    userNameChangeCount: number,
-    displayName: string,
-    email: string,
-    profilePicture: string,
-    bannerPicture: string,
-    accountStatus: AccountStatus,
-    accountType: AccountType,
-    biography: string,
-    followersCount: number,
-    followingCount: number,
-    displayedRecipes: Array<ReceipeData>,
-    showcasedRecipes: Array<ReceipeData>,
-    savedRecipes: Array<ReceipeData>,
-    userInterest: Array<RecipeCategories>,
-}
+
 type SuccessResponse<T> = { data: T; };
 type FailedResponse = { error: string; }
 //Get One User
@@ -73,7 +55,6 @@ const useSocialMediaData = () => {
 
     const postData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
     const getSocialMediaUser = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("GET")
-    const updateProfilePictures = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/updateProfilePicture")("PUT")
-    return { postData, getSocialMediaUser, updateProfilePictures, socialMediaUser, setSocialMediaUser, isLoading }
+    return { postData, getSocialMediaUser, socialMediaUser, setSocialMediaUser, isLoading }
 }
 export default useSocialMediaData;

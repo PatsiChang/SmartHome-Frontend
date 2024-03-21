@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Action } from "./hooks-utils";
-import { UserLogin } from "../page";
+import { setToLocalStorage } from "../utils/localStorage";
 
 type SuccessResponse<T> = { data: T; };
 type FailedResponse = { error: string; }
@@ -40,8 +40,9 @@ const useLogInData = () => {
       if (loginResponse.includes("error")) {
         throw new Error(loginResponse);
       }
+      setToLocalStorage("token", loginResponse);
       setToken(loginResponse);
-      
+
       // setTokenInRecipeHook(loginResponse);
       return loginResponse;
     } catch (error) {
@@ -51,8 +52,8 @@ const useLogInData = () => {
     }
   }
 
-const postData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/login")("POST");
-// const getData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/socialMedia")("GET")
+  const postData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/login")("POST");
+  // const getData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/socialMedia")("GET")
   return { token, postData, setToken };
 }
 

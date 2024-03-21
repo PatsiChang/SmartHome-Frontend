@@ -1,9 +1,8 @@
 'use client'
 import './globals.css'
 import { ChangeEvent, FormEventHandler, useEffect, useState, useContext } from 'react';
-import useLogInData from './hooks/useLogInData'
 import { useRouter } from 'next/navigation';
-import { LoginDataContext, RecipeDataContext, SocialMediaDataContext } from './providers';
+import { DataContext, SocialMediaDataContext } from './providers';
 
 export type UserLogin = {
   userId: string,
@@ -14,21 +13,11 @@ const defaultUserLogin = {
   logInPasswordHashed: "",
 }
 const Home = () => {
-
-  const { postData } = useLogInData();
   //Allow All component to access the same state of the hook
-  const recipeDataContext = useContext(RecipeDataContext);
-  if (!recipeDataContext) { return null; }
-  const { getData } = recipeDataContext;
+  const dataContext = useContext(DataContext);
+  if (!dataContext) { return null; }
+  const { getRecipeData, postLoginData, getSocialMediaData } = dataContext;
 
-  const loginDataContext = useContext(LoginDataContext);
-  if (!loginDataContext) { return null; }
-  const { setToken } = loginDataContext;
-
-
-  const socialMediaDataContext = useContext(SocialMediaDataContext)
-  if (!socialMediaDataContext) { return null; }
-  const { getSocialMediaUser } = socialMediaDataContext;
   const router = useRouter();
   const [userLogin, setUserLogin] = useState<UserLogin>(defaultUserLogin);
 
@@ -54,12 +43,11 @@ const Home = () => {
   };
   const validateLogIn: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    const token1 = await postData(userLogin);
+    const token1 = await postLoginData(userLogin);
 
     if (token1 !== null && token1 !== undefined) {
-      setToken(token1);
-      const socialMediaUser = await getSocialMediaUser(token1)(null);
-      const token = await getData(token1)(null);
+      await getSocialMediaData(null);
+      await getRecipeData(null);
       directToRecipeHome();
     }
     // event.preventDefault();

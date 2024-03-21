@@ -1,50 +1,28 @@
 'use client'
 import React, { useState, FormEventHandler, Dispatch, SetStateAction, ChangeEvent, useEffect } from "react";
 import { HomeRecipeState, emptyFormValue } from "./page";
-import ProgressBar from "./ProgressBar";
-import { ReceipeData } from "../hooks/useRecipeData";
-import IngredientList, { Ingredient } from "./IngredientList";
-import StepsList, { Steps } from "./StepsList";
+import IngredientList from "./IngredientList";
+import StepsList from "./StepsList";
 import { v4 as uuidv4 } from "uuid"
+import { Ingredient, ReceipeData, RecipeTypes, Steps, UploadFormError, UploadFormFile } from "../types/recipeTypes";
 
 //Types
 type RegisterRecipeProps = {
-    token: string,
-    postData: (token: string) => <T>(input: T) => Promise<ReceipeData[] | null>,
-    getData: (token: string) => <T>(input: T) => Promise<ReceipeData[] | null>,
+    uploadNewRecipe: (form: ReceipeData) => void,
     uploadRecipeIcon: (input: FormData) => Promise<string | null>,
     propsTrigger: HomeRecipeState['propsTrigger'],
     setPropsTrigger: HomeRecipeState["setPropsTrigger"],
     existingFormValue: ReceipeData,
     setExistingFormValue: Dispatch<SetStateAction<ReceipeData>>,
 }
-export type UploadFormFile = {
-    file: File,
-    setFile: React.Dispatch<React.SetStateAction<File | null>>
-};
-export type UploadFormError = {
-    error: string,
-    setError: React.Dispatch<React.SetStateAction<string | null>>
-};
+
 export type UploadFormState = UploadFormFile & UploadFormError;
 export type onchangeEvent = React.ChangeEvent<HTMLInputElement>;
 
-export type Form = {
-    recipeName: string | null;
-    type: RecipeTypes | null;
-    ingredient: Ingredient[] | null;
-    steps: string[] | null;
-}
 //Restrict File Types
 const ImgTypes = ['image/png', 'image/jpeg']
 
-export enum RecipeTypes {
-    BREAKFAST = "BREAKFAST",
-    LUNCH = "LUNCH",
-    DINNER = "DINNER",
-    DESSERT = "DESSERT",
-}
-const RegisterRecipe = ({ token, postData, getData, uploadRecipeIcon, propsTrigger, setPropsTrigger,
+const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPropsTrigger,
     existingFormValue }: RegisterRecipeProps) => {
     const [imgUrl, setImgUrl] = useState<string | null>(null);
     const [imgBytes, setImgBytes] = useState<File | null>(null);
@@ -62,7 +40,6 @@ const RegisterRecipe = ({ token, postData, getData, uploadRecipeIcon, propsTrigg
         setIngredientInput(existingFormValue.ingredient)
         setStepsInStringArray(existingFormValue.steps)
     }, [existingFormValue])
-
 
     //Upload Recipe Image
     const changeHandler = (e: onchangeEvent) => {
@@ -139,17 +116,19 @@ const RegisterRecipe = ({ token, postData, getData, uploadRecipeIcon, propsTrigg
                     steps: stepsInStringArray,
                     imgURL: imgId,
                 }
-                await postData(token)(form);
-                getData(token)(null);
+                uploadNewRecipe(form);
                 refreshForm();
             }
         } catch (error) {
             console.error(error)
         }
     };
+    const handleCloseBtnOnClick = () => {
+        refreshForm();
+    };
+
     return propsTrigger ? (
         <div className="registerRecipe">
-
             <div className="registerRecipeCloseBtn">
                 <button className="close-btn" onClick={refreshForm}>close</button>
             </div>
@@ -162,7 +141,7 @@ const RegisterRecipe = ({ token, postData, getData, uploadRecipeIcon, propsTrigg
                     {imgUrl && <img id="recipeImg" src={imgUrl}
                         style={{ width: "100%", height: "200px", overflow: "hidden", margin: "0% 0% 2% 0%" }} />}
                     {error && <div className="error">{error}</div>}
-                    {file && <ProgressBar file={file} setFile={setFile} />}
+                    {/* {file && <ProgressBar file={file} setFile={setFile} />} */}
                 </div>
                 <div>
                     <label htmlFor="recipeName">Recipe Name: </label>
@@ -193,7 +172,6 @@ const RegisterRecipe = ({ token, postData, getData, uploadRecipeIcon, propsTrigg
 
         </div>
     ) : <></>;
-
 }
 
 export default RegisterRecipe;

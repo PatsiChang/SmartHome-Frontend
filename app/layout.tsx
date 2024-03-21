@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import BootstrapClient from './bootstrap/BootstrapClient';
-import { ImgDataProvider, LoginDataProvider, RecipeDataProvider, SocialMediaDataProvider } from './providers'
+import { ImgDataProvider, LoginDataProvider, SocialMediaDataProvider, DataProvider } from './providers'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,18 +22,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <BootstrapClient />
-        <LoginDataProvider>
-          <RecipeDataProvider>
+        <DataProvider>
+          <LoginDataProvider>
             <SocialMediaDataProvider>
               <ImgDataProvider>
                 {children}
               </ImgDataProvider>
             </SocialMediaDataProvider>
-          </RecipeDataProvider>
-        </LoginDataProvider>
-
-
-
+          </LoginDataProvider>
+        </DataProvider>
 
         <div className="container text-center">
         </div>

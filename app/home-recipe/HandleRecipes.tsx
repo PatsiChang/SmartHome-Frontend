@@ -1,14 +1,12 @@
-import { Dispatch, SetStateAction, useState, useContext } from "react";
-import useRecipeData, { ReceipeData } from "../hooks/useRecipeData";
+import { Dispatch, SetStateAction, useState } from "react";
 import RecipeDetails from "./RecipeDetails";
-import { RecipeTypes } from "./RegisterRecipe";
 import { getImages } from "./utils";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import React from "react";
 import Slider from "react-slick";
 import SmartHomeLogger from "../logger";
-import { RecipeDataContext } from "../providers";
+import { ReceipeData, RecipeTypes } from "../types/recipeTypes";
 
 type DeleteRecipeBtnOnClickHandler = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
 type ShowdetailedRecipe = (recipe: ReceipeData) => React.MouseEventHandler<HTMLButtonElement>
@@ -22,7 +20,6 @@ export type HandleRecipeProps = {
 
 const HandleRecipe = ({ recipeList, setExistingFormValue }: HandleRecipeProps) => {
 
-    // const { recipeList, getData, deleteData } = useRecipeData();
     const [detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
     const [recipeTypeState, setRecipeTypeState] = useState<RecipeTypes>(RecipeTypes.DESSERT)
 

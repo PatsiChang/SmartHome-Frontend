@@ -1,11 +1,8 @@
-// import useRecipeData, { ReceipeData } from "../hooks/UseRecipeData";
 
-import { ReceipeData } from "../hooks/useRecipeData";
+import { ReceipeData, cardStyle } from "../types/recipeTypes";
 import { CloseRecipeDetails } from "./HandleRecipes";
-import { cardStyle } from "./RandomRecipe";
 
 const RecipeDetails = ({ recipe, closeRecipeDetails }: { recipe: ReceipeData | null; closeRecipeDetails: CloseRecipeDetails }) => {
-
     const ingredientIndividual = (ingredientAttribute: string) => {
         return recipe ? (
             <div className="ingredientName">

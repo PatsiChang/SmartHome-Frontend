@@ -1,34 +1,29 @@
 'use client'
 
-import { SocialMediaUser } from "@/app/hooks/useSocialMediaData";
 import HomeRecipeNavBar from "../navbar/page";
 import { ChangeEvent, FormEventHandler, useContext, useEffect, useState } from "react";
 import { defaultUser } from "../social-media/page";
-import { AccountType } from "@/app/Enum/enum";
 import { useRouter } from "next/navigation";
-import { ImgDataContext, LoginDataContext, SocialMediaDataContext } from "../providers";
+import { DataContext, ImgDataContext, SocialMediaDataContext } from "../providers";
 import { onchangeEvent } from "../home-recipe/RegisterRecipe";
+import { AccountType, SocialMediaUser } from "../types/socialMediaTypes";
 
 const editSocialMediaprofile = () => {
     const router = useRouter();
     const directToEditProfilePage = (link: string) => {
         router.push(link);
     }
-    const loginDataContext = useContext(LoginDataContext);
-    if (!loginDataContext) {
-        directToEditProfilePage("/");
-        return null;
-    }
+    const dataContext = useContext(DataContext);
+    if (!dataContext) { return null; }
+    const { postSocialMediaData, socialMediaUser } = dataContext;
+    console.log("socialMediaUser in component", socialMediaUser)
+
     const imgDataContext = useContext(ImgDataContext);
     if (!imgDataContext) {
         return null;
     }
     const { updateProfilePictures } = imgDataContext
-    const { token } = loginDataContext;
 
-    const socialMediaDataContext = useContext(SocialMediaDataContext);
-    if (!socialMediaDataContext) { return null; }
-    const { postData, socialMediaUser } = socialMediaDataContext;
 
     const [userFormData, setUserFormData] = useState<SocialMediaUser>(defaultUser);
     // const [editProfileBtn, setEditProfileBtn] = useState<boolean>(true);
@@ -39,7 +34,6 @@ const editSocialMediaprofile = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // getSocialMediaUser(token);
         if (socialMediaUser !== null && socialMediaUser !== undefined) {
             setUserFormData(socialMediaUser);
         } else
@@ -85,10 +79,12 @@ const editSocialMediaprofile = () => {
         })
     };
     const handleAccountTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        const newAccountType = isChecked ? AccountType.privateAccount : AccountType.publicAccount;
         setUserFormData(prevState => {
             return {
                 ...prevState,
-                accountType: e.target.value as AccountType,
+                accountType: newAccountType
             }
         })
     };
@@ -105,7 +101,7 @@ const editSocialMediaprofile = () => {
                 ...userFormData,
                 profilePicture: profilePictureID,
             }
-            postData(token)(editedFormValue);
+            postSocialMediaData(editedFormValue);
         }
         directToEditProfilePage("/social-media")
     }
@@ -158,7 +154,7 @@ const editSocialMediaprofile = () => {
                                 </div>
                             </div>
                             <div className="form-check form-switch">
-                                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                                <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" role="switch"
                                     onChange={handleAccountTypeChange} checked={userFormData.accountType === AccountType.privateAccount} />
                                 <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Private Account</label>
                             </div>

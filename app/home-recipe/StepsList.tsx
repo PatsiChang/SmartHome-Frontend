@@ -1,11 +1,7 @@
-import { MouseEventHandler, useEffect } from "react";
+import { MouseEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid"
+import { Steps } from "../types/recipeTypes";
 
-export interface Steps {
-    id: string;
-    step: string;
-    [key: string]: string | number;
-}
 interface StepsListProps {
     stepsInput: Steps[];
     setStepsInput: React.Dispatch<React.SetStateAction<Steps[]>>;

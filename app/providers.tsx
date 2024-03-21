@@ -2,23 +2,22 @@
 
 import { createContext } from "react";
 import React from "react";
-import useRecipeData from "./hooks/useRecipeData";
 import useLogInData from "./hooks/useLogInData";
 import useSocialMediaData from "./hooks/useSocialMediaData";
 import useImgData from "./hooks/useImgData";
-export const RecipeDataContext = createContext<null | ReturnType<typeof useRecipeData>>(null);
+import useData from "./hooks/useData";
+export const DataContext = createContext<null | ReturnType<typeof useData>>(null);
 export const LoginDataContext = createContext<null | ReturnType<typeof useLogInData>>(null);
 export const SocialMediaDataContext = createContext<null | ReturnType<typeof useSocialMediaData>>(null);
 export const ImgDataContext = createContext<null | ReturnType<typeof useImgData>>(null);
 
 
-
-function RecipeDataProvider({ children }: { children: React.ReactNode }) {
-    const recipeData = useRecipeData();
+function DataProvider({ children }: { children: React.ReactNode }) {
+    const data = useData();
     return (
-        <RecipeDataContext.Provider value={recipeData}>
+        <DataContext.Provider value={data}>
             {children}
-        </RecipeDataContext.Provider>
+        </DataContext.Provider>
     );
 }
 function LoginDataProvider({ children }: { children: React.ReactNode }) {
@@ -47,4 +46,4 @@ function ImgDataProvider({ children }: { children: React.ReactNode }) {
     );
 }
 
-export { RecipeDataProvider, LoginDataProvider, SocialMediaDataProvider, ImgDataProvider };
+export { LoginDataProvider, SocialMediaDataProvider, ImgDataProvider, DataProvider };
