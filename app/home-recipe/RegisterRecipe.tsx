@@ -3,7 +3,6 @@ import React, { useState, FormEventHandler, Dispatch, SetStateAction, ChangeEven
 import { HomeRecipeState, emptyFormValue } from "./page";
 import ProgressBar from "./ProgressBar";
 import { ReceipeData } from "../hooks/useRecipeData";
-// import { newRecipeValidation } from "./utils";
 import IngredientList, { Ingredient } from "./IngredientList";
 import StepsList, { Steps } from "./StepsList";
 import { v4 as uuidv4 } from "uuid"
@@ -12,6 +11,7 @@ import { v4 as uuidv4 } from "uuid"
 type RegisterRecipeProps = {
     token: string,
     postData: (token: string) => <T>(input: T) => Promise<ReceipeData[] | null>,
+    getData: (token: string) => <T>(input: T) => Promise<ReceipeData[] | null>,
     uploadRecipeIcon: (input: FormData) => Promise<string | null>,
     propsTrigger: HomeRecipeState['propsTrigger'],
     setPropsTrigger: HomeRecipeState["setPropsTrigger"],
@@ -43,12 +43,9 @@ export enum RecipeTypes {
     LUNCH = "LUNCH",
     DINNER = "DINNER",
     DESSERT = "DESSERT",
-
 }
-const RegisterRecipe = ({ token, postData, uploadRecipeIcon, propsTrigger, setPropsTrigger,
-    existingFormValue, setExistingFormValue }: RegisterRecipeProps) => {
-    console.log("In Register Recipe: check token", token);
-
+const RegisterRecipe = ({ token, postData, getData, uploadRecipeIcon, propsTrigger, setPropsTrigger,
+    existingFormValue }: RegisterRecipeProps) => {
     const [imgUrl, setImgUrl] = useState<string | null>(null);
     const [imgBytes, setImgBytes] = useState<File | null>(null);
     const [file, setFile] = useState<File | null>(null);
@@ -59,7 +56,6 @@ const RegisterRecipe = ({ token, postData, uploadRecipeIcon, propsTrigger, setPr
     const [stepsInput, setStepsInput] = useState<Steps[]>([{ id: '', step: '' }]);
     const [stepsInStringArray, setStepsInStringArray] = useState<string[]>();
     const [recipeFormData, setRecipeFormData] = useState<ReceipeData>(() => existingFormValue);
-
 
     useEffect(() => {
         setRecipeFormData(existingFormValue)
@@ -102,18 +98,6 @@ const RegisterRecipe = ({ token, postData, uploadRecipeIcon, propsTrigger, setPr
         changeRecipeStepsToStepType();
     }, [stepsInStringArray])
 
-    // const uploadForm = async (form: Form) => {
-    //     if (!newRecipeValidation({ form, recipeList })) {
-    //         setErrorCode("");
-    //         // const recipeID: string = await postData({ form: form });
-    //         setPropsTrigger(false);
-    //         // return recipeID;
-    //     } else {
-    //         setErrorCode("Recipe Name Already Exist!");
-    //         setPropsTrigger(true);
-    //     }
-    // }
-
     const handleReipeNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setRecipeFormData(prevState => {
             return {
@@ -131,7 +115,14 @@ const RegisterRecipe = ({ token, postData, uploadRecipeIcon, propsTrigger, setPr
             }
         })
     };
-
+    const refreshForm = () => {
+        setPropsTrigger(false);
+        setRecipeFormData(emptyFormValue);
+        setIngredientInput([{ id: '', ingredientName: '', ingredientAmount: '' }]);
+        setStepsInput([{ id: '', step: '' }]);
+        setStepsInStringArray([]);
+        setImgUrl("")
+    }
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         try {
             event.preventDefault();
@@ -142,45 +133,34 @@ const RegisterRecipe = ({ token, postData, uploadRecipeIcon, propsTrigger, setPr
             let stepsInStringArray: string[] = [];
             stepsInput.forEach((step) => stepsInStringArray.push(step.step));
             if (imgId !== null && imgId !== undefined) {
-                console.log(imgId);
                 const form: ReceipeData = {
                     ...recipeFormData,
                     ingredient: ingredientInput,
                     steps: stepsInStringArray,
                     imgURL: imgId,
                 }
-                postData(token)(form);
+                await postData(token)(form);
+                getData(token)(null);
+                refreshForm();
             }
-            //  window.location.reload();
         } catch (error) {
             console.error(error)
         }
-
     };
-    const handleCloseBtnOnClick = () => {
-        setPropsTrigger(false);
-        setExistingFormValue(emptyFormValue);
-        setIngredientInput([{ id: '', ingredientName: '', ingredientAmount: '' }]);
-        setStepsInput([{ id: '', step: '' }]);
-    };
-
-    const isChecked = (type: RecipeTypes) => {
-        return recipeFormData.type === type;
-    }
-
     return propsTrigger ? (
         <div className="registerRecipe">
-            <div className="registerRecipeCloseBtn">
-                <button className="close-btn" onClick={handleCloseBtnOnClick}>close</button>
-            </div>
 
+            <div className="registerRecipeCloseBtn">
+                <button className="close-btn" onClick={refreshForm}>close</button>
+            </div>
             <form id="registerRecipePopUp" onSubmit={handleSubmit}>
                 <label id="addRecipeIcons" >
                     <input type="file" name="recipeImg" onChange={changeHandler} />
-                    <span id="addRecipeIcon"> {imgState} </span>
+                    <span id="addRecipeIcon" > {imgState} </span>
                 </label>
                 <div className="output">
-                    {imgUrl && <img id="recipeImg" src={imgUrl} />}
+                    {imgUrl && <img id="recipeImg" src={imgUrl}
+                        style={{ width: "100%", height: "200px", overflow: "hidden", margin: "0% 0% 2% 0%" }} />}
                     {error && <div className="error">{error}</div>}
                     {file && <ProgressBar file={file} setFile={setFile} />}
                 </div>
@@ -190,40 +170,23 @@ const RegisterRecipe = ({ token, postData, uploadRecipeIcon, propsTrigger, setPr
                 </div>
                 <span>Recipe Type: </span>
                 <div id="radioBtn">
-                    <div>
-                        <label htmlFor="breakfast">Breakfast </label>
-                        <input type="radio" id={RecipeTypes.BREAKFAST} value={RecipeTypes.BREAKFAST}
-                            checked={recipeFormData.type === RecipeTypes.BREAKFAST}
-                            onChange={handleReipeTypeChange} />
-                    </div>
-                    <div>
-                        <label htmlFor="lunch">Lunch </label>
-                        <input type="radio" id={RecipeTypes.LUNCH} value={RecipeTypes.LUNCH} name={RecipeTypes.LUNCH}
-                            checked={isChecked(RecipeTypes.LUNCH)}
-                            onChange={handleReipeTypeChange} />
-                    </div>
-                    <div>
-                        <label htmlFor="dinner">Dinner </label>
-                        <input type="radio" id={RecipeTypes.DINNER} value={RecipeTypes.DINNER}
-                            checked={recipeFormData.type === RecipeTypes.DINNER}
-                            onChange={handleReipeTypeChange} />
-                    </div>
-                    <div>
-                        <label htmlFor="dessert">Dessert </label>
-                        <input type="radio" id={RecipeTypes.DESSERT} value={RecipeTypes.DESSERT}
-                            checked={recipeFormData.type === RecipeTypes.DESSERT}
-                            onChange={handleReipeTypeChange} />
-                    </div>
+                    {Object.values(RecipeTypes).map((recipeType) => {
+                        return (
+                            <div>
+                                <label htmlFor="breakfast">{recipeType} </label>
+                                <input type="radio" id={recipeType} value={recipeType}
+                                    checked={recipeFormData.type === recipeType}
+                                    onChange={handleReipeTypeChange} />
+                            </div>
+                        )
+                    })}
                 </div>
                 <div><IngredientList ingredientInput={ingredientInput} setIngredientInput={setIngredientInput}
                     setRecipeFormData={setRecipeFormData} /></div>
                 <span>Recipe Steps: </span>
                 <div><StepsList stepsInput={stepsInput} setStepsInput={setStepsInput}
                     stepsInStringArray={stepsInStringArray} /></div>
-
-                {/* <input type="textfield" id="steps" name="steps" placeholder=" Steps"/> */}
                 <span id="responce"></span>
-                {/* <button id="addStepsBtn">Add Steps</button> */}
                 <button type="submit" id="submitRecipe">Submit Recipe</button>
                 <div id="errorCode">{errorCode}</div>
             </form>
