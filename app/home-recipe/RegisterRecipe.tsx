@@ -5,6 +5,7 @@ import IngredientList from "./IngredientList";
 import StepsList from "./StepsList";
 import { v4 as uuidv4 } from "uuid"
 import { Ingredient, ReceipeData, RecipeTypes, Steps, UploadFormError, UploadFormFile } from "../types/recipeTypes";
+import { getImages } from "./utils";
 
 //Types
 type RegisterRecipeProps = {
@@ -24,7 +25,7 @@ const ImgTypes = ['image/png', 'image/jpeg']
 
 const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPropsTrigger,
     existingFormValue }: RegisterRecipeProps) => {
-    const [imgUrl, setImgUrl] = useState<string | null>(null);
+    const [imgUrl, setImgUrl] = useState<string | undefined>();
     const [imgBytes, setImgBytes] = useState<File | null>(null);
     // const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -36,6 +37,7 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
     const [recipeFormData, setRecipeFormData] = useState<ReceipeData>(() => existingFormValue);
 
     useEffect(() => {
+        setImgUrl(getImages(existingFormValue.imgURL))
         setRecipeFormData(existingFormValue)
         setIngredientInput(existingFormValue.ingredient)
         setStepsInStringArray(existingFormValue.steps)
