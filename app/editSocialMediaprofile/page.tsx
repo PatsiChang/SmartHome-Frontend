@@ -4,7 +4,7 @@ import HomeRecipeNavBar from "../navbar/page";
 import { ChangeEvent, FormEventHandler, useContext, useEffect, useState } from "react";
 import { defaultUser } from "../social-media/page";
 import { useRouter } from "next/navigation";
-import { DataContext, ImgDataContext, SocialMediaDataContext } from "../providers";
+import { DataContext, ImgDataContext } from "../providers";
 import { onchangeEvent } from "../home-recipe/RegisterRecipe";
 import { AccountType, SocialMediaUser } from "../types/socialMediaTypes";
 
@@ -15,7 +15,7 @@ const editSocialMediaprofile = () => {
     }
     const dataContext = useContext(DataContext);
     if (!dataContext) { return null; }
-    const { postSocialMediaData, socialMediaUser } = dataContext;
+    const { postSocialMediaData, getSocialMediaData, socialMediaUser } = dataContext;
     console.log("socialMediaUser in component", socialMediaUser)
 
     const imgDataContext = useContext(ImgDataContext);
@@ -96,12 +96,11 @@ const editSocialMediaprofile = () => {
         formData.append("profilePicture", imgURL as Blob);
         const profilePictureID = await updateProfilePictures(formData);
         if (profilePictureID !== null && profilePictureID !== undefined) {
-            console.log(profilePictureID)
             const editedFormValue: SocialMediaUser = {
                 ...userFormData,
                 profilePicture: profilePictureID,
             }
-            postSocialMediaData(editedFormValue);
+            await postSocialMediaData(editedFormValue);
         }
         directToEditProfilePage("/social-media")
     }

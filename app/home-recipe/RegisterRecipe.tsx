@@ -26,7 +26,7 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
     existingFormValue }: RegisterRecipeProps) => {
     const [imgUrl, setImgUrl] = useState<string | null>(null);
     const [imgBytes, setImgBytes] = useState<File | null>(null);
-    const [file, setFile] = useState<File | null>(null);
+    // const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [errorCode, setErrorCode] = useState<string | null>("");
     const [imgState, setImgState] = useState<string | null>("Add Recipe Icon");
@@ -47,12 +47,10 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
         let selected = e.target.files[0];
         if (selected && ImgTypes.includes(selected.type)) {
             setImgBytes(selected)
-            setFile(selected);
             setImgUrl(URL.createObjectURL(selected));
             setImgState("Change Icon");
             setError('');
         } else {
-            setFile(null);
             setError('Not an image file (png or jpeg)');
         }
     }
@@ -123,9 +121,6 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
             console.error(error)
         }
     };
-    const handleCloseBtnOnClick = () => {
-        refreshForm();
-    };
 
     return propsTrigger ? (
         <div className="registerRecipe">
@@ -141,7 +136,6 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
                     {imgUrl && <img id="recipeImg" src={imgUrl}
                         style={{ width: "100%", height: "200px", overflow: "hidden", margin: "0% 0% 2% 0%" }} />}
                     {error && <div className="error">{error}</div>}
-                    {/* {file && <ProgressBar file={file} setFile={setFile} />} */}
                 </div>
                 <div>
                     <label htmlFor="recipeName">Recipe Name: </label>
@@ -169,7 +163,6 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
                 <button type="submit" id="submitRecipe">Submit Recipe</button>
                 <div id="errorCode">{errorCode}</div>
             </form>
-
         </div>
     ) : <></>;
 }

@@ -16,7 +16,6 @@ const useImgData = () => {
     const updateProfilePictures = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/updateProfilePicture")
     const uploadRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/addRecipeIcon")
     return { updateProfilePictures, uploadRecipeIcon }
-
 }
 
 export default useImgData;

@@ -34,7 +34,6 @@ const useData = () => {
                         throw Error(recipeListByToken.error);
                     }
                     const data = recipeListByToken as ReceipeData[];
-                    console.log("Checl recipe hook data:", data)
                     setRecipeList(data);
                 } else if (fetchInput == process.env.NEXT_PUBLIC_API_URL1 + "/login") {
                     const loginResponse = await response.text();
@@ -44,12 +43,15 @@ const useData = () => {
                     setToLocalStorage("token", loginResponse);
                     return loginResponse;
                 } else if (fetchInput == process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken") {
-                    const socialMediaUserResponse = await response.json();
-                    if (typeof socialMediaUserResponse === 'object' && socialMediaUserResponse !== undefined) {
-                        setSocialMediaUser(socialMediaUserResponse);
+                    const smUserResponse: SocialMediaUser = await response.json();
+                    if (typeof smUserResponse === 'object' && smUserResponse !== undefined) {
+                        setSocialMediaUser(smUserResponse);
                         console.log("setSocialMediaUser in hook", socialMediaUser)
                         return socialMediaUser;
                     }
+                } else if (process.env.NEXT_PUBLIC_API_URL + "/socialMedia") {
+                    const smUserResponse: SocialMediaUser = await response.json();
+                    setSocialMediaUser(smUserResponse);
                 }
                 // getResponseConfig(fetchInput)(response);
             } catch (error) {
@@ -63,6 +65,9 @@ const useData = () => {
 
     const postRecipeData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("POST");
     const getRecipeData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getMyRecipe")("GET");
+    //   const getRandomRecipe = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getRandomRecipe")("GET");
+    //   const updateRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("PUT");
+    //   const deleteData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("DELETE");
     const postLoginData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/login")("POST");
     const postSocialMediaData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
     const getSocialMediaData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("GET")

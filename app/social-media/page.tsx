@@ -77,7 +77,7 @@ const SocialMediaPage = () => {
                                         </div>
                                     </div>
                                     <div className="mb-2">
-                                        <div className="p-4" style={{ backgroundColor: "#f8f9fa;" }}>
+                                        <div className="p-4" style={{ backgroundColor: "#f8f9fa" }}>
                                             <p className="font-italic mb-1">{socialMediaUser?.biography ?? ""}</p>
                                             <p className="font-italic mb-1">{socialMediaUser?.email ?? ""}</p>
                                         </div>

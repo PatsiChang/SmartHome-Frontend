@@ -46,14 +46,12 @@ function HomeRecipe() {
     await postRecipeData(form);
     getRecipeData(null);
   }
-
   const toggleRegisterNewRecipe = () => {
     setPropsTrigger(true)
   }
   const generateRandomRecipe = async () => {
     // await getRandomRecipe({});
     setRandomRecipeVisibility(true)
-
   }
   useEffect(() => {
     if (existingFormValue?.recipeID !== undefined) {
