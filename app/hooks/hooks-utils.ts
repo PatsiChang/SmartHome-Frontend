@@ -1,6 +1,6 @@
-
 export type Action = "POST" | "GET" | "PUT" | "DELETE";
 
+//Request Config
 export const getRequestConfig = (action: Action) => <T>(user: T) => {
     switch (action) {
         case "POST": {
@@ -25,3 +25,19 @@ export const getRequestConfig = (action: Action) => <T>(user: T) => {
             throw Error(`Unsupport method : ${action}`)
     }
 }
+    //Response Config
+    // const getResponseConfig = (fetchInput: Parameters<typeof fetch>[0]) => async (response: any) => {
+    //     switch (fetchInput) {
+    //         case `${process.env.NEXT_PUBLIC_API_URL1} + /login`: {
+    //             const loginResponse = await response.text();
+    //             setToLocalStorage("token", loginResponse);
+    //         }
+    //         case `${process.env.NEXT_PUBLIC_API_URL1} + /recipe/getMyRecipe`: {
+    //             const recipeList = response.json();
+    //             const data = recipeList as ReceipeData[];
+    //             console.log("useData test", data)
+    //             setRecipeList(data);
+    //             return data;
+    //         }
+    //     }
+    // }

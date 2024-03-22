@@ -1,13 +1,13 @@
 'use client'
 import './homeRecipe.css';
 import HomeRecipeNavBar from '../navbar/page';
-import RegisterRecipe, { RecipeTypes } from './RegisterRecipe';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import HandleRecipe from './HandleRecipes';
 import ImgSlider from './ImgSlider';
-import { ReceipeData } from '../hooks/useRecipeData';
-import RandomRecipe from './RandomRecipe';
-import { ImgDataContext, LoginDataContext, RecipeDataContext } from '../providers';
+// import RandomRecipe from './RandomRecipe';
+import { DataContext, ImgDataContext } from '../providers';
+import { ReceipeData, RecipeTypes } from '../types/recipeTypes';
+import RegisterRecipe from './RegisterRecipe';
 
 export type HomeRecipeState = {
   propsTrigger: boolean;
@@ -30,12 +30,10 @@ export const emptyFormValue: ReceipeData = {
 
 function HomeRecipe() {
 
-  const recipeDataContext = useContext(RecipeDataContext);
-  if (!recipeDataContext) { return null; }
-  const { recipeList, postData, getData } = recipeDataContext;
-  const loginDataContext = useContext(LoginDataContext);
-  if (!loginDataContext) { return null; }
-  const { token } = loginDataContext;
+  const dataContext = useContext(DataContext);
+  if (!dataContext) { return null; }
+  const { recipeList, postRecipeData, getRecipeData } = dataContext;
+
   const imgDataContext = useContext(ImgDataContext);
   if (!imgDataContext) { return null; }
   const { uploadRecipeIcon } = imgDataContext;
@@ -44,13 +42,16 @@ function HomeRecipe() {
   const [randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
   const [existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
 
+  const uploadNewRecipe = async (form: ReceipeData) => {
+    await postRecipeData(form);
+    getRecipeData(null);
+  }
   const toggleRegisterNewRecipe = () => {
     setPropsTrigger(true)
   }
   const generateRandomRecipe = async () => {
     // await getRandomRecipe({});
     setRandomRecipeVisibility(true)
-
   }
   useEffect(() => {
     if (existingFormValue?.recipeID !== undefined) {
@@ -68,12 +69,12 @@ function HomeRecipe() {
         <div><button className="btn btn-dark" onClick={toggleRegisterNewRecipe}>Register Recipe +</button></div>
         <div><button className="btn btn-dark" onClick={generateRandomRecipe}>+ Generate Recipe</button></div>
       </div>
-      <div className="position-fixed top-50 start-50 translate-middle" style={{ zIndex: "9999" }}>
+      {/* <div className="position-fixed top-50 start-50 translate-middle" style={{ zIndex: "9999" }}>
         <RandomRecipe randomRecipeVisibility={randomRecipeVisibility}
           setRandomRecipeVisibility={setRandomRecipeVisibility} />
-      </div>
-      <div><RegisterRecipe token={token} propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
-        uploadRecipeIcon={uploadRecipeIcon} postData={postData} getData={getData}
+      </div> */}
+      <div><RegisterRecipe uploadNewRecipe={uploadNewRecipe} propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
+        uploadRecipeIcon={uploadRecipeIcon}
         existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} />
       </div>
       <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>

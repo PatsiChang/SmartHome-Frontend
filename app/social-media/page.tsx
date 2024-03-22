@@ -1,12 +1,11 @@
 'use client'
-import { SocialMediaUser } from "../hooks/useSocialMediaData";
-import { AccountStatus, AccountType, RecipeCategories } from "../Enum/enum";
-import { getImages, getSocialMediaImages } from "../home-recipe/utils";
+import { getSocialMediaImages } from "../home-recipe/utils";
 import { useRouter } from 'next/navigation';
 import HomeRecipeNavBar from "../navbar/page";
 import { useContext } from "react";
-import { RecipeDataContext, SocialMediaDataContext } from "../providers";
-import { ReceipeData } from "../hooks/useRecipeData";
+import { DataContext } from "../providers";
+import { ReceipeData, RecipeCategories } from "../types/recipeTypes";
+import { AccountStatus, AccountType, SocialMediaUser } from "../types/socialMediaTypes";
 
 export const defaultUser: SocialMediaUser = {
     uid: "",
@@ -28,10 +27,9 @@ export const defaultUser: SocialMediaUser = {
 }
 
 const SocialMediaPage = () => {
-    const socialMediaDataContext = useContext(SocialMediaDataContext);
-    if (!socialMediaDataContext) { return null; }
-    const { socialMediaUser } = socialMediaDataContext;
-    console.log("socialMediaUser", socialMediaUser)
+    const dataContext = useContext(DataContext);
+    if (!dataContext) { return null; }
+    const { socialMediaUser } = dataContext;
 
     const router = useRouter();
     const directToEditProfilePage = (link: string) => {
@@ -79,7 +77,7 @@ const SocialMediaPage = () => {
                                         </div>
                                     </div>
                                     <div className="mb-2">
-                                        <div className="p-4" style={{ backgroundColor: "#f8f9fa;" }}>
+                                        <div className="p-4" style={{ backgroundColor: "#f8f9fa" }}>
                                             <p className="font-italic mb-1">{socialMediaUser?.biography ?? ""}</p>
                                             <p className="font-italic mb-1">{socialMediaUser?.email ?? ""}</p>
                                         </div>

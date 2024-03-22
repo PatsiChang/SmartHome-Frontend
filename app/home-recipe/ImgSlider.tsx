@@ -1,19 +1,18 @@
-import useRecipeData from '../hooks/useRecipeData';
 import sashimiDemo from '../IMG/sashimiDemo.jpg'
 import Image from 'next/image';
 import { getImages } from './utils';
 import { useContext } from 'react'
-import { RecipeDataContext } from '../providers';
+import { DataContext } from '../providers';
 
 const ImgSlider = () => {
-    const recipeDataContext = useContext(RecipeDataContext);
-    if (!recipeDataContext) { return null; }
-    const { recipeList } = recipeDataContext;
-    
+    const dataContext = useContext(DataContext);
+    if (!dataContext) { return null; }
+    const { recipeList } = dataContext;
+
     const getImagesFromRecipeList = (imgURL: string | undefined) => {
         return getImages(imgURL);
     }
-    return recipeList.length > 0 ?(
+    return recipeList.length > 0 ? (
         <main>
             <div className="row justify-content-center" style={{ marginTop: '1%', zIndex: 100 }}>
                 <div className="col-md-7">
@@ -43,7 +42,7 @@ const ImgSlider = () => {
             </div>
         </main>
 
-    ):<></>;
+    ) : <></>;
 }
 
 export default ImgSlider;

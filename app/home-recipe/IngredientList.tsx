@@ -2,14 +2,8 @@
 //Return solely the Ingredient Input fields and values
 import { MouseEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid"
-import { ReceipeData } from "../hooks/useRecipeData";
+import { Ingredient, ReceipeData } from "../types/recipeTypes";
 
-export interface Ingredient {
-    id: string;
-    ingredientName: string;
-    ingredientAmount: string;
-    [key: string]: string | number;
-}
 interface IngredientListProps {
     ingredientInput: Ingredient[];
     setIngredientInput: React.Dispatch<React.SetStateAction<Ingredient[]>>;
