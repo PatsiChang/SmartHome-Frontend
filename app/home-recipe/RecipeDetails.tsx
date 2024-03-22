@@ -1,6 +1,7 @@
 
 import { ReceipeData, cardStyle } from "../types/recipeTypes";
 import { CloseRecipeDetails } from "./HandleRecipes";
+import { getImages } from "./utils";
 
 const RecipeDetails = ({ recipe, closeRecipeDetails }: { recipe: ReceipeData | null; closeRecipeDetails: CloseRecipeDetails }) => {
     const ingredientIndividual = (ingredientAttribute: string) => {
@@ -18,7 +19,7 @@ const RecipeDetails = ({ recipe, closeRecipeDetails }: { recipe: ReceipeData | n
         <main className="row justify-content-center" style={{ width: "700px" }}>
             <div className="card" style={{ ...cardStyle }}>
                 <div style={{ overflow: "hidden" }}>
-                    <img src={`http://localhost:8080/${recipe.recipeID}.jpg`} alt={'recipeIcon'} style={{ minHeight: "100%", maxHeight: "100%", width: "100%", objectFit: "cover" }} />
+                    <img src={getImages(recipe.imgURL)} alt={'recipeIcon'} style={{ minHeight: "100%", maxHeight: "100%", width: "100%", objectFit: "cover" }} />
                 </div>
                 {/* <h5 className="card-title">{currentRandomRecipe?.recipeName}</h5> */}
                 <p className="card-text" style={{ margin: "0% 0% 0% 2%", maxHeight: "100%", overflowY: "auto", scrollbarColor: "black lightgray" }}>
