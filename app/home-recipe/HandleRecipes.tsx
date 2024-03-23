@@ -14,11 +14,12 @@ export type CloseRecipeDetails = React.MouseEventHandler<HTMLButtonElement>
 
 export type HandleRecipeProps = {
     recipeList: ReceipeData[],
+    deleteRecipe: (recipe: ReceipeData) => Promise<void>,
     existingFormValue: ReceipeData,
     setExistingFormValue: Dispatch<SetStateAction<ReceipeData>>,
 }
 
-const HandleRecipe = ({ recipeList, setExistingFormValue }: HandleRecipeProps) => {
+const HandleRecipe = ({ recipeList, deleteRecipe, setExistingFormValue }: HandleRecipeProps) => {
 
     const [detailedRecipe, setDetailedRecipe] = useState<ReceipeData | null>(null);
     const [recipeTypeState, setRecipeTypeState] = useState<RecipeTypes>(RecipeTypes.DESSERT)
@@ -30,9 +31,9 @@ const HandleRecipe = ({ recipeList, setExistingFormValue }: HandleRecipeProps) =
     }
     const deleteRecipeBtnOnClickHandler: DeleteRecipeBtnOnClickHandler = (recipe) => (event) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this recipe?");
-        // event.stopPropagation();
+        event.stopPropagation();
         if (isConfirmed && RecipeCount() >= 3) {
-            // deleteData({ recipeIDTMP: recipe.recipeID });
+            deleteRecipe(recipe);
             // window.location.reload();
         } else {
             SmartHomeLogger.log("At least 2 recipe needed")

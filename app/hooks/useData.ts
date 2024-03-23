@@ -67,13 +67,13 @@ const useData = () => {
     const getRecipeData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getMyRecipe")("GET");
     //   const getRandomRecipe = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getRandomRecipe")("GET");
     //   const updateRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("PUT");
-    //   const deleteData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("DELETE");
+    const deleteRecipeData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("DELETE");
     const postLoginData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/login")("POST");
     const postSocialMediaData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
     const getSocialMediaData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("GET")
 
     return {
-        postRecipeData, getRecipeData, postLoginData, recipeList,
+        postRecipeData, getRecipeData, postLoginData, recipeList, deleteRecipeData,
         postSocialMediaData, getSocialMediaData, socialMediaUser, setSocialMediaUser
     }
 
