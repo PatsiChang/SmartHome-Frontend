@@ -32,7 +32,7 @@ function HomeRecipe() {
 
   const dataContext = useContext(DataContext);
   if (!dataContext) { return null; }
-  const { recipeList, postRecipeData, getRecipeData } = dataContext;
+  const { recipeList, postRecipeData, getRecipeData, deleteRecipeData } = dataContext;
 
   const imgDataContext = useContext(ImgDataContext);
   if (!imgDataContext) { return null; }
@@ -44,6 +44,10 @@ function HomeRecipe() {
 
   const uploadNewRecipe = async (form: ReceipeData) => {
     await postRecipeData(form);
+    getRecipeData(null);
+  }
+  const deleteRecipe = async (recipe: ReceipeData) => {
+    await deleteRecipeData(recipe);
     getRecipeData(null);
   }
   const toggleRegisterNewRecipe = () => {
@@ -77,7 +81,8 @@ function HomeRecipe() {
         uploadRecipeIcon={uploadRecipeIcon}
         existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} />
       </div>
-      <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} /></div>
+      <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} deleteRecipe={deleteRecipe}
+        setExistingFormValue={setExistingFormValue} /></div>
     </main>
 
   )
