@@ -104,27 +104,27 @@ const RegisterRecipe = ({ fetchData, uploadRecipeIcon, propsTrigger, setPropsTri
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         try {
             event.preventDefault();
-            const imgURL = imgBytes as Blob;
-            const formData = new FormData();
-            formData.append("recipeIcon", imgURL as Blob);
-            const imgId = await uploadRecipeIcon(formData);
             let stepsInStringArray: string[] = [];
             stepsInput.forEach((step) => stepsInStringArray.push(step.step));
-            if (imgId !== null && imgId !== undefined) {
-                const form: ReceipeData = {
-                    ...recipeFormData,
-                    ingredient: ingredientInput,
-                    steps: stepsInStringArray,
-                    imgURL: imgId,
-                }
-                if (form.recipeID !== undefined && form.recipeID !== null) {
-                    fetchData("PUT")(form);
-                    refreshForm();
-                } else {
-                    fetchData("POST")(form);
-                    refreshForm();
-                }
+            let imgID = recipeFormData.imgURL;
+            if (imgBytes !== undefined && imgBytes !== null) {
+                const formData = new FormData();
+                formData.append("recipeIcon", imgBytes as Blob);
+                const response = await uploadRecipeIcon(formData);
+                if (response !== null && response !== undefined) { imgID = response; }
             }
+            const form: ReceipeData = {
+                ...recipeFormData,
+                ingredient: ingredientInput,
+                steps: stepsInStringArray,
+                imgURL: imgID
+            }
+            if (form.recipeID !== undefined && form.recipeID !== null) {
+                fetchData("PUT")(form);
+            } else {
+                fetchData("POST")(form);
+            }
+            refreshForm();
         } catch (error) {
             console.error(error)
         }
