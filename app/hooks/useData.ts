@@ -53,7 +53,6 @@ const useData = () => {
                     const smUserResponse: SocialMediaUser = await response.json();
                     setSocialMediaUser(smUserResponse);
                 }
-                // getResponseConfig(fetchInput)(response);
             } catch (error) {
                 console.log("error: ", error)
                 return null;
@@ -66,14 +65,14 @@ const useData = () => {
     const postRecipeData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("POST");
     const getRecipeData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getMyRecipe")("GET");
     //   const getRandomRecipe = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe/getRandomRecipe")("GET");
-    //   const updateRecipeIcon = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("PUT");
+    const updateRecipe = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("PUT");
     const deleteRecipeData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/recipe")("DELETE");
     const postLoginData = fetchData(process.env.NEXT_PUBLIC_API_URL1 + "/login")("POST");
     const postSocialMediaData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia")("POST");
     const getSocialMediaData = fetchData(process.env.NEXT_PUBLIC_API_URL + "/socialMedia/getUserByToken")("GET")
 
     return {
-        postRecipeData, getRecipeData, postLoginData, recipeList, deleteRecipeData,
+        postRecipeData, getRecipeData, updateRecipe, recipeList, deleteRecipeData, postLoginData,
         postSocialMediaData, getSocialMediaData, socialMediaUser, setSocialMediaUser
     }
 

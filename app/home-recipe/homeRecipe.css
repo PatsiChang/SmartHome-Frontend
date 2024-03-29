@@ -100,13 +100,6 @@ li.pageContent:hover{
     font-family: 'Poppins-thin', 'arial';
 }
 
-/* ProgressBar */
-.progress-bar{
-    height: 5px;
-    background-color: var(--lighterColor);
-    margin-top: 20px;
-}
-
 /* Register Recipe */
 .registerRecipe{
     padding: 20px;
@@ -231,30 +224,7 @@ input[type='radio']:checked:after {
     font-size: larger ;
 }
 /* Detailed Recipe */
-#closeDetailedRecipeBtn{
-    pointer-events: auto;
-    display: flex;
-    justify-content: flex-end;
-}
-#recipeDetailsParent{
-    pointer-events: none;
-    position: fixed;
-    height: 70%;
-    top: 15%;
-    display: flex;
-    justify-content: flex-start;
-}
-#detailedRecipeUpperRow{
-    gap: 20px;
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    font-size: 3em;
-    padding: 10px 0px 10px 0px;
-}
-#recipeDetailName{
-    position: relative;
-}
+
 .detailedRecipe{
     pointer-events: auto;
     font-family: 'Arial';
@@ -371,13 +341,6 @@ input[type='radio']:checked:after {
 
 }
 
-/* ImageSlider */
-.imgSliderContainer{
-    pointer-events: none;
-    width: 500px;
-    height: 280px;
-    /* margin: 0 auto; */
-}
 /* Fonts */
 @font-face {
     font-family: Poppins-Thin;
