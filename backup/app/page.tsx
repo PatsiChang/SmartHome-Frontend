@@ -2,7 +2,7 @@
 import './globals.css'
 import { ChangeEvent, FormEventHandler, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import { DataContext, SocialMediaDataContext } from './providers';
+import { DataContext } from './providers';
 
 export type UserLogin = {
   userId: string,
