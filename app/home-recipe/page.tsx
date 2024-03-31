@@ -32,7 +32,7 @@ function HomeRecipe() {
 
   const dataContext = useContext(DataContext);
   if (!dataContext) { return null; }
-  const { recipeList, postRecipeData, getRecipeData, deleteRecipeData } = dataContext;
+  const { recipeList, postRecipeData, getRecipeData, updateRecipe, deleteRecipeData } = dataContext;
 
   const imgDataContext = useContext(ImgDataContext);
   if (!imgDataContext) { return null; }
@@ -42,13 +42,24 @@ function HomeRecipe() {
   const [randomRecipeVisibility, setRandomRecipeVisibility] = useState(false);
   const [existingFormValue, setExistingFormValue] = useState<ReceipeData>(emptyFormValue);
 
-  const uploadNewRecipe = async (form: ReceipeData) => {
-    await postRecipeData(form);
-    getRecipeData(null);
-  }
-  const deleteRecipe = async (recipe: ReceipeData) => {
-    await deleteRecipeData(recipe);
-    getRecipeData(null);
+  const fetchData = (fetchType: string) => async (data: ReceipeData) => {
+    switch (fetchType) {
+      case 'POST':
+        await postRecipeData(data);
+        break;
+      case 'GET':
+        getRecipeData(null);
+        break;
+      case 'PUT':
+        await updateRecipe(data);
+        break;
+      case 'DELETE':
+        await deleteRecipeData(data);
+        break;
+    }
+    if (fetchType !== 'GET') {
+      getRecipeData(null);
+    }
   }
   const toggleRegisterNewRecipe = () => {
     setPropsTrigger(true)
@@ -77,11 +88,11 @@ function HomeRecipe() {
         <RandomRecipe randomRecipeVisibility={randomRecipeVisibility}
           setRandomRecipeVisibility={setRandomRecipeVisibility} />
       </div> */}
-      <div><RegisterRecipe uploadNewRecipe={uploadNewRecipe} propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
+      <div><RegisterRecipe fetchData={fetchData} propsTrigger={propsTrigger} setPropsTrigger={setPropsTrigger}
         uploadRecipeIcon={uploadRecipeIcon}
         existingFormValue={existingFormValue} setExistingFormValue={setExistingFormValue} />
       </div>
-      <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} deleteRecipe={deleteRecipe}
+      <div><HandleRecipe recipeList={recipeList} existingFormValue={existingFormValue} fetchData={fetchData}
         setExistingFormValue={setExistingFormValue} /></div>
     </main>
 

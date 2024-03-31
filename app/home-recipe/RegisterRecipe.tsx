@@ -9,7 +9,7 @@ import { getImages } from "./utils";
 
 //Types
 type RegisterRecipeProps = {
-    uploadNewRecipe: (form: ReceipeData) => void,
+    fetchData: (fetchType: string) => (data: ReceipeData) => Promise<void>,
     uploadRecipeIcon: (input: FormData) => Promise<string | null>,
     propsTrigger: HomeRecipeState['propsTrigger'],
     setPropsTrigger: HomeRecipeState["setPropsTrigger"],
@@ -23,7 +23,7 @@ export type onchangeEvent = React.ChangeEvent<HTMLInputElement>;
 //Restrict File Types
 const ImgTypes = ['image/png', 'image/jpeg']
 
-const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPropsTrigger,
+const RegisterRecipe = ({ fetchData, uploadRecipeIcon, propsTrigger, setPropsTrigger,
     existingFormValue }: RegisterRecipeProps) => {
     const [imgUrl, setImgUrl] = useState<string | undefined>();
     const [imgBytes, setImgBytes] = useState<File | null>(null);
@@ -98,27 +98,33 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
         setIngredientInput([{ id: '', ingredientName: '', ingredientAmount: '' }]);
         setStepsInput([{ id: '', step: '' }]);
         setStepsInStringArray([]);
-        setImgUrl("")
+        setImgUrl("");
+        setImgBytes(null);
     }
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         try {
             event.preventDefault();
-            const imgURL = imgBytes as Blob;
-            const formData = new FormData();
-            formData.append("recipeIcon", imgURL as Blob);
-            const imgId = await uploadRecipeIcon(formData);
             let stepsInStringArray: string[] = [];
             stepsInput.forEach((step) => stepsInStringArray.push(step.step));
-            if (imgId !== null && imgId !== undefined) {
-                const form: ReceipeData = {
-                    ...recipeFormData,
-                    ingredient: ingredientInput,
-                    steps: stepsInStringArray,
-                    imgURL: imgId,
-                }
-                uploadNewRecipe(form);
-                refreshForm();
+            let imgID = recipeFormData.imgURL;
+            if (imgBytes !== undefined && imgBytes !== null) {
+                const formData = new FormData();
+                formData.append("recipeIcon", imgBytes as Blob);
+                const response = await uploadRecipeIcon(formData);
+                if (response !== null && response !== undefined) { imgID = response; }
             }
+            const form: ReceipeData = {
+                ...recipeFormData,
+                ingredient: ingredientInput,
+                steps: stepsInStringArray,
+                imgURL: imgID
+            }
+            if (form.recipeID !== undefined && form.recipeID !== null) {
+                fetchData("PUT")(form);
+            } else {
+                fetchData("POST")(form);
+            }
+            refreshForm();
         } catch (error) {
             console.error(error)
         }
@@ -147,7 +153,7 @@ const RegisterRecipe = ({ uploadNewRecipe, uploadRecipeIcon, propsTrigger, setPr
                 <div id="radioBtn">
                     {Object.values(RecipeTypes).map((recipeType) => {
                         return (
-                            <div>
+                            <div key={recipeType}>
                                 <label htmlFor="breakfast">{recipeType} </label>
                                 <input type="radio" id={recipeType} value={recipeType}
                                     checked={recipeFormData.type === recipeType}
