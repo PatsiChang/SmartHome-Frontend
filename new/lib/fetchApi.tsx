@@ -1,17 +1,37 @@
 import * as UserSessionApi from './userSessionApi';
 
-export const GET = "GET";
-export const POST = "POST";
-export const PUT = "PUT";
-export const DELETE = "DELETE";
+export type Action = "POST" | "GET" | "PUT" | "DELETE";
 
-export async function doFetch(method : "GET" | "POST" | "PUT" | "DELETE", url : string, data ?: any) {
-    if (method !== GET && typeof data === 'undefined') {
+export async function doFetch<T>(url: Parameters<typeof fetch>[0], method: Action, data?: any) {
+
+    if (method !== "GET" && (data === null || data === undefined)) {
         throw new Error("body is missing. Fail to fetch.");
     }
-
-    UserSessionApi.hasLoggedIn();
-    // TODO set token to authorization header if logged in
-
-    // TODO fetch
+    let request: RequestInit = {
+        method,
+        headers: {
+            // "Content-Type": "application/json",
+            ...(UserSessionApi.hasLoggedIn() ? {
+                "Authorization": `Bearer ${UserSessionApi.getSessionToken()}`
+            } : {})
+        }
+    };
+    if (method !== "GET") {
+        if (typeof data !== "string") { request.body = JSON.stringify(data) }
+        else { request.body = data }
+    }
+    const response = await fetch(url, request);
+    if (response.ok) {
+        // response.headers.get("content-length") != null && response.headers.get("content-length") != "0"
+        if (response.headers.get("content-type")?.includes("application/json")) {
+            return await response.json() as T;
+        } else if (response.headers.get("content-type")?.includes("text/plain")) {
+            return await response.text();
+        }
+    } else {
+        throw new Error("Failed to fetch data. HTTP status: " + response.status);
+    }
 }
+
+
+
