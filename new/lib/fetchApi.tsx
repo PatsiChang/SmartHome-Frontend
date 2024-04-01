@@ -24,7 +24,6 @@ export async function doFetch<T>(url: Parameters<typeof fetch>[0], method: Actio
     if (response.ok) {
         // response.headers.get("content-length") != null && response.headers.get("content-length") != "0"
         if (response.headers.get("content-type")?.includes("application/json")) {
-            console.log("here2")
             return await response.json() as T;
         } else if (response.headers.get("content-type")?.includes("text/plain")) {
             return await response.text();
