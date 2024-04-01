@@ -1,23 +1,34 @@
 "use client"
 import * as UserSessionApi from "@/lib/userSessionApi";
-import {useRouter, usePathname} from "next/navigation";
-import React, {PropsWithChildren} from "react";
-
+import React, {PropsWithChildren, useEffect, useState} from "react";
+import {useWrappedRouter} from "@/hooks/navigation/useWrappedRouter";
+import {useWrappedPathName} from "@/hooks/navigation/useWrappedPathName";
+import {Alert, View} from "react-native";
+import {Stack} from "expo-router";
 
 interface ClientPageProps extends PropsWithChildren<{}>{
-    requireLogin ?: boolean
+    pageTitle ?: string
+    requireLogin ?: boolean,
+    fetchData ?: () => Promise<void | any>
 }
 
-export default function ClientPage({requireLogin, children, ...props} : ClientPageProps) {
+export default function ClientPage({requireLogin, fetchData, children, ...props} : ClientPageProps) {
     const shouldRedirectToLoginPage = requireLogin === true && !UserSessionApi.hasLoggedIn();
-    const router = useRouter();
+    const router = useWrappedRouter();
+
+    const needToFetchData = fetchData != null;
+    const [isLoading, setIsLoading] = useState(needToFetchData);
 
     if (shouldRedirectToLoginPage) {
-        router.replace("/loginPage?redirect=" + usePathname());
+        router.replace("/loginPage?redirect=" + useWrappedPathName());
         return null;
     } else {
-        return (
-            <>{children}</>
-        )
+        if (needToFetchData) {
+            fetchData()
+                .catch(() => Alert.alert("Error!", "Idk what happened."))
+                .then(() => setIsLoading(false));
+        }
+
+        return isLoading ? <View>I am loading!!!!!!!!</View> : <View>{children}</View>;
     }
 }

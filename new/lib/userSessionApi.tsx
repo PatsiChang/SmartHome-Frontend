@@ -44,6 +44,7 @@ export function getSessionToken() {
 
 export async function getUserProfile() {
     // TODO mock
+    await new Promise((r) => setTimeout(r, 1000));
     return (sessionToken === "123-123-123") ? {
         userName: "Test user"
     } :  {
