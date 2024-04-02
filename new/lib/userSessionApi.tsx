@@ -1,3 +1,4 @@
+import { Person, UserLogin, isPerson } from "@/model/userProfile";
 import { doFetch } from "./fetchApi";
 
 const SESSION_TOKEN_STORAGE_KEY = "sessionToken";
@@ -19,7 +20,7 @@ function recoverToken() {
 export async function loginWithUidAndPassword(uid: string, password: string): Promise<string> {
     console.log("sending to loginWithUidAndPassword: " + uid + " | " + password);
     // await new Promise((r) => setTimeout(r, 1000));
-    const person = {
+    const person: UserLogin = {
         userId: uid,
         logInPasswordHashed: password,
     }
@@ -35,8 +36,9 @@ export async function loginWithUidAndPassword(uid: string, password: string): Pr
 
 export async function logOut() {
     // TODO: Need server implementation RECIPE-93
-    sessionToken = "";
+    await doFetch("http://localhost:8081/login/logout", "POST", getSessionToken());
     window.localStorage.removeItem("sessionToken");
+    sessionToken = "";
 }
 
 export function hasLoggedIn() {
@@ -47,8 +49,10 @@ export function getSessionToken() {
     return sessionToken;
 }
 
-
 export async function getUserProfile() {
     // await new Promise((r) => setTimeout(r, 1000));
-    return await doFetch("http://localhost:8080/socialMedia/getUserByToken", "GET");
+    const response = await doFetch("http://localhost:8081/logInSession", "GET");
+    if (isPerson(response)) {
+        return response;
+    } else throw new Error("Error in get User")
 }

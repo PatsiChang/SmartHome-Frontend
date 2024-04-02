@@ -10,7 +10,9 @@ export async function doFetch<T>(url: Parameters<typeof fetch>[0], method: Actio
     let request: RequestInit = {
         method,
         headers: {
-            // "Content-Type": "application/json",
+            ...(typeof data == "object" ? {
+                "Content-Type": "application/json",
+            } : {}),
             ...(UserSessionApi.hasLoggedIn() ? {
                 "Authorization": `Bearer ${UserSessionApi.getSessionToken()}`
             } : {})
