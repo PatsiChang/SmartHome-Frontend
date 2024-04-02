@@ -1,3 +1,5 @@
+import { doFetch } from "./fetchApi";
+
 const SESSION_TOKEN_STORAGE_KEY = "sessionToken";
 let sessionToken = '';
 recoverToken();
@@ -15,21 +17,24 @@ function recoverToken() {
 }
 
 export async function loginWithUidAndPassword(uid: string, password: string): Promise<string> {
-    // TODO mocking login
     console.log("sending to loginWithUidAndPassword: " + uid + " | " + password);
-    await new Promise((r) => setTimeout(r, 1000));
-    if (uid == "test" && password == "test") {
-        sessionToken = "123-123-123";
-    } else {
-        throw new Error("INVALID");
+    // await new Promise((r) => setTimeout(r, 1000));
+    const person = {
+        userId: uid,
+        logInPasswordHashed: password,
     }
-
+    const response = await doFetch("http://localhost:8081/login", "POST", person);
+    if (typeof response == "string") {
+        sessionToken = response;
+    } else {
+        throw new Error("INVALID token");
+    }
     window.localStorage.setItem("sessionToken", sessionToken);
     return sessionToken;
 }
 
 export async function logOut() {
-    // TODO
+    // TODO: Need server implementation RECIPE-93
     sessionToken = "";
     window.localStorage.removeItem("sessionToken");
 }
@@ -42,12 +47,8 @@ export function getSessionToken() {
     return sessionToken;
 }
 
+
 export async function getUserProfile() {
-    // TODO mock
-    await new Promise((r) => setTimeout(r, 1000));
-    return (sessionToken === "123-123-123") ? {
-        userName: "Test user"
-    } :  {
-        userName: "Error!!!!!"
-    };
+    // await new Promise((r) => setTimeout(r, 1000));
+    return await doFetch("http://localhost:8080/socialMedia/getUserByToken", "GET");
 }
