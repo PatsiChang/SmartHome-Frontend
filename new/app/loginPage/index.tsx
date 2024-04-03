@@ -1,10 +1,11 @@
-import { BaseSyntheticEvent, FormEvent, useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import * as UserSessionApi from '@/lib/userSessionApi';
 import BasicForm from "@/components/basic/form/BasicForm";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { useWrappedSearchParam } from "@/hooks/navigation/useWrappedSearchParam";
 import { Text } from "react-native";
 import BasicTextInput from "@/components/basic/form/BasicTextInput";
+import { validationList } from "@/lib/validations";
 
 export default function LoginPage() {
     const [showLoginFail, setShowLoginFail] = useState(false);
@@ -31,9 +32,9 @@ export default function LoginPage() {
 
     return (
         <>
-            <BasicForm onSubmitCallback={submitFunc}>
-                <BasicTextInput name="userId" label="User Id" type="username" />
-                <BasicTextInput name="password" label="Password" type="password" />
+            <BasicForm onSubmitCallback={submitFunc} >
+                <BasicTextInput name="userId" label="User Id" type="username" validationList={[validateRequired]} />
+                <BasicTextInput name="password" label="Password" type="password" validationList={[validateRequired]} />
             </BasicForm>
             {showLoginFail ? (<Text>Login Fail</Text>) : null}
         </>
