@@ -18,7 +18,7 @@ export default function LoginPage() {
         try {
             setShowLoginFail(false);
             await UserSessionApi.loginWithUidAndPassword(formData.get("userId") as string,
-                formData.get("password") as string);
+                formData.get("logInPasswordHashed") as string);
             if (redirectParam != null && redirectParam.trim().length > 0) {
                 router.replace(redirectParam);
             } else {
