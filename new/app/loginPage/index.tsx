@@ -18,7 +18,7 @@ export default function LoginPage() {
         try {
             setShowLoginFail(false);
             await UserSessionApi.loginWithUidAndPassword(formData.get("userId") as string,
-                formData.get("logInPasswordHashed") as string);
+                formData.get("password") as string);
             if (redirectParam != null && redirectParam.trim().length > 0) {
                 router.replace(redirectParam);
             } else {
@@ -33,7 +33,7 @@ export default function LoginPage() {
         <>
             <BasicForm onSubmitCallback={submitFunc}>
                 <BasicTextInput name="userId" label="User Id" type="username" />
-                <BasicTextInput name="logInPasswordHashed" label="Password" type="password" />
+                <BasicTextInput name="password" label="Password" type="password" />
             </BasicForm>
             {showLoginFail ? (<Text>Login Fail</Text>) : null}
         </>
