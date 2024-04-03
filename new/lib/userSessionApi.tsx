@@ -1,3 +1,6 @@
+import { Person, UserLogin, isPerson } from "@/model/userProfile";
+import { doFetch } from "./fetchApi";
+
 const SESSION_TOKEN_STORAGE_KEY = "sessionToken";
 let sessionToken = '';
 recoverToken();
@@ -15,23 +18,27 @@ function recoverToken() {
 }
 
 export async function loginWithUidAndPassword(uid: string, password: string): Promise<string> {
-    // TODO mocking login
     console.log("sending to loginWithUidAndPassword: " + uid + " | " + password);
-    await new Promise((r) => setTimeout(r, 1000));
-    if (uid == "test" && password == "test") {
-        sessionToken = "123-123-123";
-    } else {
-        throw new Error("INVALID");
+    // await new Promise((r) => setTimeout(r, 1000));
+    const person: UserLogin = {
+        userId: uid,
+        logInPasswordHashed: password,
     }
-
+    const response = await doFetch("http://localhost:8081/login", "POST", person);
+    if (typeof response == "string") {
+        sessionToken = response;
+    } else {
+        throw new Error("INVALID token");
+    }
     window.localStorage.setItem("sessionToken", sessionToken);
     return sessionToken;
 }
 
 export async function logOut() {
-    // TODO
-    sessionToken = "";
+    // TODO: Need server implementation RECIPE-93
+    await doFetch("http://localhost:8081/login/logout", "POST", getSessionToken());
     window.localStorage.removeItem("sessionToken");
+    sessionToken = "";
 }
 
 export function hasLoggedIn() {
@@ -43,11 +50,9 @@ export function getSessionToken() {
 }
 
 export async function getUserProfile() {
-    // TODO mock
-    await new Promise((r) => setTimeout(r, 1000));
-    return (sessionToken === "123-123-123") ? {
-        userName: "Test user"
-    } :  {
-        userName: "Error!!!!!"
-    };
+    // await new Promise((r) => setTimeout(r, 1000));
+    const response = await doFetch("http://localhost:8081/logInSession", "GET");
+    if (isPerson(response)) {
+        return response;
+    } else throw new Error("Error in get User")
 }

@@ -10,7 +10,9 @@ export async function doFetch<T>(url: Parameters<typeof fetch>[0], method: Actio
     let request: RequestInit = {
         method,
         headers: {
-            // "Content-Type": "application/json",
+            ...(typeof data === "object" ? {
+                "Content-Type": "application/json",
+            } : {}),
             ...(UserSessionApi.hasLoggedIn() ? {
                 "Authorization": `Bearer ${UserSessionApi.getSessionToken()}`
             } : {})
@@ -22,7 +24,6 @@ export async function doFetch<T>(url: Parameters<typeof fetch>[0], method: Actio
     }
     const response = await fetch(url, request);
     if (response.ok) {
-        // response.headers.get("content-length") != null && response.headers.get("content-length") != "0"
         if (response.headers.get("content-type")?.includes("application/json")) {
             return await response.json() as T;
         } else if (response.headers.get("content-type")?.includes("text/plain")) {
