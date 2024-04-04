@@ -12,15 +12,7 @@ interface SimpleInputProps extends InputHTMLAttributes<HTMLInputElement> {
     min?: number,
     autoComplete?: string
 }
-export const validateInput = (formData: FormData, key: string, field: string) => {
-    if (key in validationsMap) {
-        return validationsMap[key](formData.get(field));
-    } else {
-        return false;
-    }
-}
 
-//TODO
 export default function BasicTextInput(props: SimpleInputProps) {
     const showLabel = typeof props.label !== 'undefined' && props.label.trim().length > 0;
     const formData = useContext(BasicFormContext);

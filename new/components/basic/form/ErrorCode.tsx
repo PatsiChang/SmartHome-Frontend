@@ -3,9 +3,9 @@ interface ErrorCodeProps {
 }
 const ErrorCode = ({ errorList }: ErrorCodeProps) => {
     return (
-        <h4>
+        <h5>
             {errorList.map((error, index) => <div key={index}>{`*${error}!`}</div>)}
-        </h4>
+        </h5>
     )
 }
 

@@ -1,7 +1,7 @@
 import React, { BaseSyntheticEvent, FormHTMLAttributes, PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import BasicButton from "@/components/basic/buttons/BasicButton";
-import BasicTextInput, { validateInput } from "./BasicTextInput";
+import BasicTextInput from "./BasicTextInput";
 import ErrorCode from "./ErrorCode";
 import { validationsMap } from "@/lib/validations";
 
@@ -22,41 +22,38 @@ export default function BasicForm({ children, ...props }: BasicFormProps) {
         </View>
     )
 }
+export const validateInput = (input: any, key: string) => {
+    if (key in validationsMap) {
+        return validationsMap[key](input);
+    } else {
+        return false;
+    }
+}
 
 function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...props }: BasicFormProps) {
     const [errorList, setValidateErrorCode] = useState<string[]>([]);
-
     const formData = useContext(BasicFormContext);
 
     const submitFuc = (e: BaseSyntheticEvent) => {
-        let result = true;
         if (onSubmitCallback != null) {
-            setValidateErrorCode([]);
-
+            const errListTmp: string[] = [];
             React.Children.forEach(children, child => {
                 if (React.isValidElement(child) && child.type === BasicTextInput) {
-                    const { name: fieldName, ...inputProps } = child.props;
+                    const { name: fieldName, label: label, ...inputProps } = child.props;
                     Object.keys(inputProps).forEach((propName) => {
                         if (propName in validationsMap) {
-                            const validationRes = validateInput(formData, propName, fieldName)
+                            const validationRes = validateInput(formData.get(fieldName), propName)
                             if (validationRes !== true) {
-                                result = false;
-                                setValidateErrorCode(prevErrors => [...prevErrors, `The ${fieldName} ${validationRes}`]);
-                            } else {
-                                result = true;
-                                setValidateErrorCode(prevErrors => {
-                                    return prevErrors.filter(error => error !== `${fieldName} is required`);
-                                })
+                                errListTmp.push(`The ${label} ${validationRes}`);
                             }
                         }
                     })
                 }
             });
-            //Todo: only allow log in when errorList is empty (unable to check state as asychronise setValidateErrorCode)
-            //Bug: If password is entered without userId it will still submit, this also affect if entered password, 
-            //then login without userId, then enter userId, then login, will still trigger "no password" error
-            if (result == true) {
+            if (errListTmp.length == 0) {
                 onSubmitCallback(e, formData);
+            } else {
+                setValidateErrorCode(errListTmp)
             }
         }
     };
