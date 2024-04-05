@@ -7,7 +7,7 @@ export const validationsMap: ValidationsMap = {
         if (input === undefined || input === null || input === "") {
             return "is required";
         }
-        return input?.length > 0;
+        return true;;
     },
     "min": (input: any, param?: number) => {
         if (typeof input == "string" && param !== undefined && param !== null) {
@@ -15,9 +15,11 @@ export const validationsMap: ValidationsMap = {
         }
         return `must be at least ${param} long`;
     },
-    //Check input is String
-    "validateInputIsString": (input: any) => {
-        return (typeof input === "string") ? true : "Invalid Input";
+    "validateNoSpace": (input: any) => {
+        if (typeof input != "string" || input.indexOf(' ') >= 0) {
+            return "Cannot contain Space"
+        }
+        return true;
     },
     //Check input is Number
     "validateInputIsNumber": (input: any) => {
