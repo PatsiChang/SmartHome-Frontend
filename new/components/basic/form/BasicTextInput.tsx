@@ -1,26 +1,37 @@
 "use client"
-import {InputHTMLAttributes} from "react";
-import {View, Text, TextInput, StyleSheet} from "react-native";
-import {TextInputProps} from "react-native/Libraries/Components/TextInput/TextInput";
+import { InputHTMLAttributes, useContext } from "react";
+import { View, Text, TextInput, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
+import { BasicFormContext } from "./BasicForm";
 
 interface SimpleInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label ?: string,
-    autoComplete ?: string
+    label?: string,
+    required?: true,
+    pattern?: string,
+    max?: number,
+    min?: number,
+    autoComplete?: string
 }
-//TODO
-export default function BasicTextInput({label, name, type, ...props} : SimpleInputProps ) {
-    const showLabel = typeof label !== 'undefined' && label.trim().length > 0;
 
+export default function BasicTextInput(props: SimpleInputProps) {
+    const showLabel = typeof props.label !== 'undefined' && props.label.trim().length > 0;
+    const formData = useContext(BasicFormContext);
+
+    const onChangeHandler = (value: string) => {
+        if (formData != null) {
+            formData.set(props.name as string, value);
+        }
+    }
     return (
         <View>
-            {showLabel ? (<Text aria-label={"Label for " + label}>{label}</Text>) : null}
-            <TextInput id={"input_" + name} style={styles.baseTextInput}/>
+            {showLabel ? (<Text aria-label={"Label for " + props.label}>{props.label}</Text>) : null}
+            <TextInput id={"input_" + props.name} style={styles.baseTextInput}
+                onChangeText={onChangeHandler} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    baseTextInput:{
+    baseTextInput: {
         borderStyle: "solid",
         borderColor: "black",
         borderWidth: 1
