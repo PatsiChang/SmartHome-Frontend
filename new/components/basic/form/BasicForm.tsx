@@ -53,7 +53,10 @@ function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...prop
                 }
             });
             if (errListTmp.length == 0) {
-                setValidateErrorCode(await onSubmitCallback(e, formData));
+                const loginErrorCode = await onSubmitCallback(e, formData);
+                if (loginErrorCode.length > 0) {
+                    setValidateErrorCode(loginErrorCode)
+                }
             } else {
                 setValidateErrorCode(errListTmp)
             }
