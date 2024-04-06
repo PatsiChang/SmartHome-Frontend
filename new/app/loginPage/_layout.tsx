@@ -1,12 +1,11 @@
-"use client"
 import React from "react";
-import ClientPage from "@/components/basic/layout/clientPage";
+import BasePage from "@/components/basic/layout/BasePage";
 import LoginPage from "@/app/loginPage/index";
 
-export default function LoginPageLayout({children}: Readonly<{children: React.ReactNode}>) {
+export default function LoginPageLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <ClientPage>
+        <BasePage>
             <LoginPage />
-        </ClientPage>
+        </BasePage>
     );
 }

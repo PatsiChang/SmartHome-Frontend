@@ -1,12 +1,12 @@
-import {PropsWithChildren} from "react";
+import { PropsWithChildren } from "react";
 import { StyleSheet, Text } from 'react-native';
 
 
-interface BaseHeaderProps extends PropsWithChildren<{}>{
+interface BaseHeaderProps extends PropsWithChildren<{}> {
 }
 
-export default function BaseHeader({children, ...props} : BaseHeaderProps) {
-    return(
+export default function BaseHeader({ children, ...props }: BaseHeaderProps) {
+    return (
         <Text style={styles.header}>{children}</Text>
     )
 }

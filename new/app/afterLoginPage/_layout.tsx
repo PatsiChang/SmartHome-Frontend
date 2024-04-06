@@ -1,4 +1,4 @@
-import ClientPage from "@/components/basic/layout/clientPage";
+import BasePage from "@/components/basic/layout/BasePage";
 import * as UserSessionApi from "@/lib/userSessionApi";
 import { useState } from "react";
 import AfterLoginPage from "@/app/afterLoginPage/index";
@@ -11,8 +11,8 @@ export default function AfterLoginPageLayout() {
     }
 
     return (
-        <ClientPage requireLogin={true} fetchData={fetchData}>
+        <BasePage requireLogin={true} fetchData={fetchData}>
             <AfterLoginPage userName={userName} />
-        </ClientPage>
+        </BasePage>
     )
 }

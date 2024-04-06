@@ -1,7 +1,6 @@
 import React from "react";
-import { Stack } from "expo-router";
 import RouterWrapper from "@/components/basic/navigation/RouterWrapper";
-import ClientLayout from "@/components/basic/layout/clientLayout";
+import BaseLayout from "@/components/basic/layout/BaseLayout";
 
 export const unstable_settings = {
   initialRouteName: "home",
@@ -9,9 +8,9 @@ export const unstable_settings = {
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <ClientLayout>
+    <BaseLayout>
       <RouterWrapper />
-    </ClientLayout>
+    </BaseLayout>
   );
 }
 

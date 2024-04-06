@@ -1,4 +1,3 @@
-"use client"
 import { InputHTMLAttributes, useContext } from "react";
 import { View, Text, TextInput, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import { BasicFormContext } from "./BasicForm";

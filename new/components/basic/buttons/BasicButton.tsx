@@ -1,12 +1,12 @@
-import {BaseSyntheticEvent, ButtonHTMLAttributes} from "react";
-import {Alert, Button} from "react-native";
+import { BaseSyntheticEvent, ButtonHTMLAttributes } from "react";
+import { Button } from "react-native";
 
 interface SimpleButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children : string,
-    onClick ?: (e : BaseSyntheticEvent) => void
+    children: string,
+    onClick?: (e: BaseSyntheticEvent) => void
 }
-export default function BasicButton({children, onClick, ...props} : SimpleButtonProps) {
+export default function BasicButton({ children, onClick, ...props }: SimpleButtonProps) {
     return (
-        <Button onPress={onClick} title={children}/>
+        <Button onPress={onClick} title={children} />
     );
 }

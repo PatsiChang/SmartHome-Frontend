@@ -1,4 +1,4 @@
-import { Person, UserLogin, isPerson } from "@/model/userProfile";
+import { UserLogin, isPerson } from "@/model/userProfile";
 import { doFetch } from "./fetchApi";
 
 const SESSION_TOKEN_STORAGE_KEY = "sessionToken";
