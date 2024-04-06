@@ -22,7 +22,8 @@ export default function BasicForm({ children, ...props }: BasicFormProps) {
         </View>
     )
 }
-export const validateInput = (input: any, key: string) => {
+export const validateInput = (input: any, key: string, propValue: any) => {
+    console.log(key + ' ' + propValue);
     if (key in validationsMap) {
         return validationsMap[key](input);
     } else {
@@ -42,7 +43,7 @@ function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...prop
                     const { name: fieldName, label: label, ...inputProps } = child.props;
                     Object.keys(inputProps).forEach((propName) => {
                         if (propName in validationsMap) {
-                            const validationRes = validateInput(formData.get(fieldName), propName)
+                            const validationRes = validateInput(formData.get(fieldName), propName, child.props[propName])
                             if (validationRes !== true) {
                                 errListTmp.push(`The ${label} ${validationRes}`);
                             }
