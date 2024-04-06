@@ -3,13 +3,10 @@ import * as UserSessionApi from '@/lib/userSessionApi';
 import BasicForm from "@/components/basic/form/BasicForm";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { useWrappedSearchParam } from "@/hooks/navigation/useWrappedSearchParam";
-import { Text } from "react-native";
 import BasicTextInput from "@/components/basic/form/BasicTextInput";
 import React from "react";
 
 export default function LoginPage() {
-    const [showLoginFail, setShowLoginFail] = useState(false);
-
     const searchParams = useWrappedSearchParam();
     const redirectParam = (searchParams !== null) ? searchParams.redirect as string : "";
     const router = useWrappedRouter();
@@ -17,8 +14,8 @@ export default function LoginPage() {
     console.log('login page: redirect = ' + redirectParam);
     const submitFunc = async (e: BaseSyntheticEvent, formData: FormData) => {
         e.preventDefault();
+        const errListTmp: string[] = [];
         try {
-            setShowLoginFail(false);
             await UserSessionApi.loginWithUidAndPassword(formData.get("userId") as string,
                 formData.get("password") as string);
             if (redirectParam != null && redirectParam.trim().length > 0) {
@@ -26,9 +23,11 @@ export default function LoginPage() {
             } else {
                 router.replace("/");
             }
+            errListTmp.push("");
         } catch (e) {
-            setShowLoginFail(true);
+            errListTmp.push("Your Password does not much your User Id!");
         }
+        return errListTmp;
     }
 
     return (
@@ -43,7 +42,6 @@ export default function LoginPage() {
                     type="password"
                     required />
             </BasicForm>
-            {showLoginFail ? (<Text>Login Fail</Text>) : null}
         </>
     );
 }

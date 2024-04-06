@@ -1,7 +1,6 @@
 "use client"
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import RouterWrapper from "@/components/basic/navigation/RouterWrapper";
 import BasicButton from "@/components/basic/buttons/BasicButton";
 
 const PopUpContext = createContext((content: ReactNode) => { });

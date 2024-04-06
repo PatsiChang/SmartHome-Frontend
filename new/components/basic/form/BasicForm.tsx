@@ -6,7 +6,7 @@ import ErrorCode from "./ErrorCode";
 import { validationsMap } from "@/lib/validations";
 
 interface BasicFormProps extends PropsWithChildren<FormHTMLAttributes<HTMLFormElement>> {
-    onSubmitCallback?: (e: BaseSyntheticEvent, formData: FormData) => void,
+    onSubmitCallback?: (e: BaseSyntheticEvent, formData: FormData) => Promise<string[]>,
     submitBtnText?: string,
 }
 
@@ -35,9 +35,10 @@ function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...prop
     const [errorList, setValidateErrorCode] = useState<string[]>([]);
     const formData = useContext(BasicFormContext);
 
-    const submitFuc = (e: BaseSyntheticEvent) => {
+    const submitFuc = async (e: BaseSyntheticEvent) => {
         if (onSubmitCallback != null) {
             const errListTmp: string[] = [];
+            setValidateErrorCode([]);
             React.Children.forEach(children, child => {
                 if (React.isValidElement(child) && child.type === BasicTextInput) {
                     const { name: fieldName, label: label, ...inputProps } = child.props;
@@ -52,20 +53,18 @@ function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...prop
                 }
             });
             if (errListTmp.length == 0) {
-                onSubmitCallback(e, formData);
+                setValidateErrorCode(await onSubmitCallback(e, formData));
             } else {
                 setValidateErrorCode(errListTmp)
             }
         }
     };
 
-
     return (
         <View>
             {children}
             <BasicButton onClick={submitFuc}>{submitBtnText != null ? submitBtnText : "Submit"}</BasicButton>
             <ErrorCode errorList={errorList}></ErrorCode>
-
         </View>
     )
 }
