@@ -1,18 +1,17 @@
 "use client"
 import * as UserSessionApi from "@/lib/userSessionApi";
-import React, {PropsWithChildren, useEffect, useState} from "react";
-import {useWrappedRouter} from "@/hooks/navigation/useWrappedRouter";
-import {useWrappedPathName} from "@/hooks/navigation/useWrappedPathName";
-import {Alert, View} from "react-native";
-import {Stack} from "expo-router";
+import React, { PropsWithChildren, useState } from "react";
+import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
+import { useWrappedPathName } from "@/hooks/navigation/useWrappedPathName";
+import { Alert, View } from "react-native";
 
-interface ClientPageProps extends PropsWithChildren<{}>{
-    pageTitle ?: string
-    requireLogin ?: boolean,
-    fetchData ?: () => Promise<void | any>
+interface ClientPageProps extends PropsWithChildren<{}> {
+    pageTitle?: string
+    requireLogin?: boolean,
+    fetchData?: () => Promise<void | any>
 }
 
-export default function ClientPage({requireLogin, fetchData, children, ...props} : ClientPageProps) {
+export default function ClientPage({ requireLogin, fetchData, children, ...props }: ClientPageProps) {
     const shouldRedirectToLoginPage = requireLogin === true && !UserSessionApi.hasLoggedIn();
     const router = useWrappedRouter();
 

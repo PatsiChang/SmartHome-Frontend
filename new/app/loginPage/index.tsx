@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useEffect, useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import * as UserSessionApi from '@/lib/userSessionApi';
 import BasicForm from "@/components/basic/form/BasicForm";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
