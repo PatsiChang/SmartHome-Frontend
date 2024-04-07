@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
-import { StyleSheet, Text } from 'react-native';
+import React, { PropsWithChildren } from "react";
+import { BaseLargeText } from "./BaseText";
 
 
 interface BaseHeaderProps extends PropsWithChildren<{}> {
@@ -7,13 +7,6 @@ interface BaseHeaderProps extends PropsWithChildren<{}> {
 
 export default function BaseHeader({ children, ...props }: BaseHeaderProps) {
     return (
-        <Text style={styles.header}>{children}</Text>
+        <BaseLargeText>{children}</BaseLargeText>
     )
 }
-
-const styles = StyleSheet.create({
-    header: {
-        fontWeight: 'bold',
-        fontSize: 40
-    }
-});
