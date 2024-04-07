@@ -1,11 +1,10 @@
-"use client"
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import BasicButton from "@/components/basic/buttons/BasicButton";
 
 const PopUpContext = createContext((content: ReactNode) => { });
 export const usePopUp = () => useContext(PopUpContext);
-export default function ClientLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function BaseLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 
     const [popUpContent, setPopUpContent] = useState<ReactNode>();
     const showPopup = (content: ReactNode) => setPopUpContent(content);

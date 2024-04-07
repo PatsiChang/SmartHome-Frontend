@@ -33,6 +33,3 @@ export async function doFetch<T>(url: Parameters<typeof fetch>[0], method: Actio
         throw new Error("Failed to fetch data. HTTP status: " + response.status);
     }
 }
-
-
-

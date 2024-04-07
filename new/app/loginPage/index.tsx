@@ -25,7 +25,7 @@ export default function LoginPage() {
             }
             errListTmp.push("");
         } catch (e) {
-            errListTmp.push("Your Password does not much your User Id!");
+            errListTmp.push("Your Password does not match your User Id!");
         }
         return errListTmp;
     }
