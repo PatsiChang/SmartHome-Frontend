@@ -1,10 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
-import {Stack} from "expo-router";
-import React from "react";
+import { Stack } from "expo-router";
+import React, { useState } from "react";
+import { ThemeContext } from './context/ThemeContext';
 
 export default function App() {
+  const [themeValue, setThemeValue] = useState<"darkTheme" | "lightTheme">("darkTheme");
+
   return (
+    <ThemeContext.Provider value={{ themeValue }}>
       <Stack initialRouteName="/" />
+    </ThemeContext.Provider>
   );
 }
 

@@ -1,24 +1,38 @@
 import { PropsWithChildren } from "react";
 import BaseBlock from "./BaseBlock";
-import { StyleSheet, ViewStyle } from "react-native";
-
+import { ViewStyle } from "react-native";
+import { useStyle } from "@/hooks/navigation/useTheme";
+import { setDarkTheme, setLightTheme } from '@/app/stylesheet';
+import { customStyleInput } from "@/lib/customStyleApi";
 
 interface BaseRowProps extends PropsWithChildren<{}> {
-    style?: ViewStyle,
+    styleClassName?: string,
 }
 
-const BaseRow = ({ children, ...props }: BaseRowProps) => {
+
+//Todo: create "baseRow" class in stylesheet as default, create styleClassName(s) for customisaion
+const BaseRow = ({ children, styleClassName = "baseRow", ...props }: BaseRowProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClassName), baseRowStyle);
     return (
-        <BaseBlock style={rowStyles.container}>
+        <BaseBlock style={styleWithClass as ViewStyle}>
             {children}
         </BaseBlock>
     )
 }
-const rowStyles = StyleSheet.create({
-    container: {
-        width: '100%',
-    },
-});
 
+const baseRowStyle = {
+    flexDirection: 'row',
+};
+const baseRowDarkStyle = {
+    ...baseRowStyle,
+    backgroundColor: "#31363F",
+};
+const baseRowLightStyle = {
+    ...baseRowStyle,
+    backgroundColor: "#EEEEEE",
+};
+//Todo: add these remaining styles into the style sheet to avoid too much extra setting attributes
+setDarkTheme("baseRow", baseRowDarkStyle);
+setLightTheme("baseRow", baseRowLightStyle);
 
 export default BaseRow;

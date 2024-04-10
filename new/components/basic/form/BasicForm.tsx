@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, FormHTMLAttributes, PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
+import React, { BaseSyntheticEvent, FormHTMLAttributes, PropsWithChildren, createContext, useContext, useState } from "react";
 import { View } from "react-native";
 import BasicButton from "@/components/basic/buttons/BasicButton";
 import BasicTextInput from "./BasicTextInput";

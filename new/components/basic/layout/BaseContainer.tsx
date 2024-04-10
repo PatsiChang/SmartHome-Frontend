@@ -1,26 +1,37 @@
 
 import { PropsWithChildren } from "react";
-import { StyleSheet, ViewStyle } from "react-native";
 import BaseBlock from "./BaseBlock";
+import { useStyle } from "@/hooks/navigation/useTheme";
+import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
+import { customStyleInput } from "@/lib/customStyleApi";
 
 interface BaseContainerProps extends PropsWithChildren<{}> {
-    style?: ViewStyle,
+    styleClassName?: string,
+
 }
 
-const BaseContainer = ({ children, ...props }: BaseContainerProps) => {
+const BaseContainer = ({ children, styleClassName = "baseContainer", ...props }: BaseContainerProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClassName), baseContainerStyle);
+
     return (
-        //Toddo: add simple styling to view tags
-        <BaseBlock style={containerStyles.container}>
+        <BaseBlock style={styleWithClass}>
             {children}
         </BaseBlock>
     )
 }
-const containerStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
+const baseContainerStyle = {
+};
+const baseContainerDarkStyle = {
+    ...baseContainerStyle,
+    backgroundColor: "#222831",
+};
+const baseContainerLightStyle = {
+    ...baseContainerStyle,
+    backgroundColor: "#eeeeee",
+};
+//Todo: add these remaining styles into the style sheet to avoid too much extra setting attributes
+setDarkTheme("baseContainer", baseContainerDarkStyle);
+setLightTheme("baseContainer", baseContainerLightStyle);
+
 
 export default BaseContainer;
