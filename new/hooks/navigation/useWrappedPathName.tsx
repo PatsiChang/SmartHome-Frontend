@@ -1,3 +1,3 @@
-import {usePathname} from "expo-router";
+import { usePathname } from "expo-router";
 
-export const useWrappedPathName  = () => usePathname();
+export const useWrappedPathName = () => usePathname();

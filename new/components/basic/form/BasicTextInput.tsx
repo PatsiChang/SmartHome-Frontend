@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, useContext } from "react";
-import { View, Text, TextInput, StyleSheet, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { BasicFormContext } from "./BasicForm";
 
 interface SimpleInputProps extends InputHTMLAttributes<HTMLInputElement> {
