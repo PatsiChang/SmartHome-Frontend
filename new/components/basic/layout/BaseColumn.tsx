@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import BaseBlock from "./BaseBlock";
-import { useStyle } from "@/hooks/navigation/useTheme";
+import { useStyle } from "@/hooks/styles/useTheme";
 import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
 import { customStyleInput } from "@/lib/customStyleApi";
 

@@ -3,7 +3,7 @@ import BaseColumn from "@/components/basic/layout/BaseColumn";
 import BaseContainer from "@/components/basic/layout/BaseContainer"
 import BaseRow from "@/components/basic/layout/BaseRow";
 import { BaseParagraph, BaseText } from "@/components/basic/layout/BaseText";
-import { useTheme } from "@/hooks/navigation/useTheme";
+import { useTheme } from "@/hooks/styles/useTheme";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 
 const LayoutPOC = () => {

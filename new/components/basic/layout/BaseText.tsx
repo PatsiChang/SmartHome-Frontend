@@ -1,5 +1,5 @@
 import { setDarkTheme, setLightTheme } from '@/app/stylesheet';
-import { useStyle } from '@/hooks/navigation/useTheme';
+import { useStyle } from '@/hooks/styles/useTheme';
 import { customStyleInput } from '@/lib/customStyleApi';
 import { PropsWithChildren } from 'react';
 import { Text, TextStyle } from 'react-native';
