@@ -1,6 +1,6 @@
 
 const globalContext: { [key: string]: any } = {
-    defaultContext: "HelloWorld",
+    defaultContext: "",
 };
 
 export const getContext = (key: string) => {
