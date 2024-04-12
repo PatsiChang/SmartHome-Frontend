@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { router, Slot, Stack } from 'expo-router';
+import { router, Slot } from 'expo-router';
 import { WrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { WrappedRouterContext } from '@/hooks/navigation/useWrappedRouter'
 
@@ -20,11 +20,8 @@ export default function RouterWrapper({ children, ...props }: BaseRouterProps) {
     } as WrappedRouter;
 
     return (
-        <>
-            {/*<Stack initialRouteName={unstable_settings.initialRouteName} />*/}
-            <WrappedRouterContext.Provider value={nextAppRouter}>
-                <Slot />
-            </WrappedRouterContext.Provider>
-        </>
+        <WrappedRouterContext.Provider value={nextAppRouter}>
+            <Slot />
+        </WrappedRouterContext.Provider>
     )
 }

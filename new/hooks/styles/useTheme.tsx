@@ -7,10 +7,8 @@ export const useTheme = () => useContext(ThemeContext);
 export const useStyle = (name: string): any => {
     const theme = useTheme();
     if (theme.themeValue == "darkTheme") {
-        // console.log("1: ", name, darkTheme()[name]);
         return darkTheme()[name];
     } else {
-        // console.log("2 : ", name, lightTheme()[name]);
         return lightTheme()[name];
     }
 }

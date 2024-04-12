@@ -1,7 +1,7 @@
 import BasePage from "@/components/basic/layout/BasePage";
 import * as UserSessionApi from "@/lib/userSessionApi";
 import { useState } from "react";
-import AfterLoginPage from "@/app/afterLoginPage/index";
+import AfterLoginPage from ".";
 
 export default function AfterLoginPageLayout() {
     const [userName, setUserName] = useState("");
