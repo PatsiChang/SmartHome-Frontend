@@ -1,6 +1,8 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import BasicButton from "@/components/basic/buttons/BasicButton";
+import BaseNavBar from "./BaseNavBar";
+import BaseContainer from "./BaseContainer";
 
 const PopUpContext = createContext((content: ReactNode) => { });
 export const usePopUp = () => useContext(PopUpContext);
@@ -10,23 +12,19 @@ export default function BaseLayout({ children }: Readonly<{ children: React.Reac
     const showPopup = (content: ReactNode) => setPopUpContent(content);
 
     return (
-        <View style={styles.container}>
+        <BaseContainer styleClassName="defaultLayoutStyle">
+            <BaseNavBar> NavBarHere </BaseNavBar>
             <PopUpContext.Provider value={showPopup}>
                 <PopUp popUpContent={popUpContent} />
                 {children}
             </PopUpContext.Provider>
-        </View>
+            <BaseNavBar> NavBarHere </BaseNavBar>
+        </BaseContainer>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
+const defaultLayoutstyles = {
+}
 
 function PopUp({ popUpContent }: { popUpContent: ReactNode }) {
     const showPopup = usePopUp();

@@ -5,6 +5,7 @@ import BaseRow from "@/components/basic/layout/BaseRow";
 import { BaseParagraph, BaseText } from "@/components/basic/layout/BaseText";
 import { useTheme } from "@/hooks/styles/useTheme";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
+import BaseLayout from "@/components/basic/layout/BaseLayout";
 
 const LayoutPOC = () => {
     const theme = useTheme();
@@ -39,6 +40,7 @@ const LayoutPOC = () => {
                 <BasicButton onClick={toggleTheme}>Toogle Theme</BasicButton>
             </BaseRow>
         </BaseContainer>
+
     )
 }
 
