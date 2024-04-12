@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React, { useState } from "react";
 import { ThemeContext } from '@/context/ThemeContext';
 import RouterWrapper from '@/components/basic/navigation/RouterWrapper';
