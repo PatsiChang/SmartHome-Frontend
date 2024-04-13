@@ -1,8 +1,8 @@
 import { usePopUp } from "@/components/basic/layout/BaseLayout";
 import * as UserSessionApi from '@/lib/userSessionApi';
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
-import BasicButton from "@/components/basic/buttons/BasicButton";
 import { BaseLargeText } from "@/components/basic/layout/BaseText";
+import BaseButton from "@/components/basic/buttons/BaseButton";
 
 interface AfterLoginPageProps {
     userName: string
@@ -19,7 +19,7 @@ export default function AfterLoginPage({ userName }: AfterLoginPageProps) {
     return (
         <>
             <BaseLargeText>Hi, {userName}!</BaseLargeText>
-            <BasicButton onClick={doLogout}>Log out</BasicButton>
+            <BaseButton onPress={doLogout} title="Logout"></BaseButton>
             <PopupButton />
         </>
     );
@@ -27,5 +27,5 @@ export default function AfterLoginPage({ userName }: AfterLoginPageProps) {
 
 function PopupButton() {
     const showPopup = usePopUp();
-    return (<BasicButton onClick={() => showPopup("Nothing here")}>Show PopUp</BasicButton>);
+    return (<BaseButton onPress={() => showPopup("Nothing here")} title="Show PopUp"></BaseButton>);
 }

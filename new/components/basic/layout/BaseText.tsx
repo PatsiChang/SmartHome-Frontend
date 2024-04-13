@@ -10,7 +10,6 @@ interface BaseTextProps extends PropsWithChildren<{}> {
 }
 
 const BaseText = ({ style, children, ...props }: BaseTextProps) => {
-
     return (
         <Text style={style}>
             {children}
@@ -19,6 +18,14 @@ const BaseText = ({ style, children, ...props }: BaseTextProps) => {
 }
 const BaseParagraph = ({ children, styleClassName }: BaseTextProps) => {
     const styleWithClass = customStyleInput(useStyle(styleClassName), baseParagraphStyle);
+    return (
+        <BaseText style={styleWithClass}>
+            {children}
+        </BaseText>
+    )
+}
+const BaseMiddleText = ({ children, styleClassName }: BaseTextProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClassName), baseMiddleTextStyle);
     return (
         <BaseText style={styleWithClass}>
             {children}
@@ -35,10 +42,13 @@ const BaseLargeText = ({ children, styleClassName }: BaseTextProps) => {
     )
 }
 const baseTextStyle = {
-    fontSize: 14,
+    fontSize: 16,
 };
 const baseParagraphStyle = {
     fontSize: 14,
+};
+const baseMiddleTextStyle = {
+    fontSize: 18,
 };
 const baseLargeStyle = {
     fontSize: 20,
@@ -52,4 +62,4 @@ const baseTextLightStyle = {
 setDarkTheme("baseText", baseTextDarkStyle);
 setLightTheme("baseText", baseTextLightStyle);
 
-export { BaseText, BaseParagraph, BaseLargeText };
+export { BaseText, BaseParagraph, BaseMiddleText, BaseLargeText };
