@@ -1,8 +1,8 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { View } from "react-native";
-import BasicButton from "@/components/basic/buttons/BasicButton";
 import BaseNavBar from "./BaseNavBar";
 import BaseContainer from "./BaseContainer";
+import BaseButton from "@/components/basic/buttons/BaseButton";
 
 const PopUpContext = createContext((content: ReactNode) => { });
 export const usePopUp = () => useContext(PopUpContext);
@@ -36,7 +36,7 @@ function PopUp({ popUpContent }: { popUpContent: ReactNode }) {
                 backgroundColor: "white", color: "black",
                 position: "fixed", marginLeft: "25vw"
             }}>
-                <BasicButton onClick={() => showPopup(null)}> X </BasicButton>
+                <BaseButton onPress={() => showPopup(null)} title="X"></BaseButton>
                 <View>
                     {popUpContent}
                 </View>

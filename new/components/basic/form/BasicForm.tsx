@@ -1,6 +1,6 @@
 import React, { BaseSyntheticEvent, FormHTMLAttributes, PropsWithChildren, createContext, useContext, useState } from "react";
 import { View } from "react-native";
-import BasicButton from "@/components/basic/buttons/BasicButton";
+import BaseButton from "@/components/basic/buttons/BaseButton";
 import BasicTextInput from "./BasicTextInput";
 import ErrorCode from "./ErrorCode";
 import { validationsMap } from "@/lib/validations";
@@ -66,7 +66,7 @@ function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...prop
     return (
         <View>
             {children}
-            <BasicButton onClick={submitFuc}>{submitBtnText != null ? submitBtnText : "Submit"}</BasicButton>
+            <BaseButton onPress={submitFuc} title={submitBtnText != null ? submitBtnText : "Submit"}></BaseButton>
             <ErrorCode errorList={errorList}></ErrorCode>
         </View>
     )

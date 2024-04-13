@@ -9,7 +9,6 @@ interface BaseRowProps extends PropsWithChildren<{}> {
     styleClassName?: string,
 }
 
-
 //Todo: create "baseRow" class in stylesheet as default, create styleClassName(s) for customisaion
 const BaseRow = ({ children, styleClassName = "baseRow", ...props }: BaseRowProps) => {
     const styleWithClass = customStyleInput(useStyle(styleClassName), baseRowStyle);

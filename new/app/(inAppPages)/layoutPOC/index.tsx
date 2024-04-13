@@ -1,12 +1,12 @@
-import BasicButton from "@/components/basic/buttons/BasicButton";
 import BaseColumn from "@/components/basic/layout/BaseColumn";
 import BaseContainer from "@/components/basic/layout/BaseContainer"
 import BaseRow from "@/components/basic/layout/BaseRow";
 import { BaseParagraph, BaseText } from "@/components/basic/layout/BaseText";
 import { useTheme } from "@/hooks/styles/useTheme";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
-import BaseLayout from "@/components/basic/layout/BaseLayout";
 import { getContext, setContext } from "@/lib/globalContextApi";
+import BaseButton from "@/components/basic/buttons/BaseButton";
+import BaseLink from "@/components/basic/links/baseLink";
 
 const LayoutPOC = () => {
     const theme = useTheme();
@@ -28,10 +28,12 @@ const LayoutPOC = () => {
                 <BaseText>Test Column</BaseText>
                 <BaseText>Test Column</BaseText>
                 <BaseText>Test Column</BaseText>
-                <BaseText>Test Column</BaseText>
+                {/* Test BaseLink */}
+                <BaseLink url='https://google.com' title="Google"></BaseLink>
             </BaseColumn>
 
             <BaseRow styleClassName="customRow">
+                {/* Test BaseText */}
                 <BaseParagraph>Text 3</BaseParagraph>
                 <BaseParagraph>Text 3</BaseParagraph>
                 <BaseParagraph>Text 3</BaseParagraph>
@@ -42,7 +44,8 @@ const LayoutPOC = () => {
                 <BaseParagraph>Text 3</BaseParagraph>
             </BaseRow>
             <BaseRow>
-                <BasicButton onClick={toggleTheme}>Toogle Theme</BasicButton>
+                {/* Test BaseButton */}
+                <BaseButton onPress={toggleTheme} title="Toogle Theme" styleClassName=""></BaseButton>
             </BaseRow>
         </BaseContainer>
 

@@ -1,0 +1,35 @@
+
+import { useStyle } from '@/hooks/styles/useTheme';
+import { customStyleInput } from '@/lib/customStyleApi';
+import { useCallback } from 'react';
+import { Alert, Linking } from 'react-native';
+import BaseButton from '../buttons/BaseButton';
+
+interface BaseLinkProps {
+    title: string,
+    url: string,
+    styleClassName?: string,
+}
+
+function BaseLink(props: BaseLinkProps) {
+    const { title, url, styleClassName = "baseButtonStyle" } = props;
+    const styleWithClass = customStyleInput(useStyle(styleClassName), baseLinkStyle);
+
+    const handlePress = useCallback(async () => {
+        const supported = await Linking.canOpenURL(url);
+        if (supported) {
+            await Linking.openURL(url);
+        } else {
+            Alert.alert(`Don't know how to open this URL: ${url}`);
+        }
+    }, [url]);
+
+    return (
+        <BaseButton title={title} onPress={handlePress} styleClassName={styleWithClass}></BaseButton>
+    );
+}
+const baseLinkStyle = {
+    color: "#77B0AA",
+};
+
+export default BaseLink;
