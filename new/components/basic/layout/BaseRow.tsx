@@ -6,12 +6,12 @@ import { setDarkTheme, setLightTheme } from '@/app/stylesheet';
 import { customStyleInput } from "@/lib/customStyleApi";
 
 interface BaseRowProps extends PropsWithChildren<{}> {
-    styleClassName?: string,
+    styleClass?: string,
 }
 
-//Todo: create "baseRow" class in stylesheet as default, create styleClassName(s) for customisaion
-const BaseRow = ({ children, styleClassName = "baseRow", ...props }: BaseRowProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseRowStyle);
+//Todo: create "baseRow" class in stylesheet as default, create styleClass(s) for customisaion
+const BaseRow = ({ children, styleClass = "baseRow", ...props }: BaseRowProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClass), baseRowStyle);
     return (
         <BaseBlock style={styleWithClass as ViewStyle}>
             {children}

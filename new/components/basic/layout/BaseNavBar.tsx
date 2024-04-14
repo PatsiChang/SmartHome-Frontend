@@ -8,7 +8,7 @@ interface NavBarType extends PropsWithChildren {
 }
 const BaseNavBar = ({ children, styleClass = "defaultNavBar", ...props }: NavBarType) => {
     return (
-        <BaseRow styleClassName={styleClass}>
+        <BaseRow styleClass={styleClass}>
             {children}
         </BaseRow>
     )

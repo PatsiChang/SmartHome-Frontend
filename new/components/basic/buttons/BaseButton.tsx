@@ -6,17 +6,17 @@ import { useStyle } from "@/hooks/styles/useTheme";
 
 interface SimpleButtonProps {
     title: string,
-    styleClassName?: string,
+    styleClass?: string,
     onPress?: ((e: BaseSyntheticEvent) => any) | (() => any),
     textColor?: string,
 }
 export default function BaseButton(props: SimpleButtonProps) {
-    const { onPress, textColor, title = 'Save', styleClassName = "baseButtonStyle" } = props;
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseButtonStyle);
+    const { onPress, textColor, title = 'Save', styleClass = "baseButtonStyle" } = props;
+    const styleWithClass = customStyleInput(useStyle(styleClass), baseButtonStyle);
 
     return (
         <Pressable onPress={onPress} style={styleWithClass}>
-            <BaseMiddleText styleClassName={textColor} >{title}</BaseMiddleText>
+            <BaseMiddleText styleClass={textColor} >{title}</BaseMiddleText>
         </Pressable>
     );
 }
