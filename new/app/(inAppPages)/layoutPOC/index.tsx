@@ -24,7 +24,7 @@ const LayoutPOC = () => {
     return (
         <BaseContainer>
             {/* Test Row */}
-            <BaseColumn styleClassName="customColumn">
+            <BaseColumn styleClass="customColumn">
                 <BaseText>Test Column</BaseText>
                 <BaseText>Test Column</BaseText>
                 <BaseText>Test Column</BaseText>
@@ -32,7 +32,7 @@ const LayoutPOC = () => {
                 <BaseLink url='https://google.com' title="Google"></BaseLink>
             </BaseColumn>
 
-            <BaseRow styleClassName="customRow">
+            <BaseRow styleClass="customRow">
                 {/* Test BaseText */}
                 <BaseParagraph>Text 3</BaseParagraph>
                 <BaseParagraph>Text 3</BaseParagraph>
@@ -45,7 +45,7 @@ const LayoutPOC = () => {
             </BaseRow>
             <BaseRow>
                 {/* Test BaseButton */}
-                <BaseButton onPress={toggleTheme} title="Toogle Theme" styleClassName=""></BaseButton>
+                <BaseButton onPress={toggleTheme} title="Toogle Theme" styleClass=""></BaseButton>
             </BaseRow>
         </BaseContainer>
 

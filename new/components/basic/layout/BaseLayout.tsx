@@ -12,7 +12,7 @@ export default function BaseLayout({ children }: Readonly<{ children: React.Reac
     const showPopup = (content: ReactNode) => setPopUpContent(content);
 
     return (
-        <BaseContainer styleClassName="defaultLayoutStyle">
+        <BaseContainer styleClass="defaultLayoutStyle">
             <BaseNavBar> NavBarHere </BaseNavBar>
             <PopUpContext.Provider value={showPopup}>
                 <PopUp popUpContent={popUpContent} />

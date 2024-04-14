@@ -6,7 +6,7 @@ import { Text, TextStyle } from 'react-native';
 
 interface BaseTextProps extends PropsWithChildren<{}> {
     style?: TextStyle,
-    styleClassName?: any,
+    styleClass?: any,
 }
 
 const BaseText = ({ style, children, ...props }: BaseTextProps) => {
@@ -16,24 +16,24 @@ const BaseText = ({ style, children, ...props }: BaseTextProps) => {
         </Text>
     )
 }
-const BaseParagraph = ({ children, styleClassName }: BaseTextProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseParagraphStyle);
+const BaseParagraph = ({ children, styleClass }: BaseTextProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClass), defaultParagraphStyle);
     return (
         <BaseText style={styleWithClass}>
             {children}
         </BaseText>
     )
 }
-const BaseMiddleText = ({ children, styleClassName }: BaseTextProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseMiddleTextStyle);
+const BaseMiddleText = ({ children, styleClass }: BaseTextProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClass), defaultMiddleTextStyle);
     return (
         <BaseText style={styleWithClass}>
             {children}
         </BaseText>
     )
 }
-const BaseLargeText = ({ children, styleClassName }: BaseTextProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseLargeStyle);
+const BaseLargeText = ({ children, styleClass }: BaseTextProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClass), defaultLargeStyle);
 
     return (
         <BaseText style={styleWithClass}>
@@ -41,25 +41,25 @@ const BaseLargeText = ({ children, styleClassName }: BaseTextProps) => {
         </BaseText>
     )
 }
-const baseTextStyle = {
+const defaultTextStyle = {
     fontSize: 16,
 };
-const baseParagraphStyle = {
+const defaultParagraphStyle = {
     fontSize: 14,
 };
-const baseMiddleTextStyle = {
+const defaultMiddleTextStyle = {
     fontSize: 18,
 };
-const baseLargeStyle = {
+const defaultLargeStyle = {
     fontSize: 20,
 };
-const baseTextDarkStyle = {
+const defaultTextDarkStyle = {
 };
-const baseTextLightStyle = {
+const defaultTextLightStyle = {
 };
 
 
-setDarkTheme("baseText", baseTextDarkStyle);
-setLightTheme("baseText", baseTextLightStyle);
+setDarkTheme("baseText", defaultTextDarkStyle);
+setLightTheme("baseText", defaultTextLightStyle);
 
 export { BaseText, BaseParagraph, BaseMiddleText, BaseLargeText };

@@ -3,6 +3,7 @@ import React, { PropsWithChildren, useEffect, useState } from "react";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { useWrappedPathName } from "@/hooks/navigation/useWrappedPathName";
 import { Alert, View } from "react-native";
+import BaseLoading from "./BaseLoading";
 
 interface ClientPageProps extends PropsWithChildren<{}> {
     pageTitle?: string
@@ -21,7 +22,8 @@ export default function BasePage({ requireLogin, fetchData, children, ...props }
     //Do the below after Page OnMount
     useEffect(() => {
         if (shouldRedirectToLoginPage) {
-            router.replace("/loginPage?redirect=" + currentPathName);
+            const delayPromise = new Promise(resolve => setTimeout(resolve, 5000)); // Set delay for 10 seconds
+            delayPromise.then(() => router.replace("/loginPage?redirect=" + currentPathName))
         } else {
             if (needToFetchData && isLoading) {
                 fetchData()
@@ -31,6 +33,6 @@ export default function BasePage({ requireLogin, fetchData, children, ...props }
         }
     }, []);
 
-    return isLoading ? <View>I am loading!!!!!!!!</View> : <View>{children}</View>;
+    return isLoading ? <BaseLoading title="I am loading..."></BaseLoading> : <View>{children}</View>;
 
 }

@@ -8,12 +8,12 @@ import BaseButton from '../buttons/BaseButton';
 interface BaseLinkProps {
     title: string,
     url: string,
-    styleClassName?: string,
+    styleClass?: string,
 }
 
 function BaseLink(props: BaseLinkProps) {
-    const { title, url, styleClassName = "baseButtonStyle" } = props;
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseLinkStyle);
+    const { title, url, styleClass = "baseButtonStyle" } = props;
+    const styleWithClass = customStyleInput(useStyle(styleClass), defaultLinkStyle);
 
     const handlePress = useCallback(async () => {
         const supported = await Linking.canOpenURL(url);
@@ -25,10 +25,10 @@ function BaseLink(props: BaseLinkProps) {
     }, [url]);
 
     return (
-        <BaseButton title={title} onPress={handlePress} styleClassName={styleWithClass}></BaseButton>
+        <BaseButton title={title} onPress={handlePress} styleClass={styleWithClass}></BaseButton>
     );
 }
-const baseLinkStyle = {
+const defaultLinkStyle = {
     color: "#77B0AA",
 };
 

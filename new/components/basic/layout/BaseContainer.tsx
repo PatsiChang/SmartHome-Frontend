@@ -6,12 +6,12 @@ import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
 import { customStyleInput } from "@/lib/customStyleApi";
 
 interface BaseContainerProps extends PropsWithChildren<{}> {
-    styleClassName?: string,
+    styleClass?: string,
 
 }
 
-const BaseContainer = ({ children, styleClassName = "baseContainer", ...props }: BaseContainerProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseContainerStyle);
+const BaseContainer = ({ children, styleClass = "baseContainer", ...props }: BaseContainerProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClass), defaultContainerStyle);
 
     return (
         <BaseBlock style={styleWithClass}>
@@ -19,19 +19,19 @@ const BaseContainer = ({ children, styleClassName = "baseContainer", ...props }:
         </BaseBlock>
     )
 }
-const baseContainerStyle = {
+const defaultContainerStyle = {
 };
-const baseContainerDarkStyle = {
-    ...baseContainerStyle,
+const defaultContainerDarkStyle = {
+    ...defaultContainerStyle,
     backgroundColor: "#222831",
 };
-const baseContainerLightStyle = {
-    ...baseContainerStyle,
+const defaultContainerLightStyle = {
+    ...defaultContainerStyle,
     backgroundColor: "#eeeeee",
 };
 //Todo: add these remaining styles into the style sheet to avoid too much extra setting attributes
-setDarkTheme("baseContainer", baseContainerDarkStyle);
-setLightTheme("baseContainer", baseContainerLightStyle);
+setDarkTheme("baseContainer", defaultContainerDarkStyle);
+setLightTheme("baseContainer", defaultContainerLightStyle);
 
 
 export default BaseContainer;

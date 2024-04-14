@@ -5,12 +5,12 @@ import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
 import { customStyleInput } from "@/lib/customStyleApi";
 
 interface BaseColumnProps extends PropsWithChildren<{}> {
-    styleClassName?: string,
+    styleClass?: string,
 
 }
 
-const BaseColumn = ({ children, styleClassName = "baseColumn", ...props }: BaseColumnProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClassName), baseColumnStyle);
+const BaseColumn = ({ children, styleClass = "baseColumn", ...props }: BaseColumnProps) => {
+    const styleWithClass = customStyleInput(useStyle(styleClass), defaultColumnStyle);
     return (
         <BaseBlock style={styleWithClass}>
             {children}
@@ -18,18 +18,18 @@ const BaseColumn = ({ children, styleClassName = "baseColumn", ...props }: BaseC
     )
 }
 
-const baseColumnStyle = {
+const defaultColumnStyle = {
     flexDirection: 'column',
 };
-const baseColumnDarkStyle = {
-    ...baseColumnStyle,
+const defaultColumnDarkStyle = {
+    ...defaultColumnStyle,
     backgroundColor: "#222831",
 };
-const baseColumnLightStyle = {
+const defaultColumnLightStyle = {
     backgroundColor: "#eeeeee",
 };
 
 //Todo: add these remaining styles into the style sheet to avoid too much extra setting attributes
-setDarkTheme("baseColumn", baseColumnDarkStyle);
-setLightTheme("baseColumn", baseColumnLightStyle);
+setDarkTheme("baseColumn", defaultColumnDarkStyle);
+setLightTheme("baseColumn", defaultColumnLightStyle);
 export default BaseColumn;
