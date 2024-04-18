@@ -7,11 +7,9 @@ interface ScrollableContainerProps extends BaseContainerProps {}
 
 const ScrollableContainer = ({ children, styleClass, ...props }: ScrollableContainerProps) => {
     return (
-        // <BaseContainer>
-            <BaseBlock scrollable={true} styleClass={styleClass}>
-                {children}
-            </BaseBlock>
-        // </BaseContainer>
+        <BaseBlock scrollable={true} styleClass={styleClass}>
+            {children}
+        </BaseBlock>
     )
 }
 

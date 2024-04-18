@@ -29,7 +29,6 @@ const LayoutPOC = () => {
     return (
         <BasePage>
             <BaseRow>
-                {/* Test BaseButton */}
                 <BaseButton onPress={toggleTheme} title="Toogle Theme"></BaseButton>
             </BaseRow>
             <BaseRow>
@@ -108,6 +107,7 @@ addStyleBuilder("customFixedBlock", (config) => {
         borderColor: config.themeColorPalette.primaryTextColor,
         borderWidth: 1,
         padding: 10,
+        margin: 10,
         justifyContent: "center",
         alignContent: "center",
     };

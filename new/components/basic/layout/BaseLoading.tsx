@@ -1,6 +1,7 @@
 import BaseContainer from "./BaseContainer";
 import { ActivityIndicator, Dimensions } from "react-native";
 import { BaseLargeText } from "./BaseText";
+import {addStyleBuilder} from "@/lib/appStyleApi";
 
 
 //Putting these two types as default, if future needs more we add "secondLoadingType" component to this page
@@ -22,43 +23,19 @@ const BaseLoading = (props: BaseLoadingType) => {
         <BaseContainer styleClass={styleWithClass}>
         </BaseContainer>
 }
-var { width, height } = Dimensions.get('window');
+// var { width, height } = Dimensions.get('window');
 
 //Todo: set overlay screen at the back
-const overlay = {
-    flex: 1,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    opacity: 0.5,
-    backgroundColor: 'black',
-    width: width
-}
-// var styles = StyleSheet.create({
-//     container: {
-//       flex: 1,
-//       justifyContent: 'center',
-//       alignItems: 'center',
-//       backgroundColor: '#F5FCFF',
-//     },
-//     welcome: {
-//       fontSize: 20,
-//       textAlign: 'center',
-//       margin: 10,
-//     },
-//     // Flex to fill, position absolute,
-//     // Fixed left/top, and the width set to the window width
-//     overlay: {
-//       flex: 1,
-//       position: 'absolute',
-//       left: 0,
-//       top: 0,
-//       opacity: 0.5,
-//       backgroundColor: 'black',
-//       width: width
-//     }
-//   });
-// setDarkTheme("defaultLoading", defaultLoading);
-// setLightTheme("defaultLoading", defaultLoading);
+addStyleBuilder("defaultLoading", (config) => {
+    return {
+        flex: 1,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        opacity: 0.5,
+        backgroundColor: config.themeColorPalette.secondaryBackground,
+        width: "100%"
+    };
+});
 
 export default BaseLoading;

@@ -7,7 +7,7 @@ export const unstable_settings = {
   initialRouteName: "home",
 };
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <BaseLayout>
         <RouterWrapper />

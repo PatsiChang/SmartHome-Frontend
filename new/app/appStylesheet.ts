@@ -26,7 +26,7 @@ setFontSizes({
     }
 });
 
-const COLORS = {
+export const COLORS = {
     licorice : "#1a1110",
     bistre: "#3c2a21",
     willowIII: "#e4e5ca",
@@ -59,7 +59,6 @@ setThemeColors({
 setStyleBuilders({
     baseContainer: (config) => {
         return {
-            backgroundColor: config.themeColorPalette.primaryBackground,
             flex: 1,
         };
     },
@@ -110,17 +109,6 @@ setStyleBuilders({
             padding: 7
         };
     },
-    defaultLoading: (config) => {
-        return {
-            flex: 1,
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            opacity: 0.5,
-            backgroundColor: config.themeColorPalette.secondaryBackground,
-            width: "100%"
-        };
-    },
     baseLink: (config) => {
         return {
             color: config.themeColorPalette.secondaryTextColor,
@@ -131,5 +119,10 @@ setStyleBuilders({
         return {
             backgroundColor: config.themeColorPalette.secondaryBackground
         };
+    },
+    basePage: (config) => {
+        return {
+            backgroundColor: config.themeColorPalette.primaryBackground,
+        }
     },
 });
