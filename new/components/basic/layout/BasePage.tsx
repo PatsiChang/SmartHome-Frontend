@@ -36,6 +36,6 @@ export default function BasePage({ requireLogin, fetchData, children, ...props }
 
     return isLoading
         ? <BaseLoading title="I am loading..."></BaseLoading>
-        : <ScrollableContainer>{children}</ScrollableContainer>;
+        : <ScrollableContainer styleClass={"basePage"}>{ children }</ScrollableContainer>;
 
 }
