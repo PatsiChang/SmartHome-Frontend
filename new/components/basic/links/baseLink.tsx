@@ -1,9 +1,7 @@
-
-import { useStyle } from '@/hooks/styles/useTheme';
-import { customStyleInput } from '@/lib/customStyleApi';
 import { useCallback } from 'react';
 import { Alert, Linking } from 'react-native';
 import BaseButton from '../buttons/BaseButton';
+import { concatStyleClass } from "@/lib/appStyleApi";
 
 interface BaseLinkProps {
     title: string,
@@ -12,8 +10,8 @@ interface BaseLinkProps {
 }
 
 function BaseLink(props: BaseLinkProps) {
-    const { title, url, styleClass = "baseButtonStyle" } = props;
-    const styleWithClass = customStyleInput(useStyle(styleClass), defaultLinkStyle);
+    const { title, url, styleClass} = props;
+    const styleWithClass = concatStyleClass("baseLink", styleClass);
 
     const handlePress = useCallback(async () => {
         const supported = await Linking.canOpenURL(url);
@@ -28,8 +26,5 @@ function BaseLink(props: BaseLinkProps) {
         <BaseButton title={title} onPress={handlePress} styleClass={styleWithClass}></BaseButton>
     );
 }
-const defaultLinkStyle = {
-    color: "#77B0AA",
-};
 
 export default BaseLink;
