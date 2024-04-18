@@ -1,35 +1,16 @@
 import { PropsWithChildren } from "react";
 import BaseBlock from "./BaseBlock";
-import { useStyle } from "@/hooks/styles/useTheme";
-import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
-import { customStyleInput } from "@/lib/customStyleApi";
+import {AppStyleClassProp} from "@/components/basic/style/StyleProvider";
+import {concatStyleClass} from "@/lib/appStyleApi";
 
-interface BaseColumnProps extends PropsWithChildren<{}> {
-    styleClass?: string,
+interface BaseColumnProps extends PropsWithChildren<{}>, AppStyleClassProp {}
 
-}
-
-const BaseColumn = ({ children, styleClass = "baseColumn", ...props }: BaseColumnProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClass), defaultColumnStyle);
+const BaseColumn = ({ children, styleClass, ...props }: BaseColumnProps) => {
     return (
-        <BaseBlock style={styleWithClass}>
+        <BaseBlock styleClass={concatStyleClass("baseColumn", styleClass)}>
             {children}
         </BaseBlock>
     )
 }
 
-const defaultColumnStyle = {
-    flexDirection: 'column',
-};
-const defaultColumnDarkStyle = {
-    ...defaultColumnStyle,
-    backgroundColor: "#222831",
-};
-const defaultColumnLightStyle = {
-    backgroundColor: "#eeeeee",
-};
-
-//Todo: add these remaining styles into the style sheet to avoid too much extra setting attributes
-setDarkTheme("baseColumn", defaultColumnDarkStyle);
-setLightTheme("baseColumn", defaultColumnLightStyle);
 export default BaseColumn;

@@ -3,6 +3,7 @@ import { View } from "react-native";
 import BaseNavBar from "./BaseNavBar";
 import BaseContainer from "./BaseContainer";
 import BaseButton from "@/components/basic/buttons/BaseButton";
+import {BaseMiddleText} from "@/components/basic/layout/BaseText";
 
 const PopUpContext = createContext((content: ReactNode) => { });
 export const usePopUp = () => useContext(PopUpContext);
@@ -12,18 +13,15 @@ export default function BaseLayout({ children }: Readonly<{ children: React.Reac
     const showPopup = (content: ReactNode) => setPopUpContent(content);
 
     return (
-        <BaseContainer styleClass="defaultLayoutStyle">
-            <BaseNavBar> NavBarHere </BaseNavBar>
+        <BaseContainer>
+            <BaseNavBar> <BaseMiddleText>NavBarHere</BaseMiddleText> </BaseNavBar>
             <PopUpContext.Provider value={showPopup}>
                 <PopUp popUpContent={popUpContent} />
                 {children}
             </PopUpContext.Provider>
-            <BaseNavBar> NavBarHere </BaseNavBar>
+            <BaseNavBar> <BaseMiddleText>NavBarHere</BaseMiddleText> </BaseNavBar>
         </BaseContainer>
     )
-}
-
-const defaultLayoutstyles = {
 }
 
 function PopUp({ popUpContent }: { popUpContent: ReactNode }) {

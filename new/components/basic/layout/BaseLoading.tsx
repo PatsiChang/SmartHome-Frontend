@@ -1,8 +1,5 @@
-import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
 import BaseContainer from "./BaseContainer";
 import { ActivityIndicator, Dimensions } from "react-native";
-import { customStyleInput } from "@/lib/customStyleApi";
-import { useStyle } from "@/hooks/styles/useTheme";
 import { BaseLargeText } from "./BaseText";
 
 
@@ -10,11 +7,11 @@ import { BaseLargeText } from "./BaseText";
 interface BaseLoadingType {
     title?: string,
     loadingType?: "default" | "lowOpacity",
-    styleClass?: string,
+    styleClass?: string | string[],
 }
 const BaseLoading = (props: BaseLoadingType) => {
     const { styleClass = "defaultNavBar", loadingType = "default", title } = props;
-    const styleWithClass = customStyleInput(useStyle(styleClass), defaultLoading);
+    const styleWithClass = ["defaultLoading", ...styleClass];
 
     return loadingType == "default" ? (
         <BaseContainer styleClass={styleWithClass}>
@@ -26,9 +23,7 @@ const BaseLoading = (props: BaseLoadingType) => {
         </BaseContainer>
 }
 var { width, height } = Dimensions.get('window');
-const defaultLoading = {
 
-};
 //Todo: set overlay screen at the back
 const overlay = {
     flex: 1,
@@ -51,7 +46,7 @@ const overlay = {
 //       textAlign: 'center',
 //       margin: 10,
 //     },
-//     // Flex to fill, position absolute, 
+//     // Flex to fill, position absolute,
 //     // Fixed left/top, and the width set to the window width
 //     overlay: {
 //       flex: 1,
@@ -61,9 +56,9 @@ const overlay = {
 //       opacity: 0.5,
 //       backgroundColor: 'black',
 //       width: width
-//     }  
+//     }
 //   });
-setDarkTheme("defaultLoading", defaultLoading);
-setLightTheme("defaultLoading", defaultLoading);
+// setDarkTheme("defaultLoading", defaultLoading);
+// setLightTheme("defaultLoading", defaultLoading);
 
 export default BaseLoading;

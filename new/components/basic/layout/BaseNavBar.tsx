@@ -1,22 +1,17 @@
 import { PropsWithChildren } from "react";
 import BaseRow from "./BaseRow";
-import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
+import { AppStyleClassProp } from "@/components/basic/style/StyleProvider";
+import {concatStyleClass} from "@/lib/appStyleApi";
 
-interface NavBarType extends PropsWithChildren {
-    pages?: "home" | "socialMedia" | "grocery" | "MyRecipes" | "Setting",
-    styleClass?: string,
+interface NavBarType extends PropsWithChildren, AppStyleClassProp {
+    pages?: "home" | "socialMedia" | "grocery" | "MyRecipes" | "Setting"
 }
-const BaseNavBar = ({ children, styleClass = "defaultNavBar", ...props }: NavBarType) => {
+const BaseNavBar = ({ children, styleClass, ...props }: NavBarType) => {
     return (
-        <BaseRow styleClass={styleClass}>
+        <BaseRow styleClass={concatStyleClass("baseNavBar", styleClass)}>
             {children}
         </BaseRow>
     )
 }
-const defaultNavBar = {
-    backgroundColor: "#135D66",
-};
-setDarkTheme("defaultNavBar", defaultNavBar);
-setLightTheme("defaultNavBar", defaultNavBar);
 
 export default BaseNavBar;

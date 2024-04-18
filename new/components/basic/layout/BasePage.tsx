@@ -4,6 +4,7 @@ import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { useWrappedPathName } from "@/hooks/navigation/useWrappedPathName";
 import { Alert, View } from "react-native";
 import BaseLoading from "./BaseLoading";
+import ScrollableContainer from "@/components/basic/layout/ScrollableContainer";
 
 interface ClientPageProps extends PropsWithChildren<{}> {
     pageTitle?: string
@@ -33,6 +34,8 @@ export default function BasePage({ requireLogin, fetchData, children, ...props }
         }
     }, []);
 
-    return isLoading ? <BaseLoading title="I am loading..."></BaseLoading> : <View>{children}</View>;
+    return isLoading
+        ? <BaseLoading title="I am loading..."></BaseLoading>
+        : <ScrollableContainer>{children}</ScrollableContainer>;
 
 }

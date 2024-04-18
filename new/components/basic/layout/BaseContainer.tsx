@@ -1,37 +1,16 @@
-
 import { PropsWithChildren } from "react";
 import BaseBlock from "./BaseBlock";
-import { useStyle } from "@/hooks/styles/useTheme";
-import { setDarkTheme, setLightTheme } from "@/app/stylesheet";
-import { customStyleInput } from "@/lib/customStyleApi";
+import {AppStyleClassProp} from "@/components/basic/style/StyleProvider";
+import {concatStyleClass} from "@/lib/appStyleApi";
 
-interface BaseContainerProps extends PropsWithChildren<{}> {
-    styleClass?: string,
+export interface BaseContainerProps extends PropsWithChildren<{}>, AppStyleClassProp {}
 
-}
-
-const BaseContainer = ({ children, styleClass = "baseContainer", ...props }: BaseContainerProps) => {
-    const styleWithClass = customStyleInput(useStyle(styleClass), defaultContainerStyle);
-
+const BaseContainer = ({ children, styleClass, ...props }: BaseContainerProps) => {
     return (
-        <BaseBlock style={styleWithClass}>
+        <BaseBlock styleClass={concatStyleClass("baseContainer", styleClass)}>
             {children}
         </BaseBlock>
     )
 }
-const defaultContainerStyle = {
-};
-const defaultContainerDarkStyle = {
-    ...defaultContainerStyle,
-    backgroundColor: "#222831",
-};
-const defaultContainerLightStyle = {
-    ...defaultContainerStyle,
-    backgroundColor: "#eeeeee",
-};
-//Todo: add these remaining styles into the style sheet to avoid too much extra setting attributes
-setDarkTheme("baseContainer", defaultContainerDarkStyle);
-setLightTheme("baseContainer", defaultContainerLightStyle);
-
 
 export default BaseContainer;
