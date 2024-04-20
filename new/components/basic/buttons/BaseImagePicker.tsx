@@ -10,7 +10,7 @@ import {ImagePickerResult, ImagePickerSuccessResult} from "expo-image-picker";
 import {Action, uploadFile} from "@/lib/fetchApi";
 import {convertBase64UriToBlob} from "@/lib/Base64Util";
 import {BaseLargeText, BaseMiddleText} from "@/components/basic/layout/BaseText";
-import {addStyleBuilder} from "@/lib/appStyleApi";
+import {addStyleBuilder, concatStyleClass} from "@/lib/appStyleApi";
 import BaseBlock from "@/components/basic/layout/BaseBlock";
 
 export type BaseFilePickerFunction = {
@@ -83,15 +83,15 @@ function BaseImagePicker({ imageIdFormInputName, allowCamera = false, imageUploa
     return (
         <BaseContainer>
             <BaseRow>
-                <BaseBlock styleClass={"baseImagePicker"}>
+                <BaseBlock styleClass={concatStyleClass("baseImagePicker", styleClass)}>
                     {image && image.assets && <Image source={{ uri: image.assets[0].uri }} style={IMAGE_PREVIEW_SIZE}/>}
                 </BaseBlock>
             </BaseRow>
             {(isUploading) ?
                 <BaseLargeText>Uploading...</BaseLargeText>
                 : <BaseRow>
-                    <BaseButton title={"Select image"} styleClass={styleClass} onPress={pickImage}/>
-                    {(allowCamera) ? <BaseButton title={"Take a picture"} styleClass={styleClass}/> : null}
+                    <BaseButton title={"Select image"} onPress={pickImage}/>
+                    {(allowCamera) ? <BaseButton title={"Take a picture"} /> : null}
                 </BaseRow>}
         </BaseContainer>
     );
