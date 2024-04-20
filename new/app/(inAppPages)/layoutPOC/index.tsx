@@ -12,7 +12,6 @@ import BasePage from "@/components/basic/layout/BasePage";
 import ScrollableContainer from "@/components/basic/layout/ScrollableContainer";
 import {BaseSyntheticEvent, useRef} from "react";
 import BasicForm from "@/components/basic/form/BasicForm";
-import {doFetch} from "@/lib/fetchApi";
 import BaseImagePicker, {BaseFilePickerFunction} from "@/components/basic/buttons/BaseImagePicker";
 
 const LayoutPOC = () => {
@@ -31,11 +30,10 @@ const LayoutPOC = () => {
     };
 
     const testUploadRecipeIcon = async (e: BaseSyntheticEvent, formData : FormData) : Promise<string[]> => {
-        const imageId = await imagePickerRef.current?.uploadImage("http://localhost:8080/recipe/addRecipeIcon");
-        if (imageId) {
-            console.log("Image uploaded! " + imageId);
+        try{
+            await imagePickerRef.current?.uploadImage("http://localhost:8080/recipe/addRecipeIcon");
             return [];
-        } else {
+        } catch (e) {
             return ["Image upload failed "];
         }
     }
@@ -87,7 +85,7 @@ const LayoutPOC = () => {
                 <BaseBlock styleClass="customFixedBlock">
                     <BasicForm onSubmitCallback={testUploadRecipeIcon} submitBtnText="Upload!" >
                         <BaseImagePicker ref={imagePickerRef}
-                                         imageIdFormInputName={"recipeIcon"}
+                                         imageIdFormInputName={"imgURL"}
                                          imageUploadFormInputName={"recipeIcon"} uploadMethod={"PUT"}/>
                     </BasicForm>
                 </BaseBlock>

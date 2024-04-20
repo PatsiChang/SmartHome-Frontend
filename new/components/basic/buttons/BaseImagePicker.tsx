@@ -10,6 +10,8 @@ import {ImagePickerResult, ImagePickerSuccessResult} from "expo-image-picker";
 import {Action, uploadFile} from "@/lib/fetchApi";
 import {convertBase64UriToBlob} from "@/lib/Base64Util";
 import {BaseLargeText, BaseMiddleText} from "@/components/basic/layout/BaseText";
+import {addStyleBuilder} from "@/lib/appStyleApi";
+import BaseBlock from "@/components/basic/layout/BaseBlock";
 
 export type BaseFilePickerFunction = {
     uploadImage: (url : string) => Promise<string>
@@ -26,7 +28,7 @@ function BaseImagePicker({ imageIdFormInputName, allowCamera = false, imageUploa
     const [isUploading, setIsUploading] = useState(false);
     const [image, setImage] = useState({} as ImagePickerSuccessResult);
     const formContext = useContext(BasicFormContext);
-    const [status, requestPermission] = ImagePicker.useCameraPermissions();
+    // const [status, requestPermission] = ImagePicker.useCameraPermissions();
 
     const pickImage = async () => {
         handleImagePicked(await ImagePicker.launchImageLibraryAsync({
@@ -66,6 +68,8 @@ function BaseImagePicker({ imageIdFormInputName, allowCamera = false, imageUploa
                         formContext.formData.set(imageIdFormInputName, imageId);
                     }
                     return imageId;
+                } else {
+                    throw new Error("No imageId returned.");
                 }
             }
         }
@@ -79,7 +83,9 @@ function BaseImagePicker({ imageIdFormInputName, allowCamera = false, imageUploa
     return (
         <BaseContainer>
             <BaseRow>
-                {image && image.assets && <Image source={{ uri: image.assets[0].uri }} style={IMAGE_PREVIEW_SIZE}/>}
+                <BaseBlock styleClass={"baseImagePicker"}>
+                    {image && image.assets && <Image source={{ uri: image.assets[0].uri }} style={IMAGE_PREVIEW_SIZE}/>}
+                </BaseBlock>
             </BaseRow>
             {(isUploading) ?
                 <BaseLargeText>Uploading...</BaseLargeText>
@@ -92,8 +98,8 @@ function BaseImagePicker({ imageIdFormInputName, allowCamera = false, imageUploa
 }
 
 const IMAGE_PREVIEW_SIZE = {
-    width: 200,
-    height: 150,
+    flex: 1
 };
+
 
 export default forwardRef(BaseImagePicker);
