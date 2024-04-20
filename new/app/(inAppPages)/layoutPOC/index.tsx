@@ -1,5 +1,4 @@
 import BaseColumn from "@/components/basic/layout/BaseColumn";
-import BaseContainer from "@/components/basic/layout/BaseContainer"
 import BaseRow from "@/components/basic/layout/BaseRow";
 import {BaseLargeText, BaseParagraph, BaseText} from "@/components/basic/layout/BaseText";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
@@ -11,9 +10,14 @@ import {addStyleBuilder} from "@/lib/appStyleApi";
 import BaseBlock from "@/components/basic/layout/BaseBlock";
 import BasePage from "@/components/basic/layout/BasePage";
 import ScrollableContainer from "@/components/basic/layout/ScrollableContainer";
+import {BaseSyntheticEvent, useRef} from "react";
+import BasicForm from "@/components/basic/form/BasicForm";
+import {doFetch} from "@/lib/fetchApi";
+import BaseImagePicker, {BaseFilePickerFunction} from "@/components/basic/buttons/BaseImagePicker";
 
 const LayoutPOC = () => {
     const router = useWrappedRouter();
+    const imagePickerRef = useRef<BaseFilePickerFunction>();
 
     const toggleTheme = () => {
         const currentTheme = getContext<string>(CONTEXT_KEY_CURRENT_THEME);
@@ -25,6 +29,16 @@ const LayoutPOC = () => {
 
         router.replace("/layoutPOC");
     };
+
+    const testUploadRecipeIcon = async (e: BaseSyntheticEvent, formData : FormData) : Promise<string[]> => {
+        const imageId = await imagePickerRef.current?.uploadImage("http://localhost:8080/recipe/addRecipeIcon");
+        if (imageId) {
+            console.log("Image uploaded! " + imageId);
+            return [];
+        } else {
+            return ["Image upload failed "];
+        }
+    }
 
     return (
         <BasePage>
@@ -70,7 +84,13 @@ const LayoutPOC = () => {
                         </BaseParagraph>
                     </ScrollableContainer>
                 </BaseBlock>
-                <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 2</BaseLargeText></BaseBlock>
+                <BaseBlock styleClass="customFixedBlock">
+                    <BasicForm onSubmitCallback={testUploadRecipeIcon} submitBtnText="Upload!" >
+                        <BaseImagePicker ref={imagePickerRef}
+                                         imageIdFormInputName={"recipeIcon"}
+                                         imageUploadFormInputName={"recipeIcon"} uploadMethod={"PUT"}/>
+                    </BasicForm>
+                </BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 3</BaseLargeText></BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 4</BaseLargeText></BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 5</BaseLargeText></BaseBlock>
