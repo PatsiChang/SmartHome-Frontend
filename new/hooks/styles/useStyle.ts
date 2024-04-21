@@ -1,8 +1,8 @@
-import { AppStyles, AppStylesSheet, mergeAppStyles } from "@/lib/appStyleApi";
-import {useContext} from "react";
-import {StyleContext} from "@/context/StyleContext";
+import { AppStyles } from "@/lib/appStyleApi";
+import { useContext } from "react";
+import { StyleContext } from "@/context/StyleContext";
 
-export const useStyle = (...styleClassName : string[]) : AppStyles | AppStyles[]=> {
+export const useStyle = (...styleClassName: string[]): AppStyles | AppStyles[] => {
     let styleObject = useContext(StyleContext);
 
     let styleObjects = [];

@@ -1,7 +1,7 @@
 import { setFontSizes, setStyleBuilders, setThemeColors} from "@/lib/appStyleApi";
 
 setFontSizes({
-    small : {
+    small: {
         xxs: 3,
         xs: 4,
         s: 6,
@@ -22,7 +22,7 @@ setFontSizes({
 });
 
 export const COLORS = {
-    licorice : "#1a1110",
+    licorice: "#1a1110",
     bistre: "#3c2a21",
     willowIII: "#e4e5ca",
     durianWhite: "#e6d0ab",
@@ -33,7 +33,7 @@ export const COLORS = {
 }
 
 setThemeColors({
-    darkTheme : {
+    darkTheme: {
         primaryBackground: COLORS.licorice,
         secondaryBackground: COLORS.bistre,
         primaryColor: COLORS.willowIII,
@@ -113,8 +113,21 @@ setStyleBuilders({
     },
     baseNavBar: (config) => {
         return {
-            backgroundColor: config.themeColorPalette.secondaryBackground
+            backgroundColor: config.themeColorPalette.secondaryBackground,
+            justifyContent: "space-between",
         };
+    },
+    baseMenuBar: (config) => {
+        return {
+            backgroundColor: config.themeColorPalette.secondaryBackground,
+            justifyContent: "space-evenly",
+        };
+    },
+    baseImg: (config) => {
+        return {
+            width: 50,
+            height: 50,
+        }
     },
     basePage: (config) => {
         return {
@@ -125,6 +138,13 @@ setStyleBuilders({
         return {
             width: 200,
             height: 150
+        }
+    },
+    pageHeaderRow: (config) => {
+        return {
+            padding: 0,
+            gap: 0,
+            margin: 0
         }
     },
 });
