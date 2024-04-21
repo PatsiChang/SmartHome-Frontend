@@ -1,23 +1,23 @@
 import BaseColumn from "@/components/basic/layout/BaseColumn";
-import BaseContainer from "@/components/basic/layout/BaseContainer"
 import BaseRow from "@/components/basic/layout/BaseRow";
-import {BaseLargeText, BaseParagraph, BaseText} from "@/components/basic/layout/BaseText";
+import { BaseLargeText, BaseParagraph } from "@/components/basic/layout/BaseText";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { getContext, setContext } from "@/lib/globalContextApi";
 import BaseButton from "@/components/basic/buttons/BaseButton";
 import BaseLink from "@/components/basic/links/baseLink";
-import {CONTEXT_KEY_CURRENT_THEME, CONTEXT_KEY_SET_THEME} from "@/components/basic/style/StyleProvider";
-import {addStyleBuilder} from "@/lib/appStyleApi";
+import { CONTEXT_KEY_CURRENT_THEME, CONTEXT_KEY_SET_THEME } from "@/components/basic/style/StyleProvider";
+import { addStyleBuilder } from "@/lib/appStyleApi";
 import BaseBlock from "@/components/basic/layout/BaseBlock";
 import BasePage from "@/components/basic/layout/BasePage";
 import ScrollableContainer from "@/components/basic/layout/ScrollableContainer";
+import BaseNavBar from "@/components/basic/layout/BaseNavBar";
 
 const LayoutPOC = () => {
     const router = useWrappedRouter();
 
     const toggleTheme = () => {
         const currentTheme = getContext<string>(CONTEXT_KEY_CURRENT_THEME);
-        const setTheme = getContext(CONTEXT_KEY_SET_THEME) as  (theme : string) => {}
+        const setTheme = getContext(CONTEXT_KEY_SET_THEME) as (theme: string) => {}
         setTheme((currentTheme === 'darkTheme') ? 'lightTheme' : 'darkTheme');
         console.log("Check getGlobalContext", getContext("defaultContext"));
         console.log("Check setGlobalContext", setContext("firstContext", "firstContext"));
@@ -31,6 +31,7 @@ const LayoutPOC = () => {
             <BaseRow>
                 <BaseButton onPress={toggleTheme} title="Toogle Theme"></BaseButton>
             </BaseRow>
+            <BaseNavBar pages={["Home", "Feeds", "AddRecipe"]} type="menuBar" platform="mobile"></BaseNavBar>
             <BaseRow>
                 <BaseColumn styleClass="customColumn">
                     <BaseLargeText>Column 1</BaseLargeText>

@@ -1,9 +1,9 @@
-import {TextStyle, ViewStyle} from "react-native";
+import { ImageStyle, TextStyle, ViewStyle } from "react-native";
 
-export type AppStyles = ViewStyle | TextStyle;
+export type AppStyles = ViewStyle | TextStyle | ImageStyle;
 
 export type AppStylesSheet = {
-    [key : string] : AppStyles
+    [key: string]: AppStyles
 }
 
 export type ThemeColorPalette = {
@@ -25,22 +25,22 @@ export type FontSizes = {
     xxl: number,
 }
 
-export type  StyleConfig = {
+export type StyleConfig = {
     themeColorPalette: ThemeColorPalette,
     fontSize: FontSizes
 }
 
-let FONT_SIZES : {[key:string] : FontSizes} = {};
-let fontSizesKeys : string[] = [];
-export const addFontSizes = (fontSizeKey: string, fontSizesVal : FontSizes) => {
+let FONT_SIZES: { [key: string]: FontSizes } = {};
+let fontSizesKeys: string[] = [];
+export const addFontSizes = (fontSizeKey: string, fontSizesVal: FontSizes) => {
     FONT_SIZES[fontSizeKey] = fontSizesVal;
     fontSizesKeys.push(fontSizeKey);
 }
 
-export const setFontSizes = (fontSizes : { [key:string] : FontSizes }) => {
+export const setFontSizes = (fontSizes: { [key: string]: FontSizes }) => {
     if (fontSizesKeys.length > 0) {
         console.warn("Cannot override font size map. Use addFontSizes to add font size");
-        for(let fontSizeKey of Object.keys(fontSizes)) {
+        for (let fontSizeKey of Object.keys(fontSizes)) {
             addFontSizes(fontSizeKey, fontSizes[fontSizeKey]);
         }
     }
@@ -48,17 +48,17 @@ export const setFontSizes = (fontSizes : { [key:string] : FontSizes }) => {
     fontSizesKeys = Object.keys(FONT_SIZES);
 }
 
-let THEME_COLORS : {[key:string] : ThemeColorPalette} = {};
-let themeColorsKeys : string[] = [];
-export const addThemeColor = (themeColorKey: string, themeColorVal : ThemeColorPalette) => {
+let THEME_COLORS: { [key: string]: ThemeColorPalette } = {};
+let themeColorsKeys: string[] = [];
+export const addThemeColor = (themeColorKey: string, themeColorVal: ThemeColorPalette) => {
     THEME_COLORS[themeColorKey] = themeColorVal;
     themeColorsKeys.push(themeColorKey);
 }
 
-export const setThemeColors = (themeColors : {[key:string] : ThemeColorPalette}) => {
+export const setThemeColors = (themeColors: { [key: string]: ThemeColorPalette }) => {
     if (themeColorsKeys.length > 0) {
         console.warn("Cannot override theme colors map. Use addThemeColor to add theme color");
-        for(let themeColorKey of Object.keys(themeColors)) {
+        for (let themeColorKey of Object.keys(themeColors)) {
             addThemeColor(themeColorKey, themeColors[themeColorKey]);
         }
     }
@@ -66,18 +66,18 @@ export const setThemeColors = (themeColors : {[key:string] : ThemeColorPalette})
     themeColorsKeys = Object.keys(THEME_COLORS);
 }
 
-let COMPONENTS_STYLE_BUILDER: { [key : string]: (config: StyleConfig) => AppStyles } = {};
-let componentsBuilderKeys : string[] = [];
+let COMPONENTS_STYLE_BUILDER: { [key: string]: (config: StyleConfig) => AppStyles } = {};
+let componentsBuilderKeys: string[] = [];
 
-export const addStyleBuilder = (styleClass: string, builder : (config: StyleConfig) => AppStyles) => {
+export const addStyleBuilder = (styleClass: string, builder: (config: StyleConfig) => AppStyles) => {
     COMPONENTS_STYLE_BUILDER[styleClass] = builder;
     componentsBuilderKeys.push(styleClass);
 };
 
-export const setStyleBuilders = (builders : { [key : string]: (config: StyleConfig) => AppStyles }) => {
+export const setStyleBuilders = (builders: { [key: string]: (config: StyleConfig) => AppStyles }) => {
     if (componentsBuilderKeys.length > 0) {
         console.warn("theme colors map already registered. Use addThemeColor to add theme color");
-        for(let styleClass of Object.keys(builders)) {
+        for (let styleClass of Object.keys(builders)) {
             addStyleBuilder(styleClass, builders[styleClass]);
         }
     } else {
@@ -89,7 +89,7 @@ export const setStyleBuilders = (builders : { [key : string]: (config: StyleConf
 
 
 export const buildAppStyleSheet = (colorTheme: string = "lightTheme", fontSize: string = "normal") => {
-    let tempStylesSheet : AppStylesSheet = {};
+    let tempStylesSheet: AppStylesSheet = {};
     const styleConfig = {
         themeColorPalette: THEME_COLORS[colorTheme],
         fontSize: FONT_SIZES[fontSize]
@@ -103,7 +103,7 @@ export const buildAppStyleSheet = (colorTheme: string = "lightTheme", fontSize: 
 
 
 //Merge custom Style with Mandatory Styles
-export const mergeAppStyles = (mandatoryStyleObj: AppStyles, styleObj: AppStyles) : AppStyles => {
+export const mergeAppStyles = (mandatoryStyleObj: AppStyles, styleObj: AppStyles): AppStyles => {
     if (!styleObj) {
         return mandatoryStyleObj;
     }
@@ -115,10 +115,10 @@ export const mergeAppStyles = (mandatoryStyleObj: AppStyles, styleObj: AppStyles
     return styleResult;
 };
 
-export const concatStyleClass = (className : string, classNames ?: string | string[]) : string[] => {
+export const concatStyleClass = (className: string, classNames?: string | string[]): string[] => {
     if (!classNames) {
         return [className];
-    } else if (typeof classNames === 'string'){
+    } else if (typeof classNames === 'string') {
         return [className, classNames];
     } else {
         return [className, ...classNames];
