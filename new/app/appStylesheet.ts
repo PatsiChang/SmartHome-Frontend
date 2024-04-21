@@ -107,6 +107,7 @@ setStyleBuilders({
     baseLink: (config) => {
         return {
             color: config.themeColorPalette.secondaryTextColor,
+            backgroundColor: "none",
             textDecorationLine: "underline"
         };
     },
