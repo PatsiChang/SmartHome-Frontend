@@ -1,9 +1,8 @@
 
-import {concatStyleClass} from "@/lib/appStyleApi";
-import BaseContainer, {BaseContainerProps} from "@/components/basic/layout/BaseContainer";
+import { BaseContainerProps } from "@/components/basic/layout/BaseContainer";
 import BaseBlock from "@/components/basic/layout/BaseBlock";
 
-interface ScrollableContainerProps extends BaseContainerProps {}
+interface ScrollableContainerProps extends BaseContainerProps { }
 
 const ScrollableContainer = ({ children, styleClass, ...props }: ScrollableContainerProps) => {
     return (
