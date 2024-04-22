@@ -10,11 +10,18 @@ interface BasicFormProps extends PropsWithChildren<FormHTMLAttributes<HTMLFormEl
     submitBtnText?: string,
 }
 
-export const BasicFormContext = createContext(new FormData());
+export const BasicFormContext = createContext({
+    isSubmitting : false,
+    formData : new FormData()
+});
+
 export default function BasicForm({ children, ...props }: BasicFormProps) {
     return (
         <View>
-            <BasicFormContext.Provider value={new FormData()}>
+            <BasicFormContext.Provider value={{
+                isSubmitting : false,
+                formData : new FormData()
+            }}>
                 <BasicFormComponent {...props}>
                     {children}
                 </BasicFormComponent>
@@ -33,7 +40,8 @@ export const validateInput = (input: any, key: string, propValue: any) => {
 
 function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...props }: BasicFormProps) {
     const [errorList, setValidateErrorCode] = useState<string[]>([]);
-    const formData = useContext(BasicFormContext);
+    const formContext = useContext(BasicFormContext);
+    const formData = formContext.formData;
 
     const submitFuc = async (e: BaseSyntheticEvent) => {
         if (onSubmitCallback != null) {

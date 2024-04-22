@@ -10,10 +10,14 @@ import { addStyleBuilder } from "@/lib/appStyleApi";
 import BaseBlock from "@/components/basic/layout/BaseBlock";
 import BasePage from "@/components/basic/layout/BasePage";
 import ScrollableContainer from "@/components/basic/layout/ScrollableContainer";
+import { BaseSyntheticEvent, useRef } from "react";
+import BasicForm from "@/components/basic/form/BasicForm";
+import BaseImagePicker, {BaseFilePickerFunction} from "@/components/basic/buttons/BaseImagePicker";
 import BaseNavBar from "@/components/basic/layout/BaseNavBar";
 
 const LayoutPOC = () => {
     const router = useWrappedRouter();
+    const imagePickerRef = useRef<BaseFilePickerFunction>();
 
     const toggleTheme = () => {
         const currentTheme = getContext<string>(CONTEXT_KEY_CURRENT_THEME);
@@ -25,6 +29,15 @@ const LayoutPOC = () => {
 
         router.replace("/layoutPOC");
     };
+
+    const testUploadRecipeIcon = async (e: BaseSyntheticEvent, formData : FormData) : Promise<string[]> => {
+        try{
+            await imagePickerRef.current?.uploadImage("http://localhost:8080/recipe/addRecipeIcon");
+            return [];
+        } catch (e) {
+            return ["Image upload failed "];
+        }
+    }
 
     return (
         <BasePage>
@@ -71,7 +84,13 @@ const LayoutPOC = () => {
                         </BaseParagraph>
                     </ScrollableContainer>
                 </BaseBlock>
-                <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 2</BaseLargeText></BaseBlock>
+                <BaseBlock styleClass="customFixedBlock">
+                    <BasicForm onSubmitCallback={testUploadRecipeIcon} submitBtnText="Upload!" >
+                        <BaseImagePicker ref={imagePickerRef}
+                                         imageIdFormInputName={"imgURL"}
+                                         imageUploadFormInputName={"recipeIcon"} uploadMethod={"PUT"}/>
+                    </BasicForm>
+                </BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 3</BaseLargeText></BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 4</BaseLargeText></BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 5</BaseLargeText></BaseBlock>

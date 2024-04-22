@@ -1,9 +1,4 @@
-// TODO 1. extract those function and styling structure to common place, ie FONT_SIZE, THEME_COLORS, COMPONENTS_STYLE_BUILDER                                                                                                               0
-// TODO 2. stylesheet should use setter to set styles
-// TODO 3. stylesheet should be loaded when app is starting up
-// TODO 4. test performance
-
-import { setFontSizes, setStyleBuilders, setThemeColors } from "@/lib/appStyleApi";
+import { setFontSizes, setStyleBuilders, setThemeColors} from "@/lib/appStyleApi";
 
 setFontSizes({
     small: {
@@ -112,6 +107,7 @@ setStyleBuilders({
     baseLink: (config) => {
         return {
             color: config.themeColorPalette.secondaryTextColor,
+            backgroundColor: "none",
             textDecorationLine: "underline"
         };
     },
@@ -136,6 +132,12 @@ setStyleBuilders({
     basePage: (config) => {
         return {
             backgroundColor: config.themeColorPalette.primaryBackground,
+        }
+    },
+    baseImagePicker:  (config) => {
+        return {
+            width: 200,
+            height: 150
         }
     },
     pageHeaderRow: (config) => {

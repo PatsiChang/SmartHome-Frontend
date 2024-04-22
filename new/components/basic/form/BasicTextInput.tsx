@@ -13,7 +13,8 @@ interface SimpleInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function BasicTextInput(props: SimpleInputProps) {
     const showLabel = typeof props.label !== 'undefined' && props.label.trim().length > 0;
-    const formData = useContext(BasicFormContext);
+    const formContext = useContext(BasicFormContext);
+    const formData = formContext.formData
 
     const onChangeHandler = (value: string) => {
         if (formData != null) {
