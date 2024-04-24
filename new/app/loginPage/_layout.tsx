@@ -4,7 +4,7 @@ import LoginPage from "@/app/loginPage/index";
 
 export default function LoginPageLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <BasePage>
+        <BasePage styleClass={"justifyContent_spaceEvenly"} scrollable={false}>
             <LoginPage />
         </BasePage>
     );

@@ -1,11 +1,20 @@
-import { Text } from 'react-native';
+import BaseRow from '../layout/BaseRow';
+import BaseContainer from '../layout/BaseContainer';
+import { BaseMiddleText } from '../layout/BaseText';
 
 interface ErrorCodeProps {
     errorList: string[],
 }
 const ErrorCode = ({ errorList }: ErrorCodeProps) => {
     return (
-        <Text>{errorList.join("\n")}</Text>
+        <BaseContainer>
+            {errorList.map((error, index) =>
+                <BaseRow key={index} styleClass={"justifyContent_spaceEvenly"}>
+                    <BaseMiddleText>{error}</BaseMiddleText>
+                </BaseRow>
+            )}
+        </BaseContainer>
+
     )
 }
 

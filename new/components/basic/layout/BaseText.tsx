@@ -1,13 +1,13 @@
 import { useStyle } from '@/hooks/styles/useStyle';
 import { PropsWithChildren } from 'react';
 import { Text } from 'react-native';
-import {concatStyleClass} from "@/lib/appStyleApi";
-import {AppStyleClassProp} from "@/components/basic/style/StyleProvider";
+import { concatStyleClass } from "@/lib/appStyleApi";
+import { AppStyleClassProp } from "@/components/basic/style/StyleProvider";
 
-interface BaseTextProps extends PropsWithChildren<{}>, AppStyleClassProp {}
+interface BaseTextProps extends PropsWithChildren<{}>, AppStyleClassProp { }
 
 const BaseText = ({ styleClass, children, ...props }: BaseTextProps) => {
-    const style = useStyle(...concatStyleClass("primaryText", styleClass));
+    const style = useStyle(...concatStyleClass("baseText", styleClass));
     return (
         <Text style={style}>
             {children}

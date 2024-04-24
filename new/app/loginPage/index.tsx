@@ -5,6 +5,10 @@ import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { useWrappedSearchParam } from "@/hooks/navigation/useWrappedSearchParam";
 import BasicTextInput from "@/components/basic/form/BasicTextInput";
 import React from "react";
+import { BaseLargeText } from "@/components/basic/layout/BaseText";
+import { addStyleBuilder } from "@/lib/appStyleApi";
+import BaseRow from "@/components/basic/layout/BaseRow";
+import BaseColumn from "@/components/basic/layout/BaseColumn";
 
 export default function LoginPage() {
     const searchParams = useWrappedSearchParam();
@@ -31,17 +35,27 @@ export default function LoginPage() {
     }
 
     return (
-        <>
-            <BasicForm onSubmitCallback={submitFunc} submitBtnText="login" >
-                <BasicTextInput name="userId"
-                    label="User Id"
-                    type="username"
-                    required />
-                <BasicTextInput name="password"
-                    label="Password"
-                    type="password"
-                    required />
-            </BasicForm>
-        </>
+        <BaseRow>
+            <BaseColumn>
+                <BasicForm styleClass="justifyContent_center" onSubmitCallback={submitFunc} submitBtnText="login" >
+                    <BasicTextInput name="userId" styleClass="justifyContent_center"
+                        label="User Id"
+                        type="username"
+                        required />
+
+                    <BasicTextInput styleClass="justifyContent_center"
+                        label="Password"
+                        type="password"
+                        required />
+                </BasicForm>
+            </BaseColumn>
+        </BaseRow>
     );
+
 }
+
+addStyleBuilder("customLoginRow", (config) => {
+    return {
+        justifyContent: "center",
+    };
+});

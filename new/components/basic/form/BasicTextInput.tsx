@@ -1,6 +1,12 @@
 import { InputHTMLAttributes, useContext } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { Text, TextInput, StyleSheet, TextStyle } from "react-native";
 import { BasicFormContext } from "./BasicForm";
+import { concatStyleClass } from "@/lib/appStyleApi";
+import BaseBlock from "../layout/BaseBlock";
+import { useStyle } from "@/hooks/styles/useStyle";
+import BaseContainer from "../layout/BaseContainer";
+import BaseRow from "../layout/BaseRow";
+import { BaseLargeText } from "../layout/BaseText";
 
 interface SimpleInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string,
@@ -8,10 +14,11 @@ interface SimpleInputProps extends InputHTMLAttributes<HTMLInputElement> {
     pattern?: string,
     max?: number,
     min?: number,
-    autoComplete?: string
+    autoComplete?: string,
+    styleClass?: string,
 }
 
-export default function BasicTextInput(props: SimpleInputProps) {
+export default function BasicTextInput({ styleClass, ...props }: SimpleInputProps) {
     const showLabel = typeof props.label !== 'undefined' && props.label.trim().length > 0;
     const formContext = useContext(BasicFormContext);
     const formData = formContext.formData
@@ -21,19 +28,20 @@ export default function BasicTextInput(props: SimpleInputProps) {
             formData.set(props.name as string, value);
         }
     }
+    const style = useStyle(...concatStyleClass("baseTextInput", styleClass));
     return (
-        <View>
-            {showLabel ? (<Text aria-label={"Label for " + props.label}>{props.label}</Text>) : null}
-            <TextInput id={"input_" + props.name} style={styles.baseTextInput}
-                onChangeText={onChangeHandler} />
-        </View>
+        <BaseRow >
+            <BaseContainer>
+                <BaseRow styleClass={styleClass}>
+                    <BaseLargeText>
+                        {showLabel ? (<Text aria-label={"Label for " + props.label}>{props.label}</Text>) : null}
+                    </BaseLargeText>
+                </BaseRow>
+                <BaseRow styleClass={styleClass}>
+                    <TextInput id={"input_" + props.name} style={style}
+                        onChangeText={onChangeHandler} />
+                </BaseRow>
+            </BaseContainer>
+        </BaseRow>
     );
 }
-
-const styles = StyleSheet.create({
-    baseTextInput: {
-        borderStyle: "solid",
-        borderColor: "black",
-        borderWidth: 1
-    }
-});
