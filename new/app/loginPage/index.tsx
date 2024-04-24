@@ -37,13 +37,13 @@ export default function LoginPage() {
     return (
         <BaseRow>
             <BaseColumn>
-                <BasicForm styleClass="justifyContent_center" onSubmitCallback={submitFunc} submitBtnText="login" >
+                <BasicForm onSubmitCallback={submitFunc} submitBtnText="login" >
                     <BasicTextInput name="userId" styleClass="justifyContent_center"
                         label="User Id"
                         type="username"
                         required />
 
-                    <BasicTextInput styleClass="justifyContent_center"
+                    <BasicTextInput name="password" styleClass="justifyContent_center"
                         label="Password"
                         type="password"
                         required />

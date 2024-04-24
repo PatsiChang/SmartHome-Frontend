@@ -10,7 +10,6 @@ import BaseRow from "../layout/BaseRow";
 interface BasicFormProps extends PropsWithChildren<FormHTMLAttributes<HTMLFormElement>> {
     onSubmitCallback?: (e: BaseSyntheticEvent, formData: FormData) => Promise<string[]>,
     submitBtnText?: string,
-    styleClass?: string,
 }
 
 export const BasicFormContext = createContext({
@@ -18,14 +17,14 @@ export const BasicFormContext = createContext({
     formData: new FormData()
 });
 
-export default function BasicForm({ children, styleClass, ...props }: BasicFormProps) {
+export default function BasicForm({ children, ...props }: BasicFormProps) {
     return (
         <View>
             <BasicFormContext.Provider value={{
                 isSubmitting: false,
                 formData: new FormData()
             }}>
-                <BasicFormComponent styleClass={styleClass} {...props}>
+                <BasicFormComponent {...props}>
                     {children}
                 </BasicFormComponent>
             </BasicFormContext.Provider>
@@ -41,7 +40,7 @@ export const validateInput = (input: any, key: string, propValue: any) => {
     }
 }
 
-function BasicFormComponent({ onSubmitCallback, children, submitBtnText, styleClass, ...props }: BasicFormProps) {
+function BasicFormComponent({ onSubmitCallback, children, submitBtnText, ...props }: BasicFormProps) {
     const [errorList, setErrorList] = useState<string[]>([]);
     const formContext = useContext(BasicFormContext);
     const formData = formContext.formData;
@@ -84,13 +83,12 @@ function BasicFormComponent({ onSubmitCallback, children, submitBtnText, styleCl
     return (
         <BaseContainer>
             {children}
-            <BaseRow styleClass={styleClass}>
+            <BaseRow styleClass="justifyContent_center">
                 <BaseButton onPress={submitFuc} title={submitBtnText != null ? submitBtnText : "Submit"}></BaseButton>
             </BaseRow>
-            <BaseRow styleClass={styleClass}>
+            <BaseRow styleClass="justifyContent_center">
                 <ErrorCode errorList={errorList}></ErrorCode>
             </BaseRow>
-
         </BaseContainer>
     )
 }

@@ -102,7 +102,6 @@ setStyleBuilders({
         return {
             backgroundColor: config.themeColorPalette.secondaryBackground,
             padding: 7,
-            justifyContent: "center",
         };
     },
     baseLink: (config) => {
@@ -153,10 +152,10 @@ setStyleBuilders({
         return {
             backgroundColor: config.themeColorPalette.secondaryBackground,
             color: config.themeColorPalette.primaryTextColor,
-            borderColor: 'white',     // Set border color to white
-            borderWidth: 1,           // Add a border
+            borderColor: config.themeColorPalette.primaryTextColor,
+            borderWidth: 1,
             borderRadius: 5,
-            caretColor: 'black'
+            caretColor: config.themeColorPalette.primaryTextColor,
         }
     },
     baseText: (config) => {

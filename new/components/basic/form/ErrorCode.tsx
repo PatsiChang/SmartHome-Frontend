@@ -9,7 +9,7 @@ const ErrorCode = ({ errorList }: ErrorCodeProps) => {
     return (
         <BaseContainer>
             {errorList.map((error, index) =>
-                <BaseRow key={index} styleClass={"justifyContent_spaceEvenly"}>
+                <BaseRow key={index} styleClass={"justifyContent_center"}>
                     <BaseMiddleText>{error}</BaseMiddleText>
                 </BaseRow>
             )}

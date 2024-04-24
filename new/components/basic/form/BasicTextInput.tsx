@@ -2,7 +2,6 @@ import { InputHTMLAttributes, useContext } from "react";
 import { Text, TextInput, StyleSheet, TextStyle } from "react-native";
 import { BasicFormContext } from "./BasicForm";
 import { concatStyleClass } from "@/lib/appStyleApi";
-import BaseBlock from "../layout/BaseBlock";
 import { useStyle } from "@/hooks/styles/useStyle";
 import BaseContainer from "../layout/BaseContainer";
 import BaseRow from "../layout/BaseRow";
