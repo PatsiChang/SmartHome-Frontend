@@ -1,4 +1,4 @@
-import { setFontSizes, setStyleBuilders, setThemeColors} from "@/lib/appStyleApi";
+import { setFontSizes, setStyleBuilders, setThemeColors } from "@/lib/appStyleApi";
 
 setFontSizes({
     small: {
@@ -101,7 +101,7 @@ setStyleBuilders({
     baseButton: (config) => {
         return {
             backgroundColor: config.themeColorPalette.secondaryBackground,
-            padding: 7
+            padding: 7,
         };
     },
     baseLink: (config) => {
@@ -131,10 +131,11 @@ setStyleBuilders({
     },
     basePage: (config) => {
         return {
+            flex: 1,
             backgroundColor: config.themeColorPalette.primaryBackground,
         }
     },
-    baseImagePicker:  (config) => {
+    baseImagePicker: (config) => {
         return {
             width: 200,
             height: 150
@@ -145,6 +146,37 @@ setStyleBuilders({
             padding: 0,
             gap: 0,
             margin: 0
+        }
+    },
+    baseTextInput: (config) => {
+        return {
+            backgroundColor: config.themeColorPalette.secondaryBackground,
+            color: config.themeColorPalette.primaryTextColor,
+            borderColor: config.themeColorPalette.primaryTextColor,
+            borderWidth: 1,
+            borderRadius: 5,
+            caretColor: config.themeColorPalette.primaryTextColor,
+        }
+    },
+    baseText: (config) => {
+        return {
+            color: config.themeColorPalette.primaryTextColor,
+        }
+    },
+    baseForm: (config) => {
+        return {
+            backgroundColor: config.themeColorPalette.secondaryBackground,
+            color: config.themeColorPalette.primaryTextColor,
+        }
+    },
+    justifyContent_spaceEvenly: (config) => {
+        return {
+            justifyContent: "space-evenly"
+        }
+    },
+    justifyContent_center: (config) => {
+        return {
+            justifyContent: "center"
         }
     },
 });
