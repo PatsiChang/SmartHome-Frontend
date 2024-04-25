@@ -14,6 +14,7 @@ import { BaseSyntheticEvent, useRef } from "react";
 import BasicForm from "@/components/basic/form/BasicForm";
 import BaseImagePicker, {BaseFilePickerFunction} from "@/components/basic/buttons/BaseImagePicker";
 import BaseNavBar from "@/components/basic/layout/BaseNavBar";
+import BasicTextInput from "@/components/basic/form/BasicTextInput";
 
 const LayoutPOC = () => {
     const router = useWrappedRouter();
@@ -98,6 +99,21 @@ const LayoutPOC = () => {
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 7</BaseLargeText></BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 8</BaseLargeText></BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 9</BaseLargeText></BaseBlock>
+            </BaseRow>
+            <BaseRow>
+                <BasicForm>
+                    <BaseRow>
+                        <BaseColumn>
+                            <BasicTextInput name="column1" label="Column 1" required/>
+                        </BaseColumn>
+                        <BaseColumn>
+                            <BasicTextInput name="column2" label="Column 2 (min=2)" min={2}/>
+                        </BaseColumn>
+                    </BaseRow>
+                    <BaseRow>
+                        <BasicTextInput name="row1" label="Row1" required/>
+                    </BaseRow>
+                </BasicForm>
             </BaseRow>
         </BasePage>
 

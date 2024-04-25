@@ -39,3 +39,19 @@ export const validationsMap: ValidationsMap = {
     }
 };
 
+export function getValidationRulesFromProp({name, label, ...propsObject}: any): ((inputVal: any) => boolean | string)[] {
+    const rules = [] as ((inputVal: any) => boolean | string)[];
+    Object.keys(propsObject).forEach((propName) => {
+        if (propName in validationsMap) {
+            rules.push((inputVal: any) => {
+                const result = validationsMap[propName](inputVal, propsObject[propName])
+                if (result !== true) {
+                    return `The ${label} ${result}`
+                } else {
+                    return result;
+                }
+            })
+        }
+    })
+    return rules;
+}
