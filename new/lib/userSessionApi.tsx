@@ -22,7 +22,7 @@ export async function loginWithUidAndPassword(uid: string, password: string): Pr
     // await new Promise((r) => setTimeout(r, 1000));
     const person: UserLogin = {
         userId: uid,
-        logInPasswordHashed: password,
+        password: password,
     }
     const response = await doFetch("http://localhost:8081/login", "POST", person);
     if (typeof response == "string") {
