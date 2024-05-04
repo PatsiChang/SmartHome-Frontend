@@ -12,7 +12,8 @@ export type ThemeColorPalette = {
     primaryColor: string,
     secondaryColor: string,
     primaryTextColor: string,
-    secondaryTextColor: string
+    secondaryTextColor: string,
+    errorColor: string
 }
 
 export type FontSizes = {

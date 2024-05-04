@@ -46,7 +46,7 @@ const LayoutPOC = () => {
                 <BaseButton onPress={toggleTheme} title="Toogle Theme"></BaseButton>
             </BaseRow>
             <BaseNavBar pages={["Home", "Feeds", "AddRecipe"]} type="menuBar" platform="mobile"></BaseNavBar>
-            <BaseRow>
+            <BaseRow styleClass="noPadding">
                 <BaseColumn styleClass="customColumn">
                     <BaseLargeText>Column 1</BaseLargeText>
                     <BaseParagraph>
@@ -102,7 +102,7 @@ const LayoutPOC = () => {
             </BaseRow>
             <BaseRow>
                 <BasicForm>
-                    <BaseRow>
+                    <BaseRow styleClass="noPadding">
                         <BaseColumn>
                             <BasicTextInput name="column1" label="Column 1" required/>
                         </BaseColumn>

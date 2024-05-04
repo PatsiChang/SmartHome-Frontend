@@ -36,4 +36,12 @@ const BaseLargeText = ({ children, styleClass }: BaseTextProps) => {
     )
 }
 
-export { BaseText, BaseParagraph, BaseMiddleText, BaseLargeText };
+const BaseHintsText = ({ children, styleClass }: BaseTextProps) => {
+    return (
+        <BaseText styleClass={concatStyleClass("hintsText", styleClass)}>
+            {children}
+        </BaseText>
+    )
+}
+
+export { BaseText, BaseParagraph, BaseMiddleText, BaseLargeText, BaseHintsText };

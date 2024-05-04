@@ -1,21 +1,17 @@
 import BaseRow from '../layout/BaseRow';
 import BaseContainer from '../layout/BaseContainer';
-import { BaseMiddleText } from '../layout/BaseText';
+import { BaseHintsText } from '../layout/BaseText';
 
 interface ErrorCodeProps {
     errorList: string[],
 }
-const ErrorCode = ({ errorList }: ErrorCodeProps) => {
-    return (
-        <BaseContainer>
-            {errorList.map((error, index) =>
-                <BaseRow key={index} styleClass={"justifyContent_center"}>
-                    <BaseMiddleText>{error}</BaseMiddleText>
-                </BaseRow>
-            )}
-        </BaseContainer>
 
-    )
+const ErrorCode = ({errorList}: ErrorCodeProps) => {
+    const errorMsg = errorList.length > 0 ? errorList[0] : " ";
+
+    return (
+        <BaseHintsText styleClass={"errorText"}>{errorMsg}</BaseHintsText>
+    );
 }
 
 export default ErrorCode;
