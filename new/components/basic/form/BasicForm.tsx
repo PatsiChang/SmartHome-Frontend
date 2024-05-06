@@ -3,7 +3,7 @@ import React, {
     createContext,
     FormHTMLAttributes,
     PropsWithChildren,
-    useContext,
+    useContext, useEffect,
     useState
 } from "react";
 import { View } from "react-native";
@@ -19,57 +19,72 @@ interface BasicFormProps extends PropsWithChildren<FormHTMLAttributes<HTMLFormEl
 }
 
 export type BasicFormContextType = {
-    isSubmitting: boolean,
-    formData: FormData,
-    validationRules: { [key: string]: ((input: any, param?: number) => boolean | string)[] }
+    formContext : {
+        isSubmitting: boolean,
+        formData: FormData,
+        validationRules: { [key: string]: ((input: any, param?: number) => boolean | string)[] },
+        errMsg: { [key: string]: string[] }
+    },
+    setFormContext ?: React.Dispatch<React.SetStateAction<BasicFormContextType>>
 }
 
 function createFormContext(): BasicFormContextType {
     return {
-        isSubmitting: false,
-        formData: new FormData(),
-        validationRules: {}
+        formContext: {
+            isSubmitting: false,
+            formData: new FormData(),
+            validationRules: {},
+            errMsg: {}
+        }
     };
 }
 
 export const BasicFormContext = createContext(createFormContext());
 
-export function registerInput(formContext: BasicFormContextType, props: any) {
+export function useInput(props: any) {
+    const formContext = useContext(BasicFormContext).formContext;
     if (props && props.name && formContext && formContext.validationRules) {
         formContext.validationRules[props.name] = getValidationRulesFromProp(props);
     }
 }
 
 export default function BasicForm({children, ...props}: BasicFormProps) {
+    const [formContext, setFormContext] = useState(createFormContext());
+    formContext.setFormContext = setFormContext;
     return (
-        <View>
-            <BasicFormContext.Provider value={createFormContext()}>
+        <BaseContainer>
+            <BasicFormContext.Provider value={formContext}>
                 <BasicFormComponent {...props}>
                     {children}
                 </BasicFormComponent>
             </BasicFormContext.Provider>
-        </View>
+        </BaseContainer>
     )
 }
 
 function BasicFormComponent({onSubmitCallback, children, submitBtnText, ...props}: BasicFormProps) {
     const [errorList, setErrorList] = useState<string[]>([]);
-    const formContext = useContext(BasicFormContext);
+    const basicFormContext = useContext(BasicFormContext)
+    const formContext = basicFormContext.formContext;
     const formData = formContext.formData;
 
     const submitFuc = async (e: BaseSyntheticEvent) => {
         const errListTmp: string[] = [];
         setErrorList([]);
+        formContext.errMsg = {};
         Object.keys(formContext.validationRules).forEach(inputName => {
             console.log("Validating input ", inputName);
             const inputFieldRules = formContext.validationRules[inputName];
             if (inputFieldRules) {
+                formContext.errMsg[inputName] = [];
                 inputFieldRules.forEach(validationRule => {
                     const validationRes = validationRule(formData.get(inputName));
                     if (validationRes !== true) {
-                        errListTmp.push(validationRes as string);
+                        const errMsg = validationRes as string;
+                        formContext.errMsg[inputName].push(errMsg);
+                        errListTmp.push(errMsg);
                     }
-                })
+                });
             } else {
                 console.error("Validation rules not found for ", inputName);
             }
@@ -82,9 +97,10 @@ function BasicFormComponent({onSubmitCallback, children, submitBtnText, ...props
                     setErrorList(errors)
                 }
             }
-        } else {
-            console.log("!!!!!!", errListTmp);
-            setErrorList(errListTmp)
+        }
+
+        if (basicFormContext.setFormContext) {
+            basicFormContext.setFormContext({formContext: formContext});
         }
     };
 

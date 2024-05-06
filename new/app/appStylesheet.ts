@@ -29,7 +29,10 @@ export const COLORS = {
     delicateUmber: "#f0ece3",
     naturalLinen: "#DFD3C3",
     smokyBlue: "#596E79",
-    nomadicDesert: "#C7B198"
+    nomadicDesert: "#C7B198",
+    darkCandyAppleRed: "#a40000",
+    redSalsa: "#fd3a4a",
+    salmonPink: "#ff91a4"
 }
 
 setThemeColors({
@@ -39,7 +42,8 @@ setThemeColors({
         primaryColor: COLORS.willowIII,
         secondaryColor: COLORS.durianWhite,
         primaryTextColor: COLORS.willowIII,
-        secondaryTextColor: COLORS.durianWhite
+        secondaryTextColor: COLORS.durianWhite,
+        errorColor: COLORS.salmonPink
     },
     lightTheme: {
         primaryBackground: COLORS.delicateUmber,
@@ -47,7 +51,8 @@ setThemeColors({
         primaryColor: COLORS.smokyBlue,
         secondaryColor: COLORS.nomadicDesert,
         primaryTextColor: COLORS.smokyBlue,
-        secondaryTextColor: COLORS.nomadicDesert
+        secondaryTextColor: COLORS.nomadicDesert,
+        errorColor: COLORS.redSalsa
     }
 });
 
@@ -158,6 +163,11 @@ setStyleBuilders({
             caretColor: config.themeColorPalette.primaryTextColor,
         }
     },
+    errorBaseTextInput: (config) => {
+        return {
+            borderColor: config.themeColorPalette.errorColor
+        }
+    },
     baseText: (config) => {
         return {
             color: config.themeColorPalette.primaryTextColor,
@@ -177,6 +187,26 @@ setStyleBuilders({
     justifyContent_center: (config) => {
         return {
             justifyContent: "center"
+        }
+    },
+    noPadding : (config) => {
+        return {
+            padding: 0
+        }
+    },
+    noMargin : (config) => {
+        return {
+            margin: 0
+        }
+    },
+    hintsText : (config) => {
+        return {
+            fontSize: config.fontSize.s
+        }
+    },
+    errorText : (config) => {
+        return {
+            color : config.themeColorPalette.errorColor
         }
     },
 });
