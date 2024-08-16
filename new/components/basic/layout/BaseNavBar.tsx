@@ -16,10 +16,10 @@ const BaseNavBar = ({ platform, pages, children, styleClass, type, ...props }: N
             return (
                 <BaseRow styleClass={"baseNavBar"}>
                     {platform == "mobile" && pages.map((page, index) =>
-                        <BaseImg imageName={page}></BaseImg>
+                        <BaseImg key={"baseNavBarImg_" + index} imageName={page}></BaseImg>
                     )}
                     {pages.map((page, index) =>
-                        <BaseMiddleText key={index}>{page}</BaseMiddleText>
+                        <BaseMiddleText key={"baseNavBarText_" + index}>{page}</BaseMiddleText>
                     )}
                 </BaseRow>
             );
@@ -28,10 +28,10 @@ const BaseNavBar = ({ platform, pages, children, styleClass, type, ...props }: N
                 <BaseContainer>
                     <BaseRow styleClass={"baseMenuBar"}>
                         {platform == "mobile" && pages.map((page, index) =>
-                            <BaseImg imageName={page}></BaseImg>
+                            <BaseImg key={"baseMenuBarImg_" + index} imageName={page}></BaseImg>
                         )}
                         {platform == "web" && pages.map((page, index) =>
-                            <BaseMiddleText key={index}>{page}</BaseMiddleText>
+                            <BaseMiddleText key={"baseMenuBarText_" + index}>{page}</BaseMiddleText>
                         )}
                     </BaseRow>
                 </BaseContainer>

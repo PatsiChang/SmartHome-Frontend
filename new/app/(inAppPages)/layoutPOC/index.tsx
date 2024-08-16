@@ -15,6 +15,7 @@ import BasicForm from "@/components/basic/form/BasicForm";
 import BaseImagePicker, {BaseFilePickerFunction} from "@/components/basic/buttons/BaseImagePicker";
 import BaseNavBar from "@/components/basic/layout/BaseNavBar";
 import BasicTextInput from "@/components/basic/form/BasicTextInput";
+import BaseItemList, { BaseItemType } from "@/components/basic/layout/BaseItemList";
 
 const LayoutPOC = () => {
     const router = useWrappedRouter();
@@ -115,6 +116,25 @@ const LayoutPOC = () => {
                     </BaseRow>
                 </BasicForm>
             </BaseRow>
+            <BaseRow styleClass={"testItemListRow"}>
+                <BaseItemList styleClass={"testItemList"} displayMode={0} fetchItems={() => {
+                        return new Promise((resolve) => {
+                            resolve([
+                                {id:"0", itemName: "Test Item 1", itemDescription: "This is a test item 1 description", itemImgUri: "AddRecipe", url:"/afterLoginPage"},
+                                {id:"1", itemName: "Test Item 2", itemDescription: "This is a test item 2 description", itemImgUri: "Grocery"},
+                                {id:"2", itemName: "Test Item 3", itemDescription: "This is a test item 3 description. This is a test item 3 description. This is a test item 3 description.", itemImgUri: "Setting", url:"/afterLoginPage"},
+                                {id:"3", itemName: "Test Item 4", itemDescription: "This is a test item 4 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                                {id:"4", itemName: "Test Item 5", itemDescription: "This is a test item 5 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                                {id:"5", itemName: "Test Item 6", itemDescription: "This is a test item 6 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                                {id:"6", itemName: "Test Item 7", itemDescription: "This is a test item 7 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                                {id:"7", itemName: "Test Item 8", itemDescription: "This is a test item 8 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                                {id:"8", itemName: "Test Item 9", itemDescription: "This is a test item 9 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                                {id:"9", itemName: "Test Item 10", itemDescription: "This is a test item 10 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                                {id:"10", itemName: "Test Item 11", itemDescription: "This is a test item 11 description", itemImgUri: "Home", url:"/afterLoginPage"},
+                            ]);
+                        });
+                }} />
+            </BaseRow>
         </BasePage>
 
     )
@@ -146,6 +166,18 @@ addStyleBuilder("customFixedBlock", (config) => {
         margin: 10,
         justifyContent: "center",
         alignContent: "center",
+    };
+});
+
+addStyleBuilder("testItemList", (config) => {
+    return {
+        height: 500
+    };
+});
+addStyleBuilder("testItemListRow", (config) => {
+    return {
+        // marginLeft: '10%',
+        // marginRight: '10%'
     };
 });
 
