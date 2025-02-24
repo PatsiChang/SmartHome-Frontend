@@ -2,3 +2,5 @@
 .DS_Store
 /new/.expo
 new/package-lock.json
+new/test-results
+/new/playwright-report
