@@ -56,3 +56,20 @@ export async function getUserProfile() {
         return response;
     } else throw new Error("Error in get User")
 }
+
+export const signup = async (userId: string, name: string, email: string, password: string): Promise<string[]> => {
+    // await new Promise((r) => setTimeout(r, 1000));
+    const unverifiedPerson = {
+        userId: userId,
+        name: name,
+        email: email,
+        password: password,
+    }
+
+    const response = await doFetch("http://localhost:8081/PersonInfo", "POST", unverifiedPerson);
+    if (Array.isArray(response)) {
+        return response;
+    } else {
+        return [];
+    }
+}

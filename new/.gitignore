@@ -36,3 +36,10 @@ yarn-error.log*
 next-env.d.ts
 
 /.idea
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+./playwright-e2e/tests/patsiTest.spec.ts

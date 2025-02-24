@@ -1,34 +1,35 @@
-import { BaseSyntheticEvent } from "react";
-import * as UserSessionApi from '@/lib/userSessionApi';
 import BasicForm from "@/components/basic/form/BasicForm";
+import BasicTextInput from "@/components/basic/form/BasicTextInput";
+import * as UserSessionApi from '@/lib/userSessionApi';
+import BaseColumn from "@/components/basic/layout/BaseColumn";
+import BaseRow from "@/components/basic/layout/BaseRow";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { useWrappedSearchParam } from "@/hooks/navigation/useWrappedSearchParam";
-import BasicTextInput from "@/components/basic/form/BasicTextInput";
-import React from "react";
-import { BaseLargeText } from "@/components/basic/layout/BaseText";
 import { addStyleBuilder } from "@/lib/appStyleApi";
-import BaseRow from "@/components/basic/layout/BaseRow";
-import BaseColumn from "@/components/basic/layout/BaseColumn";
-import BaseButton from "@/components/basic/buttons/BaseButton";
-import { signupPage } from "../enum/pageURL";
+import { BaseSyntheticEvent } from "react";
+import { loginPage } from "../enum/pageURL";
 
-export default function LoginPage() {
+
+
+const SignupPage = () => {
     const searchParams = useWrappedSearchParam();
     const redirectParam = (searchParams !== null) ? searchParams.redirect as string : "";
     const router = useWrappedRouter();
 
-    console.log('login page: redirect = ' + redirectParam);
     const submitFunc = async (e: BaseSyntheticEvent, formData: FormData) => {
         e.preventDefault();
         const errListTmp: string[] = [];
         try {
-            await UserSessionApi.loginWithUidAndPassword(
+            await UserSessionApi.signup(
                 formData.get("userId") as string,
-                formData.get("password") as string);
+                formData.get("name") as string,
+                formData.get("email") as string,
+                formData.get("password") as string
+            );
             if (redirectParam != null && redirectParam.trim().length > 0) {
                 router.replace(redirectParam);
             } else {
-                router.replace("/");
+                router.replace(loginPage);
             }
             errListTmp.push("");
         } catch (e) {
@@ -37,34 +38,34 @@ export default function LoginPage() {
         return errListTmp;
     }
 
-    const signUp = (e: BaseSyntheticEvent) => {
-        e.preventDefault();
-        const signUpPageUrl = signupPage + "?redirect=" + redirectParam as string;
-        router.replace(signUpPageUrl);
-
-
-    }
-
     return (
         <BaseRow>
             <BaseColumn>
-                <BasicForm onSubmitCallback={submitFunc} submitBtnText="login" >
+                <BasicForm onSubmitCallback={submitFunc} submitBtnText="Sign Up">
                     <BasicTextInput name="userId" styleClass="justifyContent_center"
                         label="User Id"
                         type="username"
                         required />
-
+                    <BasicTextInput name="name" styleClass="justifyContent_center"
+                        label="Name"
+                        type="name"
+                        required />
+                    <BasicTextInput name="email" styleClass="justifyContent_center"
+                        label="Email"
+                        type="email"
+                        required />
                     <BasicTextInput name="password" styleClass="justifyContent_center"
                         label="Password"
                         type="password"
                         required />
                 </BasicForm>
-                <BaseButton title="Sign Up" onPress={signUp}></BaseButton>
             </BaseColumn>
         </BaseRow>
     );
 
 }
+
+export default SignupPage;
 
 addStyleBuilder("customLoginRow", (config) => {
     return {
