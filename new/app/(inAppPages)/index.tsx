@@ -1,8 +1,9 @@
 import BasePage from "@/components/basic/layout/BasePage";
 import { usePopUp } from "@/components/basic/layout/BaseLayout";
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
-import {BaseLargeText, BaseText} from "@/components/basic/layout/BaseText";
+import { BaseLargeText, BaseText } from "@/components/basic/layout/BaseText";
 import BaseButton from "@/components/basic/buttons/BaseButton";
+
 
 export default function Home() {
     const router = useWrappedRouter();
@@ -10,7 +11,8 @@ export default function Home() {
     return (
         <BasePage>
             <BaseLargeText>Welcome home page!</BaseLargeText>
-            <BaseButton title="See something (Require login)" onPress={() => router.push("/afterLoginPage")}></BaseButton>
+            <BaseButton title="See something (Require login)" onPress={() => router.push("/afterLoginPage")}>
+            </BaseButton>
             <PopupButton />
         </BasePage>
     );
@@ -18,5 +20,7 @@ export default function Home() {
 
 function PopupButton() {
     const showPopup = usePopUp();
-    return (<BaseButton title="Show PopUp" onPress={() => showPopup(<BaseText>hi hi hi hi</BaseText>)}></BaseButton>);
+    return (
+        <BaseButton title="Show PopUp" onPress={() => showPopup(<BaseText>hi hi hi hi</BaseText>)}></BaseButton>
+    );
 }

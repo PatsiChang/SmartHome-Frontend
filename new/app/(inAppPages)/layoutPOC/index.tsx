@@ -12,7 +12,7 @@ import BasePage from "@/components/basic/layout/BasePage";
 import ScrollableContainer from "@/components/basic/layout/ScrollableContainer";
 import { BaseSyntheticEvent, useRef } from "react";
 import BasicForm from "@/components/basic/form/BasicForm";
-import BaseImagePicker, {BaseFilePickerFunction} from "@/components/basic/buttons/BaseImagePicker";
+import BaseImagePicker, { BaseFilePickerFunction } from "@/components/basic/buttons/BaseImagePicker";
 import BaseNavBar from "@/components/basic/layout/BaseNavBar";
 import BasicTextInput from "@/components/basic/form/BasicTextInput";
 
@@ -20,19 +20,19 @@ const LayoutPOC = () => {
     const router = useWrappedRouter();
     const imagePickerRef = useRef<BaseFilePickerFunction>();
 
-    const toggleTheme = () => {
-        const currentTheme = getContext<string>(CONTEXT_KEY_CURRENT_THEME);
-        const setTheme = getContext(CONTEXT_KEY_SET_THEME) as (theme: string) => {}
-        setTheme((currentTheme === 'darkTheme') ? 'lightTheme' : 'darkTheme');
-        console.log("Check getGlobalContext", getContext("defaultContext"));
-        console.log("Check setGlobalContext", setContext("firstContext", "firstContext"));
-        console.log("Check getGlobalContext", getContext("firstContext"));
+    // const toggleTheme = () => {
+    //     const currentTheme = getContext<string>(CONTEXT_KEY_CURRENT_THEME);
+    //     const setTheme = getContext(CONTEXT_KEY_SET_THEME) as (theme: string) => {}
+    //     setTheme((currentTheme === 'darkTheme') ? 'lightTheme' : 'darkTheme');
+    //     console.log("Check getGlobalContext", getContext("defaultContext"));
+    //     console.log("Check setGlobalContext", setContext("firstContext", "firstContext"));
+    //     console.log("Check getGlobalContext", getContext("firstContext"));
 
-        router.replace("/layoutPOC");
-    };
+    //     router.replace("/layoutPOC");
+    // };
 
-    const testUploadRecipeIcon = async (e: BaseSyntheticEvent, formData : FormData) : Promise<string[]> => {
-        try{
+    const testUploadRecipeIcon = async (e: BaseSyntheticEvent, formData: FormData): Promise<string[]> => {
+        try {
             await imagePickerRef.current?.uploadImage("http://localhost:8080/recipe/addRecipeIcon");
             return [];
         } catch (e) {
@@ -42,9 +42,9 @@ const LayoutPOC = () => {
 
     return (
         <BasePage>
-            <BaseRow>
+            {/* <BaseRow>
                 <BaseButton onPress={toggleTheme} title="Toogle Theme"></BaseButton>
-            </BaseRow>
+            </BaseRow> */}
             <BaseNavBar pages={["Home", "Feeds", "AddRecipe"]} type="menuBar" platform="mobile"></BaseNavBar>
             <BaseRow styleClass="noPadding">
                 <BaseColumn styleClass="customColumn">
@@ -88,8 +88,8 @@ const LayoutPOC = () => {
                 <BaseBlock styleClass="customFixedBlock">
                     <BasicForm onSubmitCallback={testUploadRecipeIcon} submitBtnText="Upload!" >
                         <BaseImagePicker ref={imagePickerRef}
-                                         imageIdFormInputName={"imgURL"}
-                                         imageUploadFormInputName={"recipeIcon"} uploadMethod={"PUT"}/>
+                            imageIdFormInputName={"imgURL"}
+                            imageUploadFormInputName={"recipeIcon"} uploadMethod={"PUT"} />
                     </BasicForm>
                 </BaseBlock>
                 <BaseBlock styleClass="customFixedBlock"><BaseLargeText>Block 3</BaseLargeText></BaseBlock>
@@ -104,14 +104,14 @@ const LayoutPOC = () => {
                 <BasicForm>
                     <BaseRow styleClass="noPadding">
                         <BaseColumn>
-                            <BasicTextInput name="column1" label="Column 1" required/>
+                            <BasicTextInput name="column1" label="Column 1" required />
                         </BaseColumn>
                         <BaseColumn>
-                            <BasicTextInput name="column2" label="Column 2 (min=2)" min={2}/>
+                            <BasicTextInput name="column2" label="Column 2 (min=2)" min={2} />
                         </BaseColumn>
                     </BaseRow>
                     <BaseRow>
-                        <BasicTextInput name="row1" label="Row1" required/>
+                        <BasicTextInput name="row1" label="Row1" required />
                     </BaseRow>
                 </BasicForm>
             </BaseRow>

@@ -3,8 +3,6 @@ import { View } from "react-native";
 import BaseNavBar from "./BaseNavBar";
 import BaseContainer from "./BaseContainer";
 import BaseButton from "@/components/basic/buttons/BaseButton";
-import { BaseMiddleText } from "@/components/basic/layout/BaseText";
-import { hasLoggedIn } from "@/lib/userSessionApi";
 import PlatformApi from "@/lib/PlatformApi";
 import BaseRow from "./BaseRow";
 
