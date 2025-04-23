@@ -76,6 +76,12 @@ setStyleBuilders({
             flexWrap: "wrap"
         };
     },
+    baseFooter: (config) => {
+        return {
+            flexDirection: 'row',
+            flexShrink: 0
+        };
+    },
     primaryText: (config) => {
         return {
             color: config.themeColorPalette.primaryTextColor
@@ -126,6 +132,7 @@ setStyleBuilders({
         return {
             backgroundColor: config.themeColorPalette.secondaryBackground,
             justifyContent: "space-evenly",
+
         };
     },
     baseImg: (config) => {
@@ -189,24 +196,63 @@ setStyleBuilders({
             justifyContent: "center"
         }
     },
-    noPadding : (config) => {
+    noPadding: (config) => {
         return {
             padding: 0
         }
     },
-    noMargin : (config) => {
+    noMargin: (config) => {
         return {
             margin: 0
         }
     },
-    hintsText : (config) => {
+    hintsText: (config) => {
         return {
             fontSize: config.fontSize.s
         }
     },
-    errorText : (config) => {
+    errorText: (config) => {
         return {
-            color : config.themeColorPalette.errorColor
+            color: config.themeColorPalette.errorColor
         }
     },
+    alignCenterAll: () => {
+        return {
+            alignSelf: "center",
+            textAlign: "center",
+            alignContent: "center"
+        }
+    },
+
+
+    //Should this be kept somewhere else?
+    menubarContainer: () => {
+        return {
+            justifyContent: "flex-end"
+        }
+    },
+    recipeCarousell: (config) => {
+        return {
+            flex: 2,
+            backgroundColor: config.themeColorPalette.secondaryBackground,
+        }
+    },
+    carousellContainer: (config) => {
+        return {
+            borderColor: config.themeColorPalette.primaryColor,
+            borderRadius: 2,
+            borderWidth: 2,
+            margin: 1,
+            backgroundColor: config.themeColorPalette.primaryColor,
+
+        }
+    },
+    recipeDescription: (config) => {
+        return {
+            flex: 1,
+            backgroundColor: config.themeColorPalette.primaryColor,
+
+
+        }
+    }
 });

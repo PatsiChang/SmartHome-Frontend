@@ -1,12 +1,10 @@
-import BaseRow from '../layout/BaseRow';
-import BaseContainer from '../layout/BaseContainer';
 import { BaseHintsText } from '../layout/BaseText';
 
 interface ErrorCodeProps {
     errorList: string[],
 }
 
-const ErrorCode = ({errorList}: ErrorCodeProps) => {
+const ErrorCode = ({ errorList }: ErrorCodeProps) => {
     const errorMsg = errorList.length > 0 ? errorList[0] : " ";
 
     return (

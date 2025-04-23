@@ -3,6 +3,7 @@ import * as UserSessionApi from '@/lib/userSessionApi';
 import { useWrappedRouter } from "@/hooks/navigation/useWrappedRouter";
 import { BaseLargeText } from "@/components/basic/layout/BaseText";
 import BaseButton from "@/components/basic/buttons/BaseButton";
+import React from 'react'
 
 interface AfterLoginPageProps {
     userName: string
