@@ -22,37 +22,44 @@ setFontSizes({
 });
 
 export const COLORS = {
-    licorice: "#1a1110",
-    bistre: "#3c2a21",
-    willowIII: "#e4e5ca",
-    durianWhite: "#e6d0ab",
-    delicateUmber: "#f0ece3",
-    naturalLinen: "#DFD3C3",
-    smokyBlue: "#596E79",
-    nomadicDesert: "#C7B198",
-    darkCandyAppleRed: "#a40000",
-    redSalsa: "#fd3a4a",
-    salmonPink: "#ff91a4"
-}
+    // Neutrals — Pale to Dark
+    snowWhite: "#FAFAFA",         // Paper white
+    cloudMist: "#F2F2F2",         // Background
+    fogGrey: "#E8E8E8",           // Secondary background
+    softAsh: "#DADADA",           // Cards, surfaces
+    mutedStone: "#B0B0B0",        // Borders, subtle text
+    charcoal: "#333333",          // Primary text
+    inkBlack: "#1A1A1A",          // Headers / dark bg
 
+    // Blue accents (yours)
+    blueHighlight: "#A3C5D9",     // Primary action
+    blueMedium: "#6A9FB5",        // Secondary action
+    blueDark: "#2E4A62",          // Links, active text
+    blueSoftBg: "#F0F8FF",        // Subtle background tint
+    blueSubtle: "#D1DCE5",        // Light border or shade
+
+    // Status
+    errorRed: "#E57373",
+    successGreen: "#81C784"
+};
 setThemeColors({
-    darkTheme: {
-        primaryBackground: COLORS.licorice,
-        secondaryBackground: COLORS.bistre,
-        primaryColor: COLORS.willowIII,
-        secondaryColor: COLORS.durianWhite,
-        primaryTextColor: COLORS.willowIII,
-        secondaryTextColor: COLORS.durianWhite,
-        errorColor: COLORS.salmonPink
-    },
     lightTheme: {
-        primaryBackground: COLORS.delicateUmber,
-        secondaryBackground: COLORS.naturalLinen,
-        primaryColor: COLORS.smokyBlue,
-        secondaryColor: COLORS.nomadicDesert,
-        primaryTextColor: COLORS.smokyBlue,
-        secondaryTextColor: COLORS.nomadicDesert,
-        errorColor: COLORS.redSalsa
+        primaryBackground: COLORS.cloudMist,           // Soft neutral
+        secondaryBackground: COLORS.fogGrey,           // Slight contrast
+        primaryColor: COLORS.blueHighlight,            // Highlight
+        secondaryColor: COLORS.blueMedium,             // Buttons etc.
+        primaryTextColor: COLORS.charcoal,             // Main text
+        secondaryTextColor: COLORS.mutedStone,         // Subtle text
+        errorColor: COLORS.errorRed
+    },
+    darkTheme: {
+        primaryBackground: COLORS.inkBlack,            // Base dark
+        secondaryBackground: COLORS.charcoal,          // Card background
+        primaryColor: COLORS.blueHighlight,            // Highlight stays same
+        secondaryColor: COLORS.blueDark,               // For buttons/links
+        primaryTextColor: COLORS.snowWhite,            // Main text
+        secondaryTextColor: COLORS.softAsh,            // Less important text
+        errorColor: COLORS.errorRed
     }
 });
 
@@ -144,7 +151,7 @@ setStyleBuilders({
     basePage: (config) => {
         return {
             flex: 1,
-            backgroundColor: config.themeColorPalette.primaryBackground,
+            backgroundColor: config.themeColorPalette.secondaryBackground,
         }
     },
     baseImagePicker: (config) => {
@@ -218,9 +225,7 @@ setStyleBuilders({
     },
     alignCenterAll: () => {
         return {
-            alignSelf: "center",
-            textAlign: "center",
-            alignContent: "center"
+            flexDirection: 'row', justifyContent: 'center', marginTop: 10
         }
     },
 
@@ -239,11 +244,8 @@ setStyleBuilders({
     },
     carousellContainer: (config) => {
         return {
-            borderColor: config.themeColorPalette.primaryColor,
-            borderRadius: 2,
-            borderWidth: 2,
             margin: 1,
-            backgroundColor: config.themeColorPalette.primaryColor,
+            backgroundColor: config.themeColorPalette.secondaryBackground,
 
         }
     },

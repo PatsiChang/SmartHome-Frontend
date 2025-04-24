@@ -9,18 +9,16 @@ interface SingleCarousellProps extends PropsWithChildren<{}> {
     caption: string[],
     imgList: ImageSourcePropType[],
     styleClass?: string,
-    pressableStyleClass?: string,
 }
 
-const SingleCarousell = ({ caption, imgList, styleClass, pressableStyleClass }: SingleCarousellProps) => {
+const ArrowCarousel = ({ caption, imgList, styleClass }: SingleCarousellProps) => {
+    const [currentSlide, setCurrentSlide] = useState(0);
     const style = concatStyleClass("singleCarousellStyle", styleClass);
 
-
-    const [currentSlide, setCurrentSlide] = useState(0);
     const handleSlides = (config: CarousellHandleType) => {
         if (config === "PREV") {
             setCurrentSlide((currentSlide - 1 + imgList.length) % imgList.length);
-        } else {
+        } else if (config === "NEXT") {
             setCurrentSlide(((currentSlide + 1) % imgList.length));
         }
     }
@@ -45,7 +43,6 @@ const SingleCarousell = ({ caption, imgList, styleClass, pressableStyleClass }: 
                     </BlurView>
                 </View>
             </View>
-
         </BaseRow>
 
     ) : <></>;
@@ -78,5 +75,4 @@ const defaultNextPressable: StyleProp<ViewStyle> = {
 const prevPressableStyle: StyleProp<ViewStyle> = { ...baseDefaultPressable, ...defaultPrevPressable };
 const nextPressableStyle: StyleProp<ViewStyle> = { ...baseDefaultPressable, ...defaultNextPressable };
 
-
-export default SingleCarousell;
+export default ArrowCarousel;
