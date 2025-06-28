@@ -6,17 +6,15 @@ import { DataContext } from './providers';
 
 export type UserLogin = {
   userId: string,
-  logInPasswordHashed: string,
+  password: string,
 }
 const defaultUserLogin = {
   userId: "",
-  logInPasswordHashed: "",
+  password: "",
 }
 const Home = () => {
   //Allow All component to access the same state of the hook
   const dataContext = useContext(DataContext);
-  if (!dataContext) { return null; }
-  const { getRecipeData, postLoginData, getSocialMediaData } = dataContext;
 
   const router = useRouter();
   const [userLogin, setUserLogin] = useState<UserLogin>(defaultUserLogin);
@@ -24,6 +22,8 @@ const Home = () => {
   useEffect(() => {
     setUserLogin(userLogin)
   }), []
+  if (!dataContext) { return null; }
+  const { getRecipeData, postLoginData, getSocialMediaData } = dataContext;
 
   const handleUserIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserLogin(prevState => {
@@ -37,7 +37,7 @@ const Home = () => {
     setUserLogin(prevState => {
       return {
         ...prevState,
-        logInPasswordHashed: e.target.value,
+        password: e.target.value,
       }
     })
   };
@@ -73,8 +73,8 @@ const Home = () => {
             <label htmlFor="userId">Email address</label>
           </div>
           <div className="form-floating mb-3" style={{ margin: "0% 10% 0% 10%" }}>
-            <input type="password" className="form-control" id="logInPasswordHashed" name="logInPasswordHashed"
-              placeholder="Password" onChange={handlePasswordChange} value={userLogin.logInPasswordHashed} />
+            <input type="password" className="form-control" id="password" name="password"
+              placeholder="Password" onChange={handlePasswordChange} value={userLogin.password} />
             <label htmlFor="passwordHashed">Password</label>
           </div>
           <div className="logInBtns">

@@ -20,17 +20,6 @@ const LayoutPOC = () => {
     const router = useWrappedRouter();
     const imagePickerRef = useRef<BaseFilePickerFunction>();
 
-    // const toggleTheme = () => {
-    //     const currentTheme = getContext<string>(CONTEXT_KEY_CURRENT_THEME);
-    //     const setTheme = getContext(CONTEXT_KEY_SET_THEME) as (theme: string) => {}
-    //     setTheme((currentTheme === 'darkTheme') ? 'lightTheme' : 'darkTheme');
-    //     console.log("Check getGlobalContext", getContext("defaultContext"));
-    //     console.log("Check setGlobalContext", setContext("firstContext", "firstContext"));
-    //     console.log("Check getGlobalContext", getContext("firstContext"));
-
-    //     router.replace("/layoutPOC");
-    // };
-
     const testUploadRecipeIcon = async (e: BaseSyntheticEvent, formData: FormData): Promise<string[]> => {
         try {
             await imagePickerRef.current?.uploadImage("http://localhost:8080/recipe/addRecipeIcon");
@@ -42,9 +31,6 @@ const LayoutPOC = () => {
 
     return (
         <BasePage>
-            {/* <BaseRow>
-                <BaseButton onPress={toggleTheme} title="Toogle Theme"></BaseButton>
-            </BaseRow> */}
             <BaseNavBar pages={["Home", "Feeds", "AddRecipe"]} type="menuBar" platform="mobile"></BaseNavBar>
             <BaseRow styleClass="noPadding">
                 <BaseColumn styleClass="customColumn">

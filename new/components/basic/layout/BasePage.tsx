@@ -27,7 +27,7 @@ export default function BasePage({ requireLogin, fetchData, children, styleClass
     //Do the below after Page OnMount
     useEffect(() => {
         if (shouldRedirectToLoginPage) {
-            const delayPromise = new Promise(resolve => setTimeout(resolve, 5000)); // Set delay for 10 seconds
+            const delayPromise = new Promise(resolve => setTimeout(resolve, 1000)); // Set delay for 10 seconds
             delayPromise.then(() => router.replace("/loginPage?redirect=" + currentPathName))
         } else {
             if (needToFetchData && isLoading) {

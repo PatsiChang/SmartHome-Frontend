@@ -7,7 +7,7 @@ const emptyPerson = {
     userId: "",
     name: "",
     email: "",
-    logInPasswordHashed: "",
+    password: "",
 }
 
 const Page = () => {
@@ -41,7 +41,7 @@ const Page = () => {
     const handlePersonlogInPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
         setPerson({
             ...person,
-            logInPasswordHashed: e.target.value,
+            password: e.target.value,
         })
     };
 
@@ -70,8 +70,8 @@ const Page = () => {
                 </div>
                 <div className="form-floating mb-3" style={{ margin: "0% 10% 0% 10%" }}>
                     <input type="text" className="form-control" id="logInPassword" name="logInPassword"
-                       onChange={handlePersonlogInPasswordChange} 
-                       value={person.logInPasswordHashed}/>
+                        onChange={handlePersonlogInPasswordChange}
+                        value={person.password} />
                     <label htmlFor="logInPassword">Name:</label>
                 </div>
                 <div className="logInBtns">
@@ -80,7 +80,7 @@ const Page = () => {
             </form>
         </div>
 
-   
+
     )
 }
 
