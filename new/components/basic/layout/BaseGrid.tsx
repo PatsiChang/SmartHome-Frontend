@@ -1,7 +1,8 @@
 import { screenSizeConfig } from "@/app/enum/screenSize";
-import { currentDevice } from "@/lib/DeviceDimensionApi";
-import { ImageSourcePropType, Image, StyleProp, ImageStyle } from "react-native";
+import { currentDevice, screenWidth } from "@/lib/DeviceDimensionApi";
+import { ImageSourcePropType, Image, StyleProp, ImageStyle, FlatList } from "react-native";
 import BaseContainer from "./BaseContainer";
+import BaseRow from "./BaseRow";
 
 type BaseGridProps = {
     imageList: ImageSourcePropType[];
@@ -9,13 +10,28 @@ type BaseGridProps = {
 
 const BaseGrid: React.FC<BaseGridProps> = ({ imageList }) => {
     const { grid } = screenSizeConfig[currentDevice];
-    const imageWidth = `${100 / grid}%`;
+
+    const renderItem = ({ item }: { item: ImageSourcePropType }) => (
+        <Image source={item} 
+            style={{
+                width: screenWidth / (grid+1),
+                height: screenWidth / (grid+1),
+                margin: 2,
+            }} 
+        resizeMode="cover" />
+    );
 
     return (
-        <BaseContainer>
-            {imageList.map((src, index) => (
-                <Image source={src} key={index} style={[imageStyle]} />
-            ))}
+          <BaseContainer>
+            <BaseRow styleClass={['alignCenterAll', 'justifyCenterAll']}>
+                <FlatList
+                    data={imageList}
+                    renderItem={renderItem}
+                    keyExtractor={(_, index) => index.toString()}
+                    numColumns={grid}
+                    scrollEnabled={false} 
+                />
+            </BaseRow>
         </BaseContainer>
     );
 }

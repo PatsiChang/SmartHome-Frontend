@@ -21,7 +21,9 @@ const RecipeDisplay = () => {
     return (
         <BasePage styleClass="basePage">
             <BaseContainer styleClass="carousellContainer">
-                <SingleCarousell caption={['first', 'second', 'third', '4', '5', '6']} imgList={defaultImgList} />
+                <BaseRow>
+                    <SingleCarousell caption={['first', 'second', 'third', '4', '5', '6']} imgList={defaultImgList} />
+                </BaseRow>
                 <BaseRow>
                     <BaseGrid imageList={defaultImgList}></BaseGrid>
                 </BaseRow>
