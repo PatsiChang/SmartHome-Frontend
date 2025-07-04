@@ -225,7 +225,9 @@ setStyleBuilders({
     },
     alignCenterAll: () => {
         return {
-            flexDirection: 'row', justifyContent: 'center', marginTop: 10
+            flexDirection: 'row', 
+            justifyContent: 'center', 
+            marginTop: 10
         }
     },
 

@@ -1,6 +1,6 @@
 import { screenSizeConfig } from "@/app/enum/screenSize";
 import { currentDevice, screenWidth } from "@/lib/DeviceDimensionApi";
-import { ImageSourcePropType, Image, StyleProp, ImageStyle, FlatList } from "react-native";
+import { ImageSourcePropType, Image, FlatList } from "react-native";
 import BaseContainer from "./BaseContainer";
 import BaseRow from "./BaseRow";
 
@@ -23,14 +23,13 @@ const BaseGrid: React.FC<BaseGridProps> = ({ imageList }) => {
 
     return (
           <BaseContainer>
-            <BaseRow styleClass={['alignCenterAll', 'justifyCenterAll']}>
+            <BaseRow>
                 <FlatList
                     data={imageList}
                     renderItem={renderItem}
                     keyExtractor={(_, index) => index.toString()}
                     numColumns={grid}
-                    scrollEnabled={false} 
-                />
+                    scrollEnabled={false} />
             </BaseRow>
         </BaseContainer>
     );
